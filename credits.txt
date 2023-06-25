@@ -1,0 +1,27 @@
+Photo
+
+Jack Hunter
+Photo by <a href="https://unsplash.com/@jacktthunter?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Jack Hunter</a> on <a href="https://unsplash.com/photos/1L4E_lsIb9Q?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
+
+Simon Lee
+Photo by <a href="https://unsplash.com/@simonppt?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">SIMON LEE</a> on <a href="https://unsplash.com/photos/hbFKxsIqclc?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
+
+Irham Setyaki
+Photo by <a href="https://unsplash.com/@setyaki?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Irham Setyaki</a> on <a href="https://unsplash.com/photos/j-p4ENypp0A?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
+
+Uriel SC
+Photo by <a href="https://unsplash.com/fr/@urielsc26?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Uriel SC</a> on <a href="https://unsplash.com/photos/11KDtiUWRq4?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
+
+Priscilla Du Preez
+Photo by <a href="https://unsplash.com/@priscilladupreez?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Priscilla Du Preez</a> on <a href="https://unsplash.com/photos/sOdldNCQEtU?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
+  
+
+
+Font
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+
+callback
+font-family: 'Bebas Neue', sans-serif;
