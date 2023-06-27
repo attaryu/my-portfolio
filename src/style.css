@@ -3,6 +3,20 @@
 @tailwind utilities;
 
 @layer base {
+  @font-face {
+    font-family: 'Tusker Grotesk Medium';
+    src: url('/font/TuskerGrotesk-3500Medium.ttf')
+  }
+
+  @font-face {
+    font-family: 'Tusker Grotesk Semibold';
+    src: url('/font/TuskerGrotesk-3600Semibold.ttf')
+  }
+
+  @font-face {
+    font-family: 'Tusker Grotesk Bold';
+    src: url('/font/TuskerGrotesk-3700Bold.ttf')
+  }
 
   * {
     @apply cursor-none;

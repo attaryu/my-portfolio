@@ -8,10 +8,13 @@ import {
   mouseEvent,
   otherEvents,
   suggestionEvent,
-  fontCheckEvent,
 } from './event';
 
 function init() {
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('./sw.js');
+  }
+
   const container = document.querySelector('#container')
   const locomotive = new LocomotiveScroll({
     el: container,
@@ -20,7 +23,6 @@ function init() {
 
   gsap.from('body', { autoAlpha: 0, delay: 0.5, duration: 1 });
   
-  fontCheckEvent();
   navigatorsEvent(locomotive);
   creditsEvent(locomotive);
   mouseEvent();

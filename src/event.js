@@ -123,18 +123,3 @@ export function suggestionEvent(globalTimeLine) {
     .querySelector('.alert-dsa-button')
     .addEventListener('click', handler)
 }
-
-export function fontCheckEvent() {
-  Promise.all([
-    new FontFace('Tusker Grotesk Medium', 'url(/font/TuskerGrotesk-3500Medium.ttf)'),
-    new FontFace('Tusker Grotesk Semibold', 'url(/font/TuskerGrotesk-3600Semibold.ttf)'),
-    new FontFace('Tusker Grotesk Bold', 'url(/font/TuskerGrotesk-3700Bold.ttf)'),
-  ]).then((e) => {
-    if (!localStorage.getItem('first-download-font')) {
-      localStorage.setItem('first-download-font', 'false');
-      location.reload();
-    }
-
-    e.forEach((font) => document.fonts.add(font));
-  });
-}
