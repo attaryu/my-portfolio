@@ -27,14 +27,15 @@ self.addEventListener('fetch', (event) => {
   
   if (request.destination === 'font' || request.destination === 'image') {
     event.respondWith(
-      caches.open(cacheKey).then(async (cache) => {
-        const cached = await cache.match(url.pathname);
+      caches.open(cacheKey).then((cache) => {
+        return cache.match(url.pathname).then((cachedResponse) => {
+          return cachedResponse || fetch(request)
+            .then((response) => {
+              cache.put(url.pathname, response.clone());
+              return response;
+            });
+        })
 
-        return cached || fetch(request)
-          .then((response) => {
-            cache.put(url.pathname, response.clone());
-            return response;
-          });
       })
     );
 
@@ -42,12 +43,14 @@ self.addEventListener('fetch', (event) => {
   }
 
   event.respondWith(
-    caches.open(cacheKey).then(async (cache) => {
-      return fetch(request).then((response) => {
-        cache.put(url.pathname, response.clone());
-        return response;
-      }).catch((error) => {
-        return cache.match(url.pathname) || error;
+    caches.open(cacheKey).then((cache) => {
+      return cache.match(url.pathname).then((cachedResponse) => {
+        const fetchedResponse = fetch(request).then((response) => {
+          cache.put(url.pathname, response.clone());
+          return response;
+        });
+  
+        return cachedResponse || fetchedResponse;
       });
     })
   );
