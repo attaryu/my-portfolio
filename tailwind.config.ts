@@ -13,6 +13,12 @@ const config: Config = {
         'tusker-grotesk-medium': ['var(--tusker-grotesk-medium)'],
         'tusker-grotesk-semibold': ['var(--tusker-grotesk-semibold)'],
       },
+			maxWidth: {
+				'widhest': '1400px',
+			},
+			maxHeight: {
+				'highest': '800px',
+			},
     },
 	},
 	plugins: [],
