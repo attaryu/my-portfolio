@@ -7,3 +7,9 @@
     @apply font-neue-montreal-normal
   }
 }
+
+@layer components {
+  .debug {
+    @apply outline outline-2 outline-red-500
+  }
+}

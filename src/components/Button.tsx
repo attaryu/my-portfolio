@@ -15,18 +15,17 @@ export default function Button({
   href,
   ...attribute
 }: Props) {
-  let baseStyling = 'py-3 px-6 h-fit flex items-center rounded-full gap-3 text-xl';
+  let baseStyling = 'py-2 xl:py-3 px-4 xl:px-6 h-fit flex justify-center items-center rounded-full gap-3 text-lg xl:text-xl';
 
   if (primary) {
-    baseStyling += ' bg-zinc-900 text-white'
+    baseStyling += ' bg-zinc-900 text-white';
   } else if (secondary) {
-    baseStyling += ' border border-zinc-900'
+    baseStyling += ' border border-zinc-900';
   }
 
   if (href) {
     return (
       <a
-        href={href}
         className={`${baseStyling} ${className ?? ''}`}
         {...attribute as React.AnchorHTMLAttributes<HTMLAnchorElement>}
       >

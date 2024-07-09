@@ -2,8 +2,10 @@ import type { Metadata } from "next";
 
 import localFont from 'next/font/local';
 
-import "./globals.css";
 import Navbar from '@/components/Navbar';
+import Footer from '@/components/Footer';
+
+import "./globals.css";
 
 export const metadata: Metadata = {
   title: "M Attar",
@@ -48,6 +50,7 @@ export default function RootLayout({
         <div className="max-w-widhest mx-auto relative">
           <Navbar  />
           {children}
+          <Footer />
         </div>
       </body>
     </html>
