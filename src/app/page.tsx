@@ -2,6 +2,7 @@ import { MdCall, MdLocationOn, MdMail, MdArrowUpward, MdShare } from 'react-icon
 
 import ProjectCard from '@/components/ProjectCard';
 import { logos, projects, socialMedias } from '@/utils/constant';
+import Button from '@/components/Button';
 
 export default function Home() {
   const date = new Date();
@@ -95,10 +96,10 @@ export default function Home() {
 
           <img src="/ui_assets/wave-light.svg" alt="" className="absolute w-full left-0 top-1/2" />
 
-          <p className="mt-auto self-end text-2xl font-neue-montreal-medium">
-            <a href="#" className="bg-zinc-900 text-zinc-100 py-4 px-6 rounded-full mr-5">
+          <p className="mt-auto self-end text-2xl font-neue-montreal-medium flex gap-8 items-center">
+            <Button href="#" primary>
               Contact Me
-            </a>{' '}
+            </Button>{' '}
             right now!
           </p>
         </section>
@@ -113,14 +114,14 @@ export default function Home() {
 
             <div className="flex content-end items-end justify-end gap-x-6 gap-y-4 flex-wrap">
               {socialMedias.map((data) => (
-                <a
+                <Button
                   key={data.id}
                   href={data.url}
                   target="_blank"
-                  className="py-3 px-6 border border-zinc-900 rounded-full text-xl"
+                  secondary
                 >
                   {data.title}
-                </a>
+                </Button>
               ))}
             </div>
           </div>

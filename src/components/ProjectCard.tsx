@@ -1,5 +1,6 @@
 import React from "react";
 import { MdArrowOutward, MdOpenInFull } from 'react-icons/md';
+import Button from "./Button";
 
 interface Prop {
   project: {
@@ -17,9 +18,9 @@ export default function ProjectCard({ project, detailURL }: Readonly<Prop>) {
       {/* background image */}
       <img src={project.image} alt="" className="w-full h-full absolute top-0 left-0 object-cover brightness-[0.3]" />
 
-      <a href={project.url} className="self-end p-3 border border-zinc-100 rounded-full text-2xl z-10">
+      <Button href={project.url} secondary className="self-end !p-3 z-10 !text-2xl !border-zinc-100">
         <MdArrowOutward />
-      </a>
+      </Button>
 
       <div className="mt-auto flex justify-between items-end gap-32 z-10">
         <div>
@@ -27,9 +28,9 @@ export default function ProjectCard({ project, detailURL }: Readonly<Prop>) {
           <p className="text-lg mt-3">{project.description}</p>
         </div>
 
-        <a href={detailURL} className="py-3 px-6 h-fit border border-zinc-100 flex items-center rounded-full gap-3 text-xl">
+        <Button href={detailURL} secondary className="!border-zinc-100">
           Detail <MdOpenInFull />
-        </a>
+        </Button>
       </div>
     </div>
   );
