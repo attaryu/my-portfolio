@@ -1,15 +1,15 @@
-import type { Metadata } from "next";
+import type { Metadata } from 'next';
 
 import localFont from 'next/font/local';
 
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 
-import "./globals.css";
+import './globals.css';
 
 export const metadata: Metadata = {
-  title: "M Attar",
-  description: "My own masterpiece",
+  title: 'M Attar',
+  description: 'My own masterpiece',
 };
 
 const neueMontrealNormal = localFont({
@@ -43,12 +43,12 @@ export default function RootLayout({
     tuskerGroteskMedium.variable,
     tuskerGroteskSemibold.variable,
   ].join(' ');
-  
+
   return (
     <html lang="en">
       <body className={fontVariables}>
-        <div className="max-w-widhest mx-auto relative">
-          <Navbar  />
+        <div className="relative mx-auto max-w-widhest">
+          <Navbar />
           {children}
           <Footer />
         </div>

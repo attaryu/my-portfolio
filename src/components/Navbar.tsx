@@ -1,9 +1,11 @@
 export default function Navbar() {
   return (
-    <nav className="flex justify-between items-center py-2 md:py-4 px-8 fixed top-0 max-w-widhest w-full h-fit z-10 md:px-20">
+    <nav className="fixed top-0 z-10 flex h-fit w-full max-w-widhest items-center justify-between px-8 py-2 md:px-20 md:py-4">
       <img src="/logo/ma-light.svg" alt="" className="size-11 md:size-12" />
 
-      <p className="font-neue-montreal-medium hidden md:block md:text-xl">M Attar</p>
+      <p className="hidden font-neue-montreal-medium md:block md:text-xl">
+        M Attar
+      </p>
 
       <button className="md:text-xl">[ Menu ]</button>
     </nav>
