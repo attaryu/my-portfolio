@@ -20,36 +20,36 @@ export default function Home() {
           </div>
 
           {/* cover */}
-          <section className="pt-16 h-[90vh] xl:h-dvh max-h-highest px-8 flex flex-col gap-10 sm:px-20 sm:items-center">
-            <h1 className="font-tusker-grotesk-medium text-7xl sm:text-5xl leading-tight mt-auto">
+          <section className="pt-16 h-svh xl:h-dvh max-h-highest px-8 flex flex-col gap-10 md:px-20 sm:items-center">
+            <h1 className="font-tusker-grotesk-medium text-7xl md:text-6xl leading-tight mt-auto">
               HELLO, <br className="sm:hidden" />
               I'M ATTAR
             </h1>
 
-            <div className="w-full sm:py-5 py-8 flex justify-between flex-col sm:flex-row sm:mt-auto sm:items-center">
+            <div className="w-full md:py-5 py-8 flex justify-between flex-col md:flex-row md:mt-auto md:items-center md:text-lg">
               <time dateTime={date.toISOString()}>{date.toLocaleString()}</time>
               <p>&copy;2024 All rights reserved.</p>
             </div>
-          </section>
+          </section> 
 
           {/* about me */}
-          <section className="h-screen sm:h-[95dvh] max-h-highest grid place-items-center px-8">
-            <p className="text-xl sm:text-4xl sm:text-center sm:w-1/2 leading-relaxed">
+          <section className="h-screen max-h-highest grid place-items-center px-8">
+            <p className="text-xl md:text-3xl md:text-center md:w-4/5 leading-relaxed">
               I'm 19 years old, with almost 3 years of in-depth experience in web development field. While I haven't stepped into the professional world yet, I've honed my skills through a variety of online courses, collaborative projects, solo projects, and even hackathons. Whether collaborating on a team or venturing solo, my ethos remains rooted in upholding best practices and ensuring precision.
             </p>
           </section>
         </div>
 
         {/* tech skill */}
-        <section className="w-full py-14 sm:py-32 overflow-hidden">
-          <h2 className="font-neue-montreal-medium text-3xl sm:text-5xl -rotate-1 px-8 sm:px-20">
+        <section className="w-full py-14 md:py-32 overflow-hidden">
+          <h2 className="font-neue-montreal-medium text-3xl md:text-5xl -rotate-1 px-8 md:px-20">
             Proudly presenting my expertise coupled with an understanding of the technology I use.
           </h2>
 
-          <div className="my-16 xl:my-24 relative -rotate-1 before:contents-[''] before:block before:w-1/4 before:xl:w-1/6 before:h-full before:absolute before:-left-1 before:bg-gradient-to-l before:from-transparent before:to-white before:pointer-events-none before:z-10 after:contents-[''] after:block after:w-1/4 after:xl:w-1/6 after:h-full after:absolute after:top-0 after:-right-1 after:bg-gradient-to-r after:from-transparent after:to-white after:pointer-events-none after:z-10">
+          <div className="my-16 md:my-20 relative -rotate-1 before:contents-[''] before:block before:w-1/4 before:xl:w-1/6 before:h-full before:absolute before:-left-1 before:bg-gradient-to-l before:from-transparent before:to-white before:pointer-events-none before:z-10 after:contents-[''] after:block after:w-1/4 after:xl:w-1/6 after:h-full after:absolute after:top-0 after:-right-1 after:bg-gradient-to-r after:from-transparent after:to-white after:pointer-events-none after:z-10">
             <div className="w-full overflow-x-auto">
               <ul
-                className="w-full min-w-[750px] h-56 xl:h-96 grid grid-rows-2 grid-cols-7 place-items-center gap-x-6 md:gap-x-12"
+                className="w-full min-w-[750px] md:w-[120vw] h-56 md:h-72 xl:h-96 grid grid-rows-2 grid-cols-7 place-items-center gap-x-6 md:gap-x-8"
               >
                 {logos.map((logo) => (
                   <img
@@ -63,8 +63,8 @@ export default function Home() {
             </div>
           </div>
 
-          <p className="mx-auto -rotate-1 px-8 sm:px-20 text-right text-sm xl:text-lg leading-tight">
-            <span className="md:w-2/3 md:inline-block">
+          <p className="mx-auto -rotate-1 px-8 sm:px-20 text-right text-sm md:text-xl leading-tight">
+            <span className="md:w-3/4 md:inline-block">
               Even though I navigate a variety of technologies, mastery of certain technologies still eludes me; Nevertheless, I accepted the journey of rediscovering these tools in a short time.
             </span>
           </p>
@@ -72,26 +72,26 @@ export default function Home() {
 
         {/* some word */}
         <section>
-          <p className="w-full h-[150vh] xl:h-[200vh] max-h-[1600px] grid place-items-center grid-rows-2">
-            <span className="font-tusker-grotesk-semibold text-center text-6xl xl:text-7xl leading-snug">
+          <p className="w-full h-[150vh] md:h-[200vh] max-h-[1600px] grid place-items-center grid-rows-2">
+            <span className="font-tusker-grotesk-semibold text-center text-6xl leading-snug">
               MAKE YOUR <br className="md:hidden" />
               DREAM WEBSITE...
             </span>
 
-            <span className="font-tusker-grotesk-medium whitespace-nowrap text-6xl xl:text-[14rem]">
+            <span className="font-tusker-grotesk-medium whitespace-nowrap text-6xl md:text-[8rem] xl:text-[14rem]">
               INTO A REALITY
             </span>
           </p>
         </section>
 
         {/* showcase selected project */}
-        <section className="px-8 xl:px-20 my-32">
+        <section className="px-8 md:px-20 my-32">
           <h2 className="font-neue-montreal-medium text-4xl xl:text-6xl text-center">
-            There are my <br className="xl:hidden" />
+            There are my <br className="md:hidden" />
             selected project
           </h2>
 
-          <ul className="mt-14 space-y-8 xl:space-y-16">
+          <ul className="mt-14 space-y-8 md:space-y-12 lg:mt-20 lg:space-y-16">
             {projects.map((data) => (
               <li key={data.id} >
                 <ProjectCard project={data} detailURL={data.detailURL} />
@@ -101,30 +101,30 @@ export default function Home() {
         </section>
 
         {/* offering project */}
-        <section className="py:16 px-8 xl:p-20 my-16 h-[80vh] xl:h-screen max-h-highest relative flex flex-col overflow-hidden">
-          <p className="text-[3.4rem] xl:text-[5.5rem] leading-none font-neue-montreal-medium">
+        <section className="py-16 px-8 md:p-20 my-16 h-[80vh] md:h-[60vh] xl:h-screen max-h-highest relative flex flex-col overflow-hidden">
+          <p className="text-[3.4rem] lg:text-[5rem] xl:text-[5.5rem] leading-none font-neue-montreal-medium">
             Don't you think about making a masterpiece together after seeing all that?
           </p>
 
-          <img src="/ui_assets/wave-light.svg" alt="" className="absolute w-full right-1/3 xl:left-0 xl:w-full top-3/4 xl:top-1/2 scale-[2.7] xl:scale-100 -rotate-5 xl:rotate-0" />
+          <img src="/ui_assets/wave-light.svg" alt="" className="absolute w-full right-1/3 md:left-0 md:w-full top-3/4 md:top-[55%] xl:top-1/2 scale-[2.7] md:scale-125 xl:scale-100 -rotate-5 md:rotate-0" />
 
-          <p className="mt-auto self-end font-neue-montreal-medium flex gap-4 xl:gap-8 items-center">
+          <p className="mt-auto self-end font-neue-montreal-medium flex gap-4 md:gap-8 items-center">
             <Button href="#" primary>
               Contact Me
             </Button>{' '}
-            <span className="xl:text-xl">right now!</span>
+            <span className="md:text-xl xl:text-2xl">right now!</span>
           </p>
         </section>
 
         {/* my social media and etc */}
-        <section className="px-8 xl:px-20 mt-32 mb-6 xl:mb-10">
-          <div className="flex justify-between flex-col xl:flex-row gap-6 xl:gap-0">
-            <h2 className="font-tusker-grotesk-medium text-[5.2rem] xl:text-[9rem] leading-[1.1] w-full">
+        <section className="px-8 md:px-20 mt-32 mb-6 md:mb-8">
+          <div className="flex justify-between flex-col md:flex-row gap-6 md:gap-0">
+            <h2 className="font-tusker-grotesk-medium text-[5.2rem] md:text-8xl lg:text-9xl xl:text-[9rem] leading-[1.1] w-full">
               HOW TO<br />
               FIND ME
             </h2>
 
-            <div className="flex content-end items-end xl:justify-end gap-x-4 gap-y-4 flex-wrap">
+            <div className="flex content-end items-end md:justify-end gap-x-4 gap-y-4 flex-wrap">
               {socialMedias.map((data) => (
                 <Button
                   key={data.id}
@@ -138,27 +138,27 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="flex justify-between flex-col xl:flex-row border-t border-t-zinc-800 py-5 xl:p-5 mt-12 xl:mt-16 gap-2">
-            <address className="flex gap-4 items-center justify">
-              <MdLocationOn className="text-xl xl:text-3xl" />
+          <div className="flex justify-between flex-col lg:flex-row border-t border-t-zinc-800 py-5 mt-12 lg:mt-16 gap-2">
+            <address className="flex gap-4 items-center">
+              <MdLocationOn className="text-xl md:text-2xl xl:text-3xl" />
 
-              <span className="not-italic text-sm xl:text-xl">
+              <span className="not-italic text-sm md:text-lg xl:text-xl">
                 Brantas street, Jombang, East Java, INA
               </span>
             </address>
 
-            <a href="#" className="flex gap-4 items-center justify">
-              <MdMail className="text-xl xl:text-3xl" />
+            <a href="#" className="flex gap-4 items-center">
+              <MdMail className="text-xl md:text-2xl xl:text-3xl" />
 
-              <span className="not-italic text-sm xl:text-xl">
+              <span className="not-italic text-sm md:text-lg xl:text-xl">
                 mattarannaufal@gmail.com
               </span>
             </a>
 
-            <a href="#" className="flex gap-4 items-center justify">
-              <MdCall className="text-xl xl:text-3xl" />
+            <a href="#" className="flex gap-4 items-center">
+              <MdCall className="text-xl md:text-2xl xl:text-3xl" />
 
-              <span className="not-italic text-sm xl:text-xl">
+              <span className="not-italic text-sm md:text-lg xl:text-xl">
                 (+62) 857 0707 1585
               </span>
             </a>

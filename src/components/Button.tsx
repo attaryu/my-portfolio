@@ -15,7 +15,7 @@ export default function Button({
   href,
   ...attribute
 }: Props) {
-  let baseStyling = 'py-2 xl:py-3 px-4 xl:px-6 h-fit flex justify-center items-center rounded-full gap-3 text-lg xl:text-xl';
+  let baseStyling = 'py-2 md:py-3 px-4 md:px-6 h-fit flex justify-center items-center rounded-full gap-3 md:text-xl xl:text-2xl';
 
   if (primary) {
     baseStyling += ' bg-zinc-900 text-white';

@@ -14,10 +14,10 @@ const config: Config = {
         'tusker-grotesk-semibold': ['var(--tusker-grotesk-semibold)'],
       },
 			maxWidth: {
-				'widhest': '1400px',
+				'widhest': '1600px',
 			},
 			maxHeight: {
-				'highest': '800px',
+				'highest': '1400px',
 			},
     },
 	},
