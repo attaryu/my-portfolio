@@ -14,7 +14,7 @@ interface Prop {
 
 export default function ProjectCard({ project, detailURL }: Readonly<Prop>) {
   return (
-    <div className="relative flex aspect-[2/3] w-full flex-col overflow-hidden rounded-3xl bg-zinc-300 p-6 text-zinc-100 md:aspect-[2/1.5] md:p-8 lg:aspect-[3/2] xl:aspect-[16/7.5]">
+    <div className="relative flex aspect-[2/3] w-full flex-col overflow-hidden rounded-3xl bg-zinc-300 p-6 text-zinc-100 md:aspect-[2/1.5] md:p-8 lg:aspect-[3/2] xl:aspect-[16/7.5] xl:p-10">
       {/* background image */}
       <img
         src={project.image}
@@ -36,7 +36,7 @@ export default function ProjectCard({ project, detailURL }: Readonly<Prop>) {
             {project.title.toUpperCase()}
           </h3>
 
-          <p className="mt-3 text-sm md:mt-2 md:text-lg lg:text-xl">
+          <p className="mt-3 text-sm md:mt-2 md:text-lg lg:text-xl xl:mt-4">
             {project.description}
           </p>
         </div>

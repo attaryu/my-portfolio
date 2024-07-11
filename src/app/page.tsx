@@ -2,6 +2,7 @@ import { MdCall, MdLocationOn, MdMail } from 'react-icons/md';
 
 import Button from '@/components/Button';
 import ProjectCard from '@/components/ProjectCard';
+
 import { logos, projects, socialMedias } from '@/utils/constant';
 
 export default function Home() {
@@ -24,13 +25,13 @@ export default function Home() {
         </div>
 
         {/* cover */}
-        <section className="flex h-svh max-h-highest flex-col gap-10 px-8 pt-16 sm:items-center md:px-20 xl:h-dvh">
-          <h1 className="mt-auto font-tusker-grotesk-medium text-7xl leading-tight md:text-6xl lg:text-7xl">
-            HELLO, <br className="sm:hidden" />
+        <section className="flex h-svh max-h-highest flex-col justify-end gap-10 px-8 pt-16 md:items-center md:px-20 md:pt-24 xl:h-svh">
+          <h1 className="font-tusker-grotesk-medium text-7xl leading-tight md:mt-auto md:text-6xl lg:text-7xl xl:text-6xl">
+            HELLO, <br className="md:hidden" />
             I'M ATTAR
           </h1>
 
-          <div className="flex w-full flex-col justify-between py-8 md:mt-auto md:flex-row md:items-center md:py-10 md:text-lg lg:py-12 lg:text-xl">
+          <div className="flex w-full flex-col justify-between py-8 md:mt-auto md:flex-row md:items-center md:py-10 md:text-lg lg:py-12 lg:text-xl xl:py-5 xl:text-lg">
             <time dateTime={date.toISOString()}>{date.toLocaleString()}</time>
             <p>&copy;2024 All rights reserved.</p>
           </div>
@@ -38,7 +39,7 @@ export default function Home() {
 
         {/* about me */}
         <section className="grid h-screen max-h-highest place-items-center px-8">
-          <p className="text-xl leading-relaxed md:w-4/5 md:text-center md:text-3xl lg:w-2/3 lg:text-4xl">
+          <p className="text-xl !leading-relaxed md:w-4/5 md:text-center md:text-3xl lg:w-2/3 lg:text-4xl xl:text-3xl">
             I'm 19 years old, with almost 3 years of in-depth experience in web
             development field. While I haven't stepped into the professional
             world yet, I've honed my skills through a variety of online courses,
@@ -71,7 +72,7 @@ export default function Home() {
           </div>
         </div>
 
-        <p className="mx-auto -rotate-1 px-8 text-right text-sm leading-tight md:px-20 md:text-xl lg:text-2xl">
+        <p className="mx-auto -rotate-1 px-8 text-right text-sm leading-tight md:px-20 md:text-xl lg:text-2xl xl:text-xl">
           <span className="md:inline-block md:w-3/4 lg:w-4/5">
             Even though I navigate a variety of technologies, mastery of certain
             technologies still eludes me; Nevertheless, I accepted the journey

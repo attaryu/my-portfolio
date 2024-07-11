@@ -15,19 +15,21 @@ export default function Button({
   href,
   ...otherAttributes
 }: Readonly<Props>) {
-  let baseStyling =
-    'py-2 md:py-3 px-4 md:px-6 h-fit flex justify-center items-center rounded-full gap-3 md:text-xl lg:text-2xl';
+  let styling =
+    'flex h-fit cursor-pointer items-center justify-center gap-3 rounded-full px-4 py-2 md:px-6 md:py-3 md:text-xl lg:text-2xl xl:gap-4 ';
 
   if (primary) {
-    baseStyling += ' bg-zinc-900 text-white';
+    styling += 'bg-zinc-900 text-white ';
   } else if (secondary) {
-    baseStyling += ' border border-zinc-900';
+    styling += 'border border-zinc-900 ';
   }
+
+  styling += className;
 
   if (href) {
     return (
       <a
-        className={`${baseStyling} ${className ?? ''}`}
+        className={styling}
         {...(otherAttributes as React.AnchorHTMLAttributes<HTMLAnchorElement>)}
       >
         {children}
@@ -36,7 +38,7 @@ export default function Button({
   }
 
   return (
-    <button className={`${baseStyling} ${className ?? ''}`} {...otherAttributes}>
+    <button className={styling} {...otherAttributes}>
       {children}
     </button>
   );
