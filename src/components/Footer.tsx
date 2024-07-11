@@ -1,4 +1,4 @@
-import { MdArrowUpward, MdShare } from "react-icons/md";
+import { MdArrowUpward, MdShare } from 'react-icons/md';
 
 export default function Footer() {
   return (

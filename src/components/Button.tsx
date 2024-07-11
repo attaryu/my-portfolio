@@ -13,10 +13,10 @@ export default function Button({
   primary,
   secondary,
   href,
-  ...attribute
-}: Props) {
+  ...otherAttributes
+}: Readonly<Props>) {
   let baseStyling =
-    'py-2 md:py-3 px-4 md:px-6 h-fit flex justify-center items-center rounded-full gap-3 md:text-xl xl:text-2xl';
+    'py-2 md:py-3 px-4 md:px-6 h-fit flex justify-center items-center rounded-full gap-3 md:text-xl lg:text-2xl';
 
   if (primary) {
     baseStyling += ' bg-zinc-900 text-white';
@@ -28,7 +28,7 @@ export default function Button({
     return (
       <a
         className={`${baseStyling} ${className ?? ''}`}
-        {...(attribute as React.AnchorHTMLAttributes<HTMLAnchorElement>)}
+        {...(otherAttributes as React.AnchorHTMLAttributes<HTMLAnchorElement>)}
       >
         {children}
       </a>
@@ -36,7 +36,7 @@ export default function Button({
   }
 
   return (
-    <button className={`${baseStyling} ${className ?? ''}`} {...attribute}>
+    <button className={`${baseStyling} ${className ?? ''}`} {...otherAttributes}>
       {children}
     </button>
   );
