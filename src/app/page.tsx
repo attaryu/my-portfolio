@@ -2,6 +2,7 @@ import { MdCall, MdLocationOn, MdMail } from 'react-icons/md';
 
 import Button from '@/components/Button';
 import ProjectCard from '@/components/ProjectCard';
+import Grid from './self-components/Grid';
 
 import { logos, projects, socialMedias } from '@/utils/constant';
 
@@ -13,25 +14,18 @@ export default function Home() {
       {/* grid area */}
       <div>
         {/* grid backgroud */}
-        <div className="after:contents-[''] absolute top-0 -z-10 grid h-[230vh] w-full grid-cols-[repeat(auto-fit,_minmax(2rem,_1fr))] overflow-hidden after:absolute after:bottom-0 after:left-0 after:block after:h-1/5 after:w-full after:bg-gradient-to-t after:from-white after:to-transparent xl:h-fit">
-          {Array(50 * 37)
-            .fill(1)
-            .map((box, i) => (
-              <div
-                key={box + i}
-                className="grid-box w-full border border-b-zinc-50 border-l-zinc-50 pt-[100%]"
-              />
-            ))}
+        <div className="absolute top-0 left-0 h-[240vh] w-full">
+          <Grid />
         </div>
 
         {/* cover */}
         <section className="flex h-svh max-h-highest flex-col justify-end gap-10 px-8 pt-16 md:items-center md:px-20 md:pt-24 xl:h-svh">
-          <h1 className="font-tusker-grotesk-medium text-7xl leading-tight md:mt-auto md:text-6xl lg:text-7xl xl:text-6xl">
+          <h1 className="font-tusker-grotesk-medium text-7xl leading-tight md:mt-auto md:text-6xl lg:text-7xl xl:text-6xl z-10">
             HELLO, <br className="md:hidden" />
             I'M ATTAR
           </h1>
 
-          <div className="flex w-full flex-col justify-between py-8 md:mt-auto md:flex-row md:items-center md:py-10 md:text-lg lg:py-12 lg:text-xl xl:py-5 xl:text-lg">
+          <div className="flex w-full flex-col justify-between py-8 md:mt-auto md:flex-row md:items-center md:py-10 md:text-lg lg:py-12 lg:text-xl xl:py-5 xl:text-lg z-10">
             <time dateTime={date.toISOString()}>{date.toLocaleString()}</time>
             <p>&copy;2024 All rights reserved.</p>
           </div>
@@ -39,7 +33,7 @@ export default function Home() {
 
         {/* about me */}
         <section className="grid h-screen max-h-highest place-items-center px-8">
-          <p className="text-xl !leading-relaxed md:w-4/5 md:text-center md:text-3xl lg:w-2/3 lg:text-4xl xl:text-3xl">
+          <p className="text-xl !leading-relaxed md:w-4/5 md:text-center md:text-3xl lg:w-2/3 lg:text-4xl xl:text-3xl z-10">
             I'm 19 years old, with almost 3 years of in-depth experience in web
             development field. While I haven't stepped into the professional
             world yet, I've honed my skills through a variety of online courses,

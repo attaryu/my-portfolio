@@ -5,6 +5,8 @@ import localFont from 'next/font/local';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 
+import { ReactLenis } from '@/utils/lenis';
+
 import './globals.css';
 
 export const metadata: Metadata = {
@@ -47,11 +49,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={fontVariables}>
-        <div className="relative mx-auto max-w-widhest">
-          <Navbar />
-          {children}
-          <Footer />
-        </div>
+        <ReactLenis root>
+          <div className="relative mx-auto max-w-widhest">
+            <Navbar />
+            {children}
+            <Footer />
+          </div>
+        </ReactLenis>
       </body>
     </html>
   );
