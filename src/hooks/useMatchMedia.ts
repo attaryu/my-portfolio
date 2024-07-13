@@ -1,6 +1,5 @@
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
-import { useState } from 'react';
 
 type Conditions = {
   isSmall: boolean,
@@ -11,19 +10,10 @@ type Conditions = {
 
 gsap.registerPlugin(useGSAP);
 
-export default function useMatchMedia(fn: (context: Conditions) => (() => void) | void, depend: any[] = []) {
-  const [width, setWidth] = useState(0);
-
-  useGSAP(() => { gsap.matchMediaRefresh() }, [width]);
-
-  useGSAP(() => {
-    const handler = () => setWidth(window.innerWidth);
-
-    window.addEventListener('resize', handler);
-
-    return () => window.removeEventListener('resize', handler);
-  }, []);
-
+export default function useMatchMedia(
+  fn: (context: Conditions) => (() => void) | void,
+  depend: any[] = []
+) {
   useGSAP(() => {
     gsap.matchMedia().add({
       isSmall: '(max-width: 766px)',
