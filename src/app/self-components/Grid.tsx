@@ -13,38 +13,38 @@ function Grid() {
   const random = () => Math.floor(Math.random() * (totalBox * 0.6));
   const [boxIndex, setBoxIndex] = useState(random());
 
-  // TODO: menggunakan hook match media dan mengimplementasikannya sesuai dengan layar device
-
   useEffect(() => {
     if (screen) {
-      setTotalBox(screen.height * 1.5);
+      setTotalBox(Math.round(screen.height * 1.5));
     }
   }, []);
 
   useMatchMedia(
     ({ isSmall }) => {
-      gsap.to('.grid-box', {
-        backgroundColor: 'white',
-        borderColor: 'white',
-        stagger: {
-          from: boxIndex,
-          grid: 'auto' as const,
-          amount: isSmall ? 2.5 : 1.5,
-          yoyo: true,
-          repeat: 1,
-          repeatDelay: 1.5,
-        },
-        onComplete: () => {
-          setTimeout(() => setBoxIndex(random()), 1500);
-        },
-      });
+      if (totalBox) {
+        gsap.to('.grid-box', {
+          backgroundColor: 'white',
+          borderColor: 'white',
+          stagger: {
+            from: boxIndex,
+            grid: 'auto',
+            amount: isSmall ? 2.5 : 1.5,
+            yoyo: true,
+            repeat: 1,
+            repeatDelay: 1.5,
+          },
+          onComplete: () => {
+            setTimeout(() => setBoxIndex(random()), 1500);
+          },
+        });
+      }
     },
     [boxIndex, totalBox],
   );
 
   return (
     <div className="after:contents-[''] sticky left-0 top-0 grid h-svh max-h-highest w-full grid-cols-[repeat(auto-fit,_minmax(2rem,_1fr))] overflow-hidden after:pointer-events-none after:absolute after:bottom-0 after:left-0 after:block after:h-1/5 after:w-full after:bg-gradient-to-t after:from-white after:to-transparent">
-      {Array(totalBox)
+      {!!totalBox && Array(totalBox)
         .fill(1)
         .map((box, i) => (
           <div
