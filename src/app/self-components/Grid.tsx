@@ -43,7 +43,7 @@ function Grid() {
   );
 
   return (
-    <div className="after:contents-[''] sticky left-0 top-0 grid h-svh max-h-highest w-full grid-cols-[repeat(auto-fit,_minmax(2rem,_1fr))] overflow-hidden after:pointer-events-none after:absolute after:bottom-0 after:left-0 after:block after:h-1/5 after:w-full after:bg-gradient-to-t after:from-white after:to-transparent">
+    <div className="after:contents-[''] sticky left-0 top-0 grid h-[120svh] max-h-highest w-full grid-cols-[repeat(auto-fit,_minmax(2rem,_1fr))] overflow-hidden after:pointer-events-none after:absolute after:bottom-0 after:left-0 after:block after:h-1/5 after:w-full after:bg-gradient-to-t after:from-white after:to-transparent">
       {!!totalBox && Array(totalBox)
         .fill(1)
         .map((box, i) => (
