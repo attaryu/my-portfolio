@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@gsap/react": "^2.1.1",
+    "@lottiefiles/dotlottie-react": "^0.7.2",
     "gsap": "^3.12.5",
     "lenis": "^1.1.6",
     "next": "14.2.4",
