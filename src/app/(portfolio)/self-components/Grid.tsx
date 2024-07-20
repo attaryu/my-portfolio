@@ -31,7 +31,7 @@ function Grid() {
     ({ isSmall }) => {
       if (totalBox && play) {
         gsap.to('.grid-box', {
-          backgroundColor: 'white',
+          // backgroundColor: 'white',
           borderColor: 'white',
           stagger: {
             from: boxIndex,
@@ -58,7 +58,7 @@ function Grid() {
           .map((box, i) => (
             <div
               key={box + i}
-              className="grid-box w-full border border-b-zinc-50 border-l-zinc-50 pt-[100%]"
+              className="grid-box w-full border border-b-zinc-100 border-l-zinc-100 pt-[100%]"
             />
           ))}
     </div>

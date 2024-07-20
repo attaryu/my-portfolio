@@ -60,10 +60,6 @@ export default function Page() {
 
     if (loadingPercentage === 100 && lottieRef) {
       setLoadingTitle("Let's go!");
-      setTimeout(
-        () => gsap.to('.text-container', { autoAlpha: 0, duration: 1 }),
-        800,
-      );
       setTimeout(() => lottieRef.play(), 800);
 
       lottieRef.addEventListener('complete', () => {
@@ -80,16 +76,17 @@ export default function Page() {
           duration: 1.5,
           ease: 'power2.inOut',
         })
-        .to('.loading-container', { autoAlpha: 0, duration: 0.8 }, '<80%')
+        .to('.text-container', { autoAlpha: 0, duration: 1 }, '<')
+        .to('.loading-container', { autoAlpha: 0, duration: 0.8 }, '>+0.5s')
+        .add(() => {
+          publish();
+        }, '<')
         .to('.root-container', {
           height: 'auto',
           overflow: 'visible',
           duration: 0,
-        })
-        .to('.loading-container', { display: 'none', duration: 0 })
-        .add(() => {
-          publish();
-        });
+        },  '<')
+        .to('.loading-container', { display: 'none', duration: 0 });
     }
 
     return () => lottieRef?.removeEventListener('complete');
