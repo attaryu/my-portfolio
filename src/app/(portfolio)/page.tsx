@@ -17,7 +17,6 @@ export default function Page() {
   const [loadingTitle, setLoadingTitle] = useState('Keep focus...');
   const [loadingPercentage, setLoadingPercentage] = useState(0);
   const [lottieRef, setLottieRef] = useState<DotLottie | null>(null);
-  const [timeline, setTimeline] = useState<GSAPTimeline | null>(null);
 
   function updateLoading() {
     setLoadingPercentage((lastPercentage) => {
@@ -54,39 +53,38 @@ export default function Page() {
   }, [loadingPercentage]);
 
   useGSAP(() => {
-    if (!timeline) {
-      setTimeline(gsap.timeline({ paused: true }));
-    }
-
     if (loadingPercentage === 100 && lottieRef) {
       setLoadingTitle("Let's go!");
       setTimeout(() => lottieRef.play(), 800);
 
       lottieRef.addEventListener('complete', () => {
-        setTimeout(() => timeline?.play(), 200);
+        setTimeout(() => {
+          gsap
+            .timeline()
+            .to('.animated-logo', { display: 'none', duration: 0 })
+            .to('.static-logo', { display: 'block', duration: 0 })
+            .to('.logo-container', {
+              width: '750%',
+              duration: 1.5,
+              ease: 'power2.inOut',
+            })
+            .to('.text-container', { autoAlpha: 0, duration: 1 }, '<')
+            .to('.loading-container', { autoAlpha: 0, duration: 0.8 }, '>+0.5s')
+            .add(() => {
+              publish();
+            }, '<')
+            .to(
+              '.root-container',
+              {
+                height: 'auto',
+                overflow: 'visible',
+                duration: 0,
+              },
+              '<',
+            )
+            .to('.loading-container', { display: 'none', duration: 0 });
+        }, 200);
       });
-    }
-
-    if (timeline) {
-      timeline
-        .to('.animated-logo', { display: 'none', duration: 0 })
-        .to('.static-logo', { display: 'block', duration: 0 })
-        .to('.logo-container', {
-          width: '750%',
-          duration: 1.5,
-          ease: 'power2.inOut',
-        })
-        .to('.text-container', { autoAlpha: 0, duration: 1 }, '<')
-        .to('.loading-container', { autoAlpha: 0, duration: 0.8 }, '>+0.5s')
-        .add(() => {
-          publish();
-        }, '<')
-        .to('.root-container', {
-          height: 'auto',
-          overflow: 'visible',
-          duration: 0,
-        },  '<')
-        .to('.loading-container', { display: 'none', duration: 0 });
     }
 
     return () => lottieRef?.removeEventListener('complete');
