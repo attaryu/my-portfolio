@@ -13,9 +13,9 @@ import MainPage from './MainPage';
 gsap.registerPlugin(useGSAP);
 
 export default function Page() {
-  const { publish } = useEvent('timeline@1');
-  const [loadingPercentage, setLoadingPercentage] = useState(0);
+  const { publish } = useEvent('timeline@loading');
   const [loadingTitle, setLoadingTitle] = useState('Keep focus...');
+  const [loadingPercentage, setLoadingPercentage] = useState(0);
   const [lottieRef, setLottieRef] = useState<DotLottie | null>(null);
   const [timeline, setTimeline] = useState<GSAPTimeline | null>(null);
 
@@ -33,7 +33,7 @@ export default function Page() {
 
   useEffect(() => {
     if (window) {
-      // check loading percentage to prevent double triggering
+      // ? check loading percentage to prevent double triggering
       if (loadingPercentage) {
         setTimeout(
           () => {

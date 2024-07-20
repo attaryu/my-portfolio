@@ -9,7 +9,8 @@ import { memo, useEffect, useState } from 'react';
 gsap.registerPlugin(useGSAP);
 
 function Grid() {
-  const { subscribe } = useEvent('timeline@1');
+  // ? subsribe to loading timeline when done
+  const { subscribe } = useEvent('timeline@loading');
   const [play, setPlay] = useState(false);
   const [totalBox, setTotalBox] = useState(0);
   const random = () => Math.floor(Math.random() * (totalBox * 0.6));
@@ -31,7 +32,7 @@ function Grid() {
     ({ isSmall }) => {
       if (totalBox && play) {
         gsap.to('.grid-box', {
-          // backgroundColor: 'white',
+          backgroundColor: 'white',
           borderColor: 'white',
           stagger: {
             from: boxIndex,
@@ -58,7 +59,7 @@ function Grid() {
           .map((box, i) => (
             <div
               key={box + i}
-              className="grid-box w-full border border-b-zinc-100 border-l-zinc-100 pt-[100%]"
+              className="grid-box w-full border border-b-zinc-50 border-l-zinc-50 pt-[100%]"
             />
           ))}
     </div>
