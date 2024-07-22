@@ -47,7 +47,10 @@ export default function Grid() {
         });
       }
     },
-    [boxIndex, play],
+    {
+      dependencies: [boxIndex, play],
+      revert: true,
+    },
   );
 
   return (
