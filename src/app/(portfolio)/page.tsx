@@ -32,7 +32,7 @@ export default function Page() {
 
   useEffect(() => {
     if (window) {
-      // ? check loading percentage to prevent double triggering
+      // check loading percentage to prevent double triggering
       if (loadingPercentage) {
         setTimeout(
           () => {
@@ -70,9 +70,7 @@ export default function Page() {
             })
             .to('.text-container', { autoAlpha: 0, duration: 1 }, '<')
             .to('.loading-container', { autoAlpha: 0, duration: 0.8 }, '>+0.5s')
-            .add(() => {
-              publish();
-            }, '<')
+            .add(publish, '<')
             .to(
               '.root-container',
               {
@@ -93,7 +91,7 @@ export default function Page() {
   return (
     <div className="root-container relative mx-auto h-svh max-w-widhest overflow-hidden">
       {/* loading layer */}
-      <div className="loading-container fixed left-0 top-0 z-20 flex h-screen w-screen flex-col items-center justify-center bg-zinc-950 text-white">
+      <div className="loading-container fixed left-0 top-0 z-50 flex h-screen w-screen flex-col items-center justify-center bg-zinc-950 text-white">
         <div className="logo-container w-[40%] md:w-1/4 xl:w-1/6 2xl:w-[10%]">
           {/* animation logo */}
           <DotLottieReact

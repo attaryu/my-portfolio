@@ -19,6 +19,9 @@ const config: Config = {
 			maxHeight: {
 				'highest': '1400px',
 			},
+			borderRadius: {
+				'4xl': '3rem',
+			},
     },
 	},
 	plugins: [],

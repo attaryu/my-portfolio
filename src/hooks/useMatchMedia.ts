@@ -1,9 +1,10 @@
-import debounce from '@/utils/debounce';
 import type { useGSAPConfig } from '@gsap/react';
 
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import { useCallback, useEffect, useState } from 'react';
+
+import debounce from '@/utils/debounce';
 
 type Conditions = {
   isSmall: boolean,

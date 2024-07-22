@@ -13,18 +13,18 @@ export default function MainPage() {
       {/* grid area */}
       <div>
         {/* grid backgroud */}
-        <div className="absolute top-0 h-[240vh] w-full">
+        <div className="absolute top-0 h-[240vh] w-full -z-10">
           <Grid />
         </div>
 
         {/* cover */}
         <section className="flex h-svh max-h-highest flex-col justify-end gap-10 px-8 pt-16 md:items-center md:px-20 md:pt-24 xl:h-svh">
-          <h1 className="z-10 font-tusker-grotesk-medium text-7xl leading-tight md:mt-auto md:text-6xl lg:text-7xl xl:text-6xl">
+          <h1 className="font-tusker-grotesk-medium text-7xl leading-tight md:mt-auto md:text-6xl lg:text-7xl xl:text-6xl">
             HELLO, <br className="md:hidden" />
             I'M ATTAR
           </h1>
 
-          <div className="z-10 flex w-full flex-col justify-between py-8 md:mt-auto md:flex-row md:items-center md:py-10 md:text-lg lg:py-12 lg:text-xl xl:py-5 xl:text-lg">
+          <div className="flex w-full flex-col justify-between py-8 md:mt-auto md:flex-row md:items-center md:py-10 md:text-lg lg:py-12 lg:text-xl xl:py-5 xl:text-lg">
             <Time />
             <p>&copy;2024 All rights reserved.</p>
           </div>
@@ -32,7 +32,7 @@ export default function MainPage() {
 
         {/* about me */}
         <section className="grid h-screen max-h-highest place-items-center px-8">
-          <p className="z-10 text-xl !leading-relaxed md:w-4/5 md:text-center md:text-3xl lg:w-2/3 lg:text-4xl xl:text-3xl">
+          <p className="text-xl !leading-relaxed md:w-4/5 md:text-center md:text-3xl lg:w-2/3 lg:text-4xl xl:text-3xl">
             I'm 19 years old, with almost 3 years of in-depth experience in web
             development field. While I haven't stepped into the professional
             world yet, I've honed my skills through a variety of online courses,
