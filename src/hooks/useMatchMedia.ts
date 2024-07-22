@@ -1,8 +1,9 @@
+import debounce from '@/utils/debounce';
 import type { useGSAPConfig } from '@gsap/react';
 
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 type Conditions = {
   isSmall: boolean,
@@ -19,24 +20,28 @@ export default function useMatchMedia(
 ) {
   const [screenWidth, setScreenWidth] = useState(0);
 
+  const handleResize = useCallback(debounce(() => {
+    setScreenWidth(window.innerWidth);
+  }, 150), []);
+
   useEffect(() => {
-    if (window) {
-      window.addEventListener('resize', () => setScreenWidth(window.innerWidth));
-    }
+    window.addEventListener('resize', handleResize);
 
     return () => {
-      window.removeEventListener('resize', () => setScreenWidth(window.innerWidth));
+      window.removeEventListener('resize', handleResize);
     }
-  }, []);
+  }, [handleResize]);
 
-  useGSAP(() => {
-    gsap.matchMedia().add({
+  useEffect(() => { gsap.matchMediaRefresh() }, [screenWidth]);
+
+  return useGSAP(() => {
+    const matchMedia = gsap.matchMedia().add({
       isSmall: '(max-width: 766px)',
       isMedium: '(min-width: 768px)',
       isLarge: '(min-width: 1024px)',
       isExtraLarge: '(min-width: 1280px)',
     }, (context) => fn(context.conditions as Conditions));
-  }, config);
 
-  useEffect(() => { gsap.matchMediaRefresh() }, [screenWidth]);
+    return () => matchMedia.revert();
+  }, config);
 }
