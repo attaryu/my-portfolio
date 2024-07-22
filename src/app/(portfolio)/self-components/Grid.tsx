@@ -8,8 +8,8 @@ import { memo, useEffect, useState } from 'react';
 
 gsap.registerPlugin(useGSAP);
 
-function Grid() {
-  // ? subsribe to loading timeline when done
+export default function Grid() {
+  // subsribe to loading timeline when done
   const { subscribe } = useEvent('timeline@loading');
   const [play, setPlay] = useState(false);
   const [totalBox, setTotalBox] = useState(0);
@@ -32,7 +32,6 @@ function Grid() {
     ({ isSmall }) => {
       if (totalBox && play) {
         gsap.to('.grid-box', {
-          backgroundColor: 'white',
           borderColor: 'white',
           stagger: {
             from: boxIndex,
@@ -56,14 +55,11 @@ function Grid() {
       {!!totalBox &&
         Array(totalBox)
           .fill(1)
-          .map((box, i) => (
-            <div
-              key={box + i}
-              className="grid-box w-full border border-b-zinc-50 border-l-zinc-50 pt-[100%]"
-            />
-          ))}
+          .map((box, i) => <Box key={box + i} />)}
     </div>
   );
 }
 
-export default memo(Grid);
+const Box = memo(() => (
+  <div className="grid-box w-full border border-b-zinc-50 border-l-zinc-50 pt-[100%]" />
+));
