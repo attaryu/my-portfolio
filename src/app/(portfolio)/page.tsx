@@ -89,6 +89,8 @@ export default function Page() {
   }, [loadingPercentage]);
 
   return (
+    // element below for disable loading when development process
+    // <div className="root-container relative mx-auto max-w-widhest">
     <div className="root-container relative mx-auto h-svh max-w-widhest overflow-hidden">
       {/* loading layer */}
       <div className="loading-container fixed left-0 top-0 z-50 flex h-screen w-screen flex-col items-center justify-center bg-zinc-950 text-white">

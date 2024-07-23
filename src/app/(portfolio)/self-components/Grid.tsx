@@ -64,5 +64,5 @@ export default function Grid() {
 }
 
 const Box = memo(() => (
-  <div className="grid-box w-full border border-b-zinc-50 border-l-zinc-50 pt-[100%]" />
+  <div className="grid-box w-full border border-b-zinc-200 border-l-zinc-200 pt-[100%]" />
 ));

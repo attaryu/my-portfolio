@@ -126,7 +126,7 @@ export default function Navbar() {
     >
       <div className="w-full">
         <img
-          src="/logo/ma-light.svg"
+          src="/logo/ma.svg"
           alt=""
           className="size-11 md:size-12 lg:size-14"
         />

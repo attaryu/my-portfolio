@@ -4,8 +4,9 @@ import Button from '@/components/Button';
 import ProjectCard from '@/components/ProjectCard';
 import Grid from './self-components/Grid';
 import Time from './self-components/Time';
+import Marquee from './self-components/Marquee';
 
-import { logos, projects, socialMedias } from '@/utils/constant';
+import { projects, socialMedias } from '@/utils/constant';
 
 export default function MainPage() {
   return (
@@ -50,20 +51,7 @@ export default function MainPage() {
           technology I use.
         </h2>
 
-        <div className="before:contents-[''] after:contents-[''] relative my-16 -rotate-1 before:pointer-events-none before:absolute before:-left-1 before:z-10 before:block before:h-full before:w-1/4 before:bg-gradient-to-l before:from-transparent before:to-white after:pointer-events-none after:absolute after:-right-1 after:top-0 after:z-10 after:block after:h-full after:w-1/4 after:bg-gradient-to-r after:from-transparent after:to-white md:my-20 before:xl:w-1/6 after:xl:w-1/6">
-          <div className="w-full overflow-x-auto">
-            <ul className="grid h-56 w-full min-w-[750px] grid-cols-7 grid-rows-2 place-items-center gap-x-6 md:h-72 md:w-[120vw] md:gap-x-8 lg:w-full xl:h-96">
-              {logos.map((logo) => (
-                <img
-                  key={logo}
-                  src={`/logo/${logo}-light.svg`}
-                  alt={`${logo} logo`}
-                  className="w-full rounded-lg border border-zinc-900 p-4 lg:rounded-xl lg:p-6 xl:p-8"
-                />
-              ))}
-            </ul>
-          </div>
-        </div>
+        <Marquee />
 
         <p className="mx-auto -rotate-1 px-8 text-right text-sm leading-tight md:px-20 md:text-xl lg:text-2xl xl:text-xl">
           <span className="md:inline-block md:w-3/4 lg:w-4/5">

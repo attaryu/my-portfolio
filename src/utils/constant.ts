@@ -1,18 +1,20 @@
 export const logos = [
   'denojs',
-  'django',
   'express',
   'firebase',
   'laravel',
   'mysql',
-  'nestjs',
   'nextjs',
   'nodejs',
   'postgresql',
-  'react',
   'storybook',
   'svelte',
   'tailwindcss',
+  'react',
+  'sass',
+  'framer-motion',
+  'redux',
+  'gsap',
 ];
 
 export const projects = [
@@ -63,24 +65,4 @@ export const socialMedias = [
     title: 'MyCompiler',
     url: 'https://www.mycompiler.io/@mattar',
   },
-  // {
-  //   id: 5,
-  //   title: 'Instagram',
-  //   url: 'https://www.instagram.com/just.atr_',
-  // },
-  // {
-  //   id: 6,
-  //   title: 'LinkedIn',
-  //   url: 'https://www.linkedin.com/in/mattarannaufal/',
-  // },
-  // {
-  //   id: 7,
-  //   title: 'Github',
-  //   url: 'https://github.com/attaryu',
-  // },
-  // {
-  //   id: 8,
-  //   title: 'MyCompiler',
-  //   url: 'https://www.mycompiler.io/@mattar',
-  // },
 ];
