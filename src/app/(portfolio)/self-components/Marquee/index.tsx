@@ -5,14 +5,12 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useEffect, useRef } from 'react';
 
-import useEvent from '@/hooks/useEvent';
 import { logos } from '@/utils/constant';
 import BoxLogo from './BoxLogo';
 
 gsap.registerPlugin(useGSAP);
 
 export default function Marquee() {
-  const { subscribe } = useEvent('timeline@loading');
   const scrollerPercentage = useRef(0);
   const velocity = useRef(0);
   const lastScrollPosition = useRef(0);
@@ -50,9 +48,7 @@ export default function Marquee() {
       });
     }
 
-    if (window) {
-      subscribe(() => setTimeout(activeScrollTrigger, 100));
-    }
+    setTimeout(activeScrollTrigger, 100);
   }, []);
 
   // play marquee animation

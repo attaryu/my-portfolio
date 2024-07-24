@@ -1,21 +1,23 @@
 import { useCallback, useEffect, useRef } from 'react';
 
+import debounce from '@/utils/debounce';
+
 type CallbackEvent = (event: Event) => void;
 
 export default function useEvent(nameEvent: string) {
   const listenersRef = useRef<Set<CallbackEvent>>(new Set());
 
-  const publish = useCallback((detail: any = {}) => {
+  const publish = useCallback(debounce((detail: any = {}) => {
     document.dispatchEvent(new CustomEvent(nameEvent, { detail }));
-  }, [nameEvent]);
+  }, 50), [nameEvent]);
 
   const subscribe = useCallback((subscribeCallback: CallbackEvent) => {
     listenersRef.current.add(subscribeCallback);
     document.addEventListener(nameEvent, subscribeCallback);
 
-    return (unsubscribeCallback: CallbackEvent) => {
-      listenersRef.current.delete(unsubscribeCallback);
-      document.removeEventListener(nameEvent, unsubscribeCallback);
+    return () => {
+      listenersRef.current.delete(subscribeCallback);
+      document.removeEventListener(nameEvent, subscribeCallback);
     };
   }, [nameEvent]);
 

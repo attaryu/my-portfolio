@@ -70,7 +70,7 @@ export default function Page() {
             })
             .to('.text-container', { autoAlpha: 0, duration: 1 }, '<')
             .to('.loading-container', { autoAlpha: 0, duration: 0.8 }, '>+0.5s')
-            .add(publish, '<')
+            .call(publish, undefined, '<')
             .to(
               '.root-container',
               {
@@ -88,9 +88,18 @@ export default function Page() {
     return () => lottieRef?.removeEventListener('complete');
   }, [loadingPercentage]);
 
+  // ! rendering below for disable loading when development process
+  // * comment again before commit changes
+  // return (
+  //   <div className="root-container relative mx-auto max-w-widhest">
+  //     <Navbar />
+  //     <MainPage />
+  //     <Footer />
+  //   </div>
+  // );
+
+
   return (
-    // element below for disable loading when development process
-    // <div className="root-container relative mx-auto max-w-widhest">
     <div className="root-container relative mx-auto h-svh max-w-widhest overflow-hidden">
       {/* loading layer */}
       <div className="loading-container fixed left-0 top-0 z-50 flex h-screen w-screen flex-col items-center justify-center bg-zinc-950 text-white">
