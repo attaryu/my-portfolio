@@ -1,15 +1,15 @@
 'use client';
 
-import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
-import ScrollTrigger from 'gsap/ScrollTrigger';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useEffect, useRef } from 'react';
 
-import { logos } from '@/utils/constant';
 import useEvent from '@/hooks/useEvent';
+import { logos } from '@/utils/constant';
 import BoxLogo from './BoxLogo';
 
-gsap.registerPlugin(ScrollTrigger, useGSAP);
+gsap.registerPlugin(useGSAP);
 
 export default function Marquee() {
   const { subscribe } = useEvent('timeline@loading');
@@ -23,10 +23,14 @@ export default function Marquee() {
   const secondSectionLogo = logos.slice(length);
 
   useEffect(() => {
-    requestAnimationFrame(play);
-    window.addEventListener('scroll', scrollHandler);
+    if (window) {
+      gsap.registerPlugin(ScrollTrigger);
+      
+      requestAnimationFrame(play);
+      window.addEventListener('scroll', scrollHandler);
 
-    return () => window.removeEventListener('scroll', scrollHandler);
+      return () => window.removeEventListener('scroll', scrollHandler);
+    }
   }, []);
 
   useGSAP(() => {
@@ -46,7 +50,9 @@ export default function Marquee() {
       });
     }
 
-    subscribe(() => setTimeout(activeScrollTrigger, 100));
+    if (window) {
+      subscribe(() => setTimeout(activeScrollTrigger, 100));
+    }
   }, []);
 
   // play marquee animation
@@ -77,12 +83,7 @@ export default function Marquee() {
   function scrollHandler() {
     const scrollPosition = window.scrollY;
 
-    if (lastScrollPosition.current > scrollPosition) {
-      scrollDirection.current = -1;
-    } else {
-      scrollDirection.current = 1;
-    }
-
+    scrollDirection.current = lastScrollPosition.current > scrollPosition ? -1 : 1;
     lastScrollPosition.current = scrollPosition;
   }
 
