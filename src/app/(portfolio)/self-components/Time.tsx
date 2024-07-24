@@ -1,23 +1,24 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef } from 'react';
 
 export default function Time() {
-  const [date, setDate] = useState<Date | null>(null);
+  const timeRef = useRef<HTMLTimeElement | null>(null);
 
   useEffect(() => {
     if (window) {
-      const updateDateInterval = setInterval(() => {
-        setDate(new Date());
+      const updateDateInterval = setInterval(() => {        
+        if (timeRef.current) {
+          const now = new Date();
+
+          timeRef.current.innerHTML = now.toLocaleString();
+          timeRef.current.setAttribute('datetime', now.toISOString());
+        }
       }, 1000);
 
       return () => clearInterval(updateDateInterval);
     }
   }, []);
 
-  if (!date) {
-    return <time dateTime="">x/xx/xxxx, xx:xx:xx AM</time>;
-  }
-
-  return <time dateTime={date.toISOString()}>{date.toLocaleString()}</time>;
+  return <time ref={timeRef}>x/xx/xxxx, xx:xx:xx AM</time>;
 }
