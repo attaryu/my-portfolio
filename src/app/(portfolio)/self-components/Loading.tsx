@@ -74,6 +74,7 @@ export default function Loading() {
             .to('.text-container', { autoAlpha: 0, duration: 1 }, '<')
             .to('.loading-container', { autoAlpha: 0, duration: 0.8 }, '>+0.5s')
             .call(publish, undefined, '<-0.5s')
+            // * refer to portfolio (main page) container
             .to(
               '.root-container',
               {
