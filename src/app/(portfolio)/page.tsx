@@ -13,6 +13,8 @@ import { projects, socialMedias } from '@/utils/constant';
 
 export default function Page() {
   return (
+    // ? for development, disable loading animation by uncomment below
+    // <div className="root-container relative mx-auto max-w-widhest">
     <div className="root-container relative mx-auto h-svh max-w-widhest overflow-hidden">
       <Loading />
 
@@ -40,8 +42,8 @@ export default function Page() {
         </section>
 
         {/* about me */}
-        <section className="grid h-screen max-h-highest place-items-center px-8">
-          <p className="text-xl !leading-relaxed md:w-4/5 md:text-center md:text-3xl lg:w-2/3 lg:text-4xl xl:text-3xl">
+        <section className="grid place-items-center px-8 md:px-20 py-44">
+          <p className="text-3xl !leading-snug md:text-5xl lg:text-6xl font-bold">
             I'm 19 years old, with almost 3 years of in-depth experience in web
             development field. While I haven't stepped into the professional
             world yet, I've honed my skills through a variety of online courses,
