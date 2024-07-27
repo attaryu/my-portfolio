@@ -35,9 +35,14 @@ export default function Page() {
             I'M ATTAR
           </h1>
 
-          <div className="flex w-full flex-col justify-between py-8 md:mt-auto md:flex-row md:items-center md:py-10 md:text-lg lg:py-12 lg:text-xl xl:py-5 xl:text-lg">
+          <div className="flex w-full flex-col-reverse justify-between py-8 gap-6 md:items-end md:mt-auto md:flex-row md:py-10 md:text-lg lg:py-12 lg:text-xl xl:py-5 xl:text-lg ">
             <Time />
-            <p>&copy;2024 All rights reserved.</p>
+
+            <ul className="text-lg md:text-end">
+              <li>UI Designer</li>
+              <li>Front-end Developer</li>
+              <li>Back-end Developer</li>
+            </ul>
           </div>
         </section>
 

@@ -8,7 +8,7 @@ export default function Footer() {
         <MdArrowUpward />
       </button>
 
-      <p className="text-sm lg:text-base">&copy;2024 All rights reserved.</p>
+      <p className="text-sm lg:text-base">Since 2021 until present</p>
 
       <button className="flex items-center gap-2 text-lg lg:text-xl xl:text-lg">
         <span className="hidden md:inline">Share</span>
