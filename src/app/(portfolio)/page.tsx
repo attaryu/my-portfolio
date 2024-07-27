@@ -108,7 +108,7 @@ export default function Page() {
       </section>
 
       {/* offering project */}
-      <section className="relative my-16 flex h-[80vh] max-h-highest flex-col overflow-hidden px-8 py-16 md:h-[60vh] md:max-h-[650px] md:p-20 xl:h-screen">
+      <section className="relative my-16 flex h-[90vh] max-h-highest flex-col overflow-hidden px-8 py-16 md:h-[60vh] md:max-h-[650px] md:p-20 xl:h-screen">
         <p className="font-neue-montreal-medium text-[3.4rem] leading-none lg:text-[5rem] xl:text-[5.5rem]">
           Don't you think about making a masterpiece together after seeing all
           that?
