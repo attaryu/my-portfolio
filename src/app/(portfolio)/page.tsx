@@ -29,7 +29,7 @@ export default function Page() {
         </div>
 
         {/* cover */}
-        <section className="flex h-svh max-h-highest flex-col justify-end gap-10 px-8 pt-16 md:items-center md:px-20 md:pt-24 xl:h-svh">
+        <section className="flex h-svh max-h-highest flex-col justify-end gap-10 px-8 pt-16 md:items-center md:px-20 md:pt-36 xl:h-svh">
           <h1 className="font-tusker-grotesk-medium text-7xl leading-tight md:mt-auto md:text-6xl lg:text-7xl xl:text-6xl">
             HELLO, <br className="md:hidden" />
             I'M ATTAR
