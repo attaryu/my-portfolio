@@ -1,6 +1,4 @@
-import type { useGSAPConfig } from '@gsap/react';
-
-import { useGSAP } from '@gsap/react';
+import { useGSAP, useGSAPConfig } from '@gsap/react';
 import gsap from 'gsap';
 import { useCallback, useEffect, useState } from 'react';
 

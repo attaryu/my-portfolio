@@ -1,15 +1,11 @@
-// TODO: membuat menu bar menjadi resposive
-// ? untuk saat ini, menu bar pada mobile sudah responsive, tinggal layar medium keatas saja
-// ! KEEP SPIRIT! DO IT! WORK FOR A DREAM JOB!
-
 'use client';
 
 import gsap from 'gsap';
 import { useEffect, useRef, useState } from 'react';
 import SplitType from 'split-type';
 
-import Button from './Button';
 import useMatchMedia from '@/hooks/useMatchMedia';
+import Button from './Button';
 
 export default function Navbar() {
   const navigationRef = useRef<HTMLDivElement | null>(null);
