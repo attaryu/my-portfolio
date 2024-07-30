@@ -20,7 +20,7 @@ export default function Loading() {
       if (percentage >= 100) {
         loadingInformationRef.current.innerText = 'Here we go!';
       } else if (percentage >= 50) {
-        loadingInformationRef.current.innerText = 'Animation orchestration...';
+        loadingInformationRef.current.innerText = 'Sequencing animation...';
       }
     }
   }
@@ -94,7 +94,7 @@ export default function Loading() {
 
   return (
     <div className="loading-container fixed left-0 top-0 z-50 flex h-screen w-screen flex-col items-center justify-center bg-zinc-950 text-white">
-      <div className="logo-container w-[40%] md:w-1/4 xl:w-1/6 2xl:w-[10%]">
+      <div className="logo-container w-[40%] md:w-1/4 xl:w-[15%] 2xl:w-[8%]">
         {/* animation logo */}
         <DotLottieReact
           src="/animated_logo/ma-logo.json"
@@ -111,7 +111,7 @@ export default function Loading() {
         />
       </div>
 
-      <div className="text-container mt-6 *:text-center *:md:text-lg *:lg:text-2xl xl:mt-8 xl:text-xl 2xl:mt-12 2xl:space-y-4 *:2xl:text-4xl">
+      <div className="text-container mt-6 text-center md:mt-10 md:text-2xl lg:mt-12 lg:text-3xl xl:mt-10 xl:space-y-1 xl:text-2xl 2xl:mt-12 2xl:space-y-4 2xl:text-3xl">
         <p ref={loadingInformationRef}>Keep focus...</p>
         <p>
           <span ref={loadingPercentageRef}>0</span>
