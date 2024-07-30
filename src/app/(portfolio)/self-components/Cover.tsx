@@ -45,13 +45,13 @@ export default function Cover() {
   );
 
   return (
-    <section className="flex h-svh max-h-highest flex-col justify-end gap-10 px-8 pt-16 md:items-center md:px-20 md:pt-36 xl:h-svh">
+    <section className="flex h-svh max-h-highest flex-col justify-end gap-10 px-8 pt-28 md:items-center md:px-20 md:pt-40 lg:pt-52 xl:pt-44 xl:h-svh">
       <TextReveal
         className="md:mt-auto"
         type="upwards"
         timelineRef={titleTimelineRef}
       >
-        <h1 className="font-tusker-grotesk-medium text-7xl leading-tight md:text-6xl md:leading-relaxed lg:text-7xl xl:text-6xl">
+        <h1 className="font-tusker-grotesk-medium text-7xl !leading-tight md:text-6xl lg:text-7xl xl:text-6xl">
           HELLO, <br className="md:hidden" />
           I'M ATTAR
         </h1>
@@ -62,7 +62,7 @@ export default function Cover() {
           <Time />
         </TextReveal>
 
-        <ul className="text-lg md:text-end">
+        <ul className="text-lg md:text-end lg:text-2xl xl:text-xl">
           <li>
             <TextReveal type="slider" timelineRef={addRoleTimelineRef}>
               <span>UI Designer</span>
