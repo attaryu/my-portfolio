@@ -4,16 +4,15 @@ import Button from '@/components/Button';
 import Footer from '@/components/Footer';
 import Navbar from '@/components/Navbar';
 import ProjectCard from '@/components/ProjectCard';
+import { projects, socialMedias } from '@/utils/constant';
+import Cover from './self-components/Cover';
 import Grid from './self-components/Grid';
 import Loading from './self-components/Loading';
 import Marquee from './self-components/Marquee';
-import Time from './self-components/Time';
-
-import { projects, socialMedias } from '@/utils/constant';
 
 export default function Page() {
   return (
-    // ? for development, disable loading animation by uncomment below
+    // ? for development, disable loading animation with uncomment below
     // <div className="root-container relative mx-auto max-w-widhest">
     <div className="root-container relative mx-auto h-svh max-w-widhest overflow-hidden">
       <Loading />
@@ -29,22 +28,7 @@ export default function Page() {
         </div>
 
         {/* cover */}
-        <section className="flex h-svh max-h-highest flex-col justify-end gap-10 px-8 pt-16 md:items-center md:px-20 md:pt-36 xl:h-svh">
-          <h1 className="font-tusker-grotesk-medium text-7xl leading-tight md:mt-auto md:text-6xl lg:text-7xl xl:text-6xl">
-            HELLO, <br className="md:hidden" />
-            I'M ATTAR
-          </h1>
-
-          <div className="flex w-full flex-col-reverse justify-between py-8 gap-6 md:items-end md:mt-auto md:flex-row md:py-10 md:text-lg lg:py-12 lg:text-xl xl:py-5 xl:text-lg ">
-            <Time />
-
-            <ul className="text-lg md:text-end">
-              <li>UI Designer</li>
-              <li>Front-end Developer</li>
-              <li>Back-end Developer</li>
-            </ul>
-          </div>
-        </section>
+        <Cover />
 
         {/* about me */}
         <section className="grid place-items-center px-8 md:px-20 py-44">
