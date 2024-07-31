@@ -30,5 +30,5 @@ export default function Time() {
     };
   }, []);
 
-  return <time ref={timeRef}>x/xx/xxxx, xx:xx:xx AM</time>;
+  return <time className="time" ref={timeRef}>x/xx/xxxx, xx:xx:xx AM</time>;
 }
