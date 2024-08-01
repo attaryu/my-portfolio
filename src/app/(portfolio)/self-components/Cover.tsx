@@ -6,7 +6,7 @@ import { useRef } from 'react';
 
 import useEvent from '@/hooks/useEvent';
 import {
-  charsUpwardsAnimationStyling,
+  lineUpwardsAnimationStyling,
   upwardsAnimation,
 } from '@/utils/animation/upwards';
 import {
@@ -26,24 +26,19 @@ export default function Cover() {
   useGSAP(() => {
     if (containerRef.current) {
       const titleText = textSplitter('.title', containerRef.current, {
-        lineClass: charsUpwardsAnimationStyling,
+        lineClass: lineUpwardsAnimationStyling,
+        types: 'chars,lines',
       });
 
-      const timeText = textSplitter('.time', containerRef.current, {
+      const options = {
         lineClass: lineWipeAnimationStyling,
-      });
+        types: 'lines',
+      };
 
-      const firstRoleText = textSplitter('.role-1', containerRef.current, {
-        lineClass: lineWipeAnimationStyling,
-      });
-
-      const secondRoleText = textSplitter('.role-2', containerRef.current, {
-        lineClass: lineWipeAnimationStyling,
-      });
-
-      const thirdRoleText = textSplitter('.role-3', containerRef.current, {
-        lineClass: lineWipeAnimationStyling,
-      });
+      const timeText = textSplitter('.time', containerRef.current, options as any);
+      const firstRoleText = textSplitter('.role-1', containerRef.current, options as any);
+      const secondRoleText = textSplitter('.role-2', containerRef.current, options as any);
+      const thirdRoleText = textSplitter('.role-3', containerRef.current, options as any);
 
       return subscribe(() => {
         setTimeout(() => {

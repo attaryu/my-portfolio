@@ -1,7 +1,7 @@
 import gsap from 'gsap';
 import SplitType from 'split-type';
 
-export const charsUpwardsAnimationStyling = 'overflow-hidden';
+export const lineUpwardsAnimationStyling = 'overflow-hidden h-fit';
 
 export function upwardsAnimation(splittedText: SplitType) {
   gsap.set(splittedText.chars, { yPercent: 110 });
