@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 
 import localFont from 'next/font/local';
 
-import { ReactLenis } from '@/utils/lenis';
+import Lenis from '@/app/Lenis';
 
 import './globals.css';
 
@@ -46,7 +46,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={fontVariables}>
-        <ReactLenis root>{children}</ReactLenis>
+        <Lenis>{children}</Lenis>
       </body>
     </html>
   );

@@ -1,4 +1,3 @@
-import { MutableRefObject } from 'react';
 import SplitType, { SplitTypeOptions, TargetElement } from 'split-type';
 
 export default function textSplitter(
