@@ -5,8 +5,14 @@ import gsap from 'gsap';
 import { useRef } from 'react';
 
 import useEvent from '@/hooks/useEvent';
-import { charsUpwardsAnimationStyling, upwardsAnimation } from '@/utils/animation/upwards';
-import { lineWipeAnimationStyling, wipeAnimation } from '@/utils/animation/wipe';
+import {
+  charsUpwardsAnimationStyling,
+  upwardsAnimation,
+} from '@/utils/animation/upwards';
+import {
+  lineWipeAnimationStyling,
+  wipeAnimation,
+} from '@/utils/animation/wipe';
 import textSplitter from '@/utils/textSplitter';
 import Time from './Time';
 
@@ -40,14 +46,16 @@ export default function Cover() {
       });
 
       return subscribe(() => {
-        gsap
-          .timeline()
-          .add(upwardsAnimation(titleText).play())
-          .add(wipeAnimation(timeText).play())
-          .add(wipeAnimation(firstRoleText).play(), '<20%')
-          .add(wipeAnimation(secondRoleText).play(), '<20%')
-          .add(wipeAnimation(thirdRoleText).play(), '<20%')
-          .call(publish);
+        setTimeout(() => {
+          gsap
+            .timeline()
+            .add(upwardsAnimation(titleText).play())
+            .add(wipeAnimation(timeText).play())
+            .add(wipeAnimation(firstRoleText).play(), '<20%')
+            .add(wipeAnimation(secondRoleText).play(), '<20%')
+            .add(wipeAnimation(thirdRoleText).play(), '<20%')
+            .call(publish);
+        }, 400);
       });
     }
   }, []);
