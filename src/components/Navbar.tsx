@@ -3,9 +3,12 @@
 import gsap from 'gsap';
 import { useEffect, useRef, useState } from 'react';
 import SplitType from 'split-type';
+import { useGSAP } from '@gsap/react';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 import useMatchMedia from '@/hooks/useMatchMedia';
-import Button from './Button';
+
+gsap.registerPlugin(useGSAP);
 
 export default function Navbar() {
   const navigationRef = useRef<HTMLDivElement | null>(null);
@@ -109,63 +112,93 @@ export default function Navbar() {
         timeline.call(() => setIsAnimateDone(true));
       }
     },
-    {
-      dependencies: [open],
-      scope: navigationRef,
-    },
+    [open],
   );
 
+  // change navbar background on scroll
+  useGSAP(() => {
+    gsap.registerPlugin(ScrollTrigger);
+
+    const scrolledNavbarStyle = [
+      'backdrop-blur-sm',
+      'bg-white',
+      'bg-opacity-80',
+      '!border-b-zinc-900',
+    ];
+
+    ScrollTrigger.create({
+      trigger: navigationRef.current,
+      start: 'center top',
+      end: 'bottom 10%',
+      onEnter: () =>
+        scrolledNavbarStyle.forEach((style) =>
+          navigationRef.current!.classList.add(style),
+        ),
+      onLeaveBack: () =>
+        scrolledNavbarStyle.forEach((style) =>
+          navigationRef.current!.classList.remove(style),
+        ),
+    });
+  }, []);
+
   return (
-    <nav
-      className="fixed top-0 z-20 flex h-fit w-full max-w-widhest items-center justify-between px-8 py-2 md:px-20 md:py-4 md:text-xl lg:text-2xl xl:py-2 xl:text-xl"
-      ref={navigationRef}
-    >
-      <div className="w-full">
-        <img
-          src="/logo/ma.svg"
-          alt=""
-          className="size-11 md:size-12 lg:size-14"
-        />
-      </div>
+    <>
+      <nav
+        className="fixed top-0 z-20 flex h-fit w-full max-w-widhest items-center justify-between border border-transparent px-8 py-1 transition-all duration-300 md:px-20 md:text-xl lg:text-2xl xl:py-0 xl:text-xl"
+        ref={navigationRef}
+      >
+        <div className="w-full">
+          <img
+            src="/logo/ma.svg"
+            alt=""
+            className="size-10 md:size-12 lg:size-14"
+          />
+        </div>
 
-      <p className="hidden w-full text-center font-neue-montreal-medium md:block">
-        M Attar
-      </p>
+        <p className="hidden w-full text-center font-neue-montreal-medium md:block">
+          M Attar
+        </p>
 
-      <div className="flex w-full justify-end">
-        <Button
-          className="z-20 !text-sm md:!px-4 md:!py-2 md:!text-lg lg:!px-6 lg:!text-xl"
-          primary
-          onClick={setMenu}
-          disabled={!isAnimateDone}
-        >
-          Menu
-        </Button>
-
-        <div className="menu fixed -bottom-full left-0 z-50 flex h-[70dvh] w-full flex-col items-end bg-white p-8 outline outline-2 outline-zinc-900 md:p-20 xl:h-dvh">
+        <div className="flex w-full justify-end">
           <button
+            className="group z-20 flex items-center text-sm md:px-4 md:text-lg lg:px-6"
             onClick={setMenu}
-            className="relative flex size-8 items-center justify-center md:size-12 lg:size-14 xl:size-10"
             disabled={!isAnimateDone}
           >
-            <span className="close-icon absolute block h-1 rotate-45 rounded-full bg-zinc-900 md:h-2 xl:h-1.5" />
-            <span className="close-icon absolute block h-1 -rotate-45 rounded-full bg-zinc-900 md:h-2 xl:h-1.5" />
+            [
+            <div className="h-[1.5px] w-0 bg-zinc-900 transition-all duration-300 group-hover:xl:w-8" />
+            <div className="w-0 overflow-hidden whitespace-nowrap transition-all duration-300 group-hover:xl:w-16 group-hover:xl:px-2">
+              Open
+            </div>
+            Menu]
           </button>
-
-          <ul className="mt-12 h-full w-full space-y-4 md:space-y-6 xl:mt-0">
-            {links.map(({ id, link, title }) => (
-              <li key={id}>
-                <a
-                  href={link}
-                  className="menu-link block w-fit overflow-hidden text-5xl font-semibold leading-tight md:text-6xl md:leading-snug lg:text-7xl lg:leading-normal xl:text-6xl xl:leading-snug"
-                >
-                  {title}
-                </a>
-              </li>
-            ))}
-          </ul>
         </div>
+      </nav>
+
+      {/* menu */}
+      <div className="menu fixed -bottom-full left-0 z-50 flex h-[70dvh] w-full flex-col items-end bg-white p-8 outline outline-2 outline-zinc-900 md:p-20 xl:h-dvh">
+        <button
+          onClick={setMenu}
+          className="relative flex size-8 items-center justify-center md:size-12 lg:size-14 xl:size-10"
+          disabled={!isAnimateDone}
+        >
+          <span className="close-icon absolute block h-1 rotate-45 rounded-full bg-zinc-900 md:h-2 xl:h-1.5" />
+          <span className="close-icon absolute block h-1 -rotate-45 rounded-full bg-zinc-900 md:h-2 xl:h-1.5" />
+        </button>
+
+        <ul className="mt-12 h-full w-full space-y-4 md:space-y-6 xl:mt-0">
+          {links.map(({ id, link, title }) => (
+            <li key={id}>
+              <a
+                href={link}
+                className="menu-link block w-fit overflow-hidden text-5xl font-semibold leading-tight md:text-6xl md:leading-snug lg:text-7xl lg:leading-normal xl:text-6xl xl:leading-snug"
+              >
+                {title}
+              </a>
+            </li>
+          ))}
+        </ul>
       </div>
-    </nav>
+    </>
   );
 }
