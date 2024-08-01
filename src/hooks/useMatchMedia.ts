@@ -9,6 +9,7 @@ type Conditions = {
   isMedium: boolean,
   isLarge: boolean,
   isExtraLarge: boolean,
+  isDoubleExtraLarge: boolean,
 }
 
 interface Config extends useGSAPConfig {
@@ -49,6 +50,7 @@ export default function useMatchMedia(
       isMedium: '(min-width: 768px)',
       isLarge: '(min-width: 1024px)',
       isExtraLarge: '(min-width: 1280px)',
+      isDoubleExtraLarge: '(min-width: 1536px)',
     }, (context) => fn(context.conditions as Conditions));
     
     if (config && !Array.isArray(config)) {
