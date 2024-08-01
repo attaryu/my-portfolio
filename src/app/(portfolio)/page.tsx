@@ -9,6 +9,7 @@ import Cover from './self-components/Cover';
 import Grid from './self-components/Grid';
 import Loading from './self-components/Loading';
 import Marquee from './self-components/Marquee';
+import AboutMe from './self-components/AboutMe';
 
 export default function Page() {
   return (
@@ -31,16 +32,7 @@ export default function Page() {
         <Cover />
 
         {/* about me */}
-        <section className="grid place-items-center px-8 md:px-20 py-44">
-          <p className="text-3xl !leading-snug md:text-5xl lg:text-6xl font-bold">
-            I'm 19 years old, with almost 3 years of in-depth experience in web
-            development field. While I haven't stepped into the professional
-            world yet, I've honed my skills through a variety of online courses,
-            collaborative projects, solo projects, and even hackathons. Whether
-            collaborating on a team or venturing solo, my ethos remains rooted
-            in upholding best practices and ensuring precision.
-          </p>
-        </section>
+        <AboutMe />
       </div>
 
       {/* tech skill */}
