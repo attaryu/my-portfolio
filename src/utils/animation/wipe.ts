@@ -3,7 +3,7 @@ import SplitType from 'split-type';
 
 export const lineWipeAnimationStyling = "line before:contents-[''] relative before:absolute before:left-[var(--left)] before:right-[var(--right)] before:top-0 before:block before:h-full before:w-[var(--width)] before:bg-zinc-950 text-transparent";
 
-export function wipeAnimation(splittedText: SplitType | SplitType['lines']) {
+export function wipeAnimation(splittedText: SplitType | HTMLElement) {
   const setupAnimation: GSAPTweenVars = {
     '--width': '0%',
     '--left': 0,

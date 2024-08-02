@@ -8,8 +8,8 @@ import { projects, socialMedias } from '@/utils/constant';
 import Cover from './self-components/Cover';
 import Grid from './self-components/Grid';
 import Loading from './self-components/Loading';
-import Marquee from './self-components/Marquee';
 import AboutMe from './self-components/AboutMe';
+import TechStack from './self-components/TechStack';
 
 export default function Page() {
   return (
@@ -36,22 +36,7 @@ export default function Page() {
       </div>
 
       {/* tech skill */}
-      <section className="w-full overflow-hidden py-14 md:py-32">
-        <h2 className="-rotate-1 px-8 font-neue-montreal-medium text-3xl md:px-20 md:text-5xl lg:text-6xl">
-          Proudly presenting my expertise coupled with an understanding of the
-          technology I use.
-        </h2>
-
-        <Marquee />
-
-        <p className="mx-auto -rotate-1 px-8 text-right text-sm leading-tight md:px-20 md:text-xl lg:text-2xl xl:text-xl">
-          <span className="md:inline-block md:w-3/4 lg:w-4/5">
-            Even though I navigate a variety of technologies, mastery of certain
-            technologies still eludes me; Nevertheless, I accepted the journey
-            of rediscovering these tools in a short time.
-          </span>
-        </p>
-      </section>
+      <TechStack />
 
       {/* some word */}
       <section>
