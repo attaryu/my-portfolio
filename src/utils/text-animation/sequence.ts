@@ -2,7 +2,7 @@ import gsap from 'gsap';
 import SplitType from 'split-type';
 
 export default function sequenceAnimation(splittedText: SplitType, from: 'top' | 'bottom' = 'bottom') {
-  const className = ['overflow-hidden', 'h-fit']
+  const className = ['overflow-hidden', 'h-fit', '!w-fit']
 
   splittedText.lines?.forEach((line) => line.classList.add(...className));
 

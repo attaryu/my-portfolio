@@ -10,6 +10,7 @@ import Grid from './self-components/Grid';
 import Loading from './self-components/Loading';
 import AboutMe from './self-components/AboutMe';
 import TechStack from './self-components/TechStack';
+import SomeWord from './self-components/SomeWord';
 
 export default function Page() {
   return (
@@ -38,19 +39,8 @@ export default function Page() {
       {/* tech skill */}
       <TechStack />
 
-      {/* some word */}
-      <section>
-        <p className="grid h-[150vh] max-h-[1600px] w-full grid-rows-2 place-items-center md:h-[200vh]">
-          <span className="text-center font-tusker-grotesk-semibold text-6xl leading-snug">
-            MAKE YOUR <br className="md:hidden" />
-            DREAM WEBSITE...
-          </span>
-
-          <span className="whitespace-nowrap font-tusker-grotesk-medium text-6xl md:text-[8rem] lg:text-[10rem] xl:text-[14rem]">
-            INTO A REALITY
-          </span>
-        </p>
-      </section>
+      {/* some word */}      
+      <SomeWord />
 
       {/* showcase selected project */}
       <section className="my-32 px-8 md:px-20">
