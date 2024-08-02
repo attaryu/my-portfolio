@@ -161,7 +161,7 @@ export default function Navbar() {
 
         <div className="flex w-full justify-end">
           <button
-            className="group z-20 flex items-center text-sm md:px-4 md:text-lg lg:px-6"
+            className="group z-20 flex items-center text-sm md:text-lg"
             onClick={setMenu}
             disabled={!isAnimateDone}
           >
