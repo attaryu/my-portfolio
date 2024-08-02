@@ -5,16 +5,11 @@ import gsap from 'gsap';
 import { useRef } from 'react';
 
 import useEvent from '@/hooks/useEvent';
-import {
-  lineUpwardsAnimationStyling,
-  upwardsAnimation,
-} from '@/utils/animation/upwards';
-import {
-  lineWipeAnimationStyling,
-  wipeAnimation,
-} from '@/utils/animation/wipe';
+import sequenceAnimation from '@/utils/text-animation/sequence';
+import wipeAnimation from '@/utils/text-animation/wipe';
 import textSplitter from '@/utils/textSplitter';
 import Time from './Time';
+import { SplitTypeOptions } from 'split-type';
 
 gsap.registerPlugin(useGSAP);
 
@@ -26,25 +21,23 @@ export default function Cover() {
   useGSAP(() => {
     if (containerRef.current) {
       const titleText = textSplitter('.title', containerRef.current, {
-        lineClass: lineUpwardsAnimationStyling,
         types: 'chars,lines',
       });
 
-      const options = {
-        lineClass: lineWipeAnimationStyling,
+      const options: Partial<SplitTypeOptions> = {
         types: 'lines',
       };
 
-      const timeText = textSplitter('.time', containerRef.current, options as any);
-      const firstRoleText = textSplitter('.role-1', containerRef.current, options as any);
-      const secondRoleText = textSplitter('.role-2', containerRef.current, options as any);
-      const thirdRoleText = textSplitter('.role-3', containerRef.current, options as any);
+      const timeText = textSplitter('.time', containerRef.current, options);
+      const firstRoleText = textSplitter('.role-1', containerRef.current, options);
+      const secondRoleText = textSplitter('.role-2', containerRef.current, options);
+      const thirdRoleText = textSplitter('.role-3', containerRef.current, options);
 
       return subscribe(() => {
         setTimeout(() => {
           gsap
             .timeline()
-            .add(upwardsAnimation(titleText).play())
+            .add(sequenceAnimation(titleText).play())
             .add(wipeAnimation(timeText).play())
             .add(wipeAnimation(firstRoleText).play(), '<20%')
             .add(wipeAnimation(secondRoleText).play(), '<20%')

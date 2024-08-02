@@ -1,18 +1,15 @@
 'use client';
 
+import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useEffect, useRef, useState } from 'react';
 import { SplitTypeOptions } from 'split-type';
-import { useGSAP } from '@gsap/react';
 
-import {
-  lineUpwardsAnimationStyling,
-  upwardsAnimation,
-} from '@/utils/animation/upwards';
+import useEvent from '@/hooks/useEvent';
+import sequenceAnimation from '@/utils/text-animation/sequence';
 import textSplitter from '@/utils/textSplitter';
 import Marquee from './Marquee';
-import useEvent from '@/hooks/useEvent';
 
 gsap.registerPlugin(useGSAP);
 
@@ -30,7 +27,6 @@ export default function TechStack() {
 
         const setting: Partial<SplitTypeOptions> = {
           types: 'chars,lines',
-          lineClass: lineUpwardsAnimationStyling,
         };
 
         const titleText = textSplitter('h2', containerRef.current!, setting);
@@ -46,13 +42,13 @@ export default function TechStack() {
           .timeline({
             scrollTrigger: { ...scrollTriggerSetting, trigger: 'h2' },
           })
-          .add(upwardsAnimation(titleText).play());
+          .add(sequenceAnimation(titleText).play());
 
         gsap
           .timeline({
             scrollTrigger: { ...scrollTriggerSetting, trigger: 'p' },
           })
-          .add(upwardsAnimation(noteText).play());
+          .add(sequenceAnimation(noteText).play());
       }
     },
     {
