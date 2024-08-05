@@ -2,7 +2,6 @@
 
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useEffect, useRef } from 'react';
 
 import { logos } from '@/utils/constant';
@@ -12,9 +11,9 @@ gsap.registerPlugin(useGSAP);
 
 export default function Marquee() {
   const scrollerPercentage = useRef(0);
-  const velocity = useRef(0);
   const lastScrollPosition = useRef(0);
   const scrollDirection = useRef(1);
+  const { contextSafe } = useGSAP();
 
   const length = Math.round(logos.length / 2);
   const firstSectionLogo = logos.slice(0, length);
@@ -22,8 +21,6 @@ export default function Marquee() {
 
   useEffect(() => {
     if (window) {
-      gsap.registerPlugin(ScrollTrigger);
-      
       requestAnimationFrame(play);
       window.addEventListener('scroll', scrollHandler);
 
@@ -31,28 +28,8 @@ export default function Marquee() {
     }
   }, []);
 
-  useGSAP(() => {
-    const transformer = gsap.utils.pipe(
-      (value: number) => value / 1000,
-      gsap.utils.clamp(0, 0.1),
-      gsap.utils.snap(0.01),
-    );
-
-    function activeScrollTrigger() {
-      ScrollTrigger.create({
-        onUpdate: (self) => {
-          velocity.current = transformer(
-            self.getVelocity() * scrollDirection.current,
-          );
-        },
-      });
-    }
-
-    setTimeout(activeScrollTrigger, 100);
-  }, []);
-
   // play marquee animation
-  function play() {
+  const play = contextSafe(() => {
     if (scrollerPercentage.current >= 100) {
       // for right direction
       scrollerPercentage.current = 0;
@@ -64,16 +41,10 @@ export default function Marquee() {
     gsap.set('.scroller-1', { xPercent: -scrollerPercentage.current });
     gsap.set('.scroller-2', { xPercent: scrollerPercentage.current });
 
-    if (window.innerWidth < 400) {
-      scrollerPercentage.current +=
-        (0.08 + velocity.current) * scrollDirection.current;
-    } else {
-      scrollerPercentage.current +=
-        (0.05 + velocity.current) * scrollDirection.current;
-    }
+    scrollerPercentage.current += 0.08 * scrollDirection.current;
 
     requestAnimationFrame(play);
-  }
+  })
 
   // to control scroll direction
   function scrollHandler() {
