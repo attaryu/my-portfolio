@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from 'react';
 import SplitType from 'split-type';
 import { useGSAP } from '@gsap/react';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import Link from 'next/link';
 
 import useMatchMedia from '@/hooks/useMatchMedia';
 
@@ -18,12 +19,12 @@ export default function Navbar() {
   const links = [
     {
       id: 1,
-      link: '/#',
+      link: '/',
       title: 'Home',
     },
     {
       id: 2,
-      link: '/#',
+      link: '/projects',
       title: 'Projects',
     },
     {
@@ -189,12 +190,12 @@ export default function Navbar() {
         <ul className="mt-12 h-full w-full space-y-4 md:space-y-6 xl:mt-0">
           {links.map(({ id, link, title }) => (
             <li key={id}>
-              <a
+              <Link
                 href={link}
                 className="menu-link block w-fit overflow-hidden text-5xl font-semibold leading-tight md:text-6xl md:leading-snug lg:text-7xl lg:leading-normal xl:text-6xl xl:leading-snug"
               >
                 {title}
-              </a>
+              </Link>
             </li>
           ))}
         </ul>

@@ -1,9 +1,20 @@
+import Footer from '@/components/Footer'
+import Navbar from '@/components/Navbar'
+
 type Props = {
   children: React.ReactNode
 }
 
 export default function layout({ children }: Readonly<Props>) {
   return (
-    <>{children}</>
+    <>
+      <Navbar />
+
+      <div className="pt-16">
+        {children}
+      </div>
+
+      <Footer />
+    </>
   )
 }

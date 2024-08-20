@@ -45,7 +45,7 @@ export default function RootLayout({
 
   return (
     <html lang="en">
-      <body className={fontVariables}>
+      <body className={`relative mx-auto max-w-widhest ${fontVariables}`}>
         <Lenis>{children}</Lenis>
       </body>
     </html>

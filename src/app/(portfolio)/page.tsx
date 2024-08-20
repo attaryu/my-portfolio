@@ -15,8 +15,8 @@ import SomeWord from './self-components/SomeWord';
 export default function Page() {
   return (
     // ? for development, disable loading animation with uncomment below
-    // <div className="root-container relative mx-auto max-w-widhest">
-    <div className="root-container relative mx-auto h-svh max-w-widhest overflow-hidden">
+    // <div className="root-container">
+    <div className="root-container h-svh overflow-hidden">
       <Loading />
 
       <Navbar />
