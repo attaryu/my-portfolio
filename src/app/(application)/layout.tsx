@@ -10,7 +10,7 @@ export default function layout({ children }: Readonly<Props>) {
     <>
       <Navbar />
 
-      <div className="pt-16">
+      <div className="pt-14">
         {children}
       </div>
 
