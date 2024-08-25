@@ -4,20 +4,23 @@ import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import { useEffect, useRef } from 'react';
 
-import { logos } from '@/utils/constant';
 import BoxLogo from './BoxLogo';
 
 gsap.registerPlugin(useGSAP);
 
-export default function Marquee() {
+type Prop = {
+  icons: any;
+};
+
+export default function Marquee({ icons }: Readonly<Prop>) {
   const scrollerPercentage = useRef(0);
   const lastScrollPosition = useRef(0);
   const scrollDirection = useRef(1);
   const { contextSafe } = useGSAP();
 
-  const length = Math.round(logos.length / 2);
-  const firstSectionLogo = logos.slice(0, length);
-  const secondSectionLogo = logos.slice(length);
+  const length = Math.round(icons.length / 2);
+  const firstSectionLogo = icons.slice(0, length);
+  const secondSectionLogo = icons.slice(length);
 
   useEffect(() => {
     if (window) {
@@ -44,13 +47,14 @@ export default function Marquee() {
     scrollerPercentage.current += 0.08 * scrollDirection.current;
 
     requestAnimationFrame(play);
-  })
+  });
 
   // to control scroll direction
   function scrollHandler() {
     const scrollPosition = window.scrollY;
 
-    scrollDirection.current = lastScrollPosition.current > scrollPosition ? -1 : 1;
+    scrollDirection.current =
+      lastScrollPosition.current > scrollPosition ? -1 : 1;
     lastScrollPosition.current = scrollPosition;
   }
 
@@ -60,14 +64,23 @@ export default function Marquee() {
         {/* direction 1 */}
         <div className="relative flex w-max">
           <div className="scroller-1 grid w-max grid-flow-col grid-rows-1 gap-5 pr-5 md:gap-8 md:pr-8 lg:gap-10 lg:pr-10">
-            {firstSectionLogo.map((logo) => (
-              <BoxLogo key={logo} name={logo} />
+            {firstSectionLogo.map((data: any) => (
+              <BoxLogo
+                key={data.id}
+                url={data.attributes.icon.data.attributes.url}
+                name={data.attributes.icon.data.attributes.alternativeText}
+              />
             ))}
           </div>
 
           <div className="scroller-1 absolute left-full grid w-max grid-flow-col grid-rows-1 gap-5 pr-5 md:gap-8 md:pr-8 lg:gap-10 lg:pr-10">
-            {firstSectionLogo.map((logo) => (
-              <BoxLogo key={logo} name={logo} aria-hidden />
+            {firstSectionLogo.map((data: any) => (
+              <BoxLogo
+                key={data.id}
+                url={data.attributes.icon.data.attributes.url}
+                name={data.attributes.icon.data.attributes.alternativeText}
+                aria-hidden
+              />
             ))}
           </div>
         </div>
@@ -75,14 +88,23 @@ export default function Marquee() {
         {/* direction 2 */}
         <div className="relative flex w-max">
           <div className="scroller-2 grid w-max grid-flow-col grid-rows-1 gap-5 pr-5 md:gap-8 md:pr-8 lg:gap-10 lg:pr-10">
-            {secondSectionLogo.map((logo) => (
-              <BoxLogo key={logo} name={logo} />
+            {secondSectionLogo.map((data: any) => (
+              <BoxLogo
+                key={data.id}
+                url={data.attributes.icon.data.attributes.url}
+                name={data.attributes.icon.data.attributes.alternativeText}
+              />
             ))}
           </div>
 
           <div className="scroller-2 absolute right-full grid w-max grid-flow-col grid-rows-1 gap-5 pr-5 md:gap-8 md:pr-8 lg:gap-10 lg:pr-10">
-            {secondSectionLogo.map((logo) => (
-              <BoxLogo key={logo} name={logo} aria-hidden />
+            {secondSectionLogo.map((data: any) => (
+              <BoxLogo
+                key={data.id}
+                url={data.attributes.icon.data.attributes.url}
+                name={data.attributes.icon.data.attributes.alternativeText}
+                aria-hidden
+              />
             ))}
           </div>
         </div>

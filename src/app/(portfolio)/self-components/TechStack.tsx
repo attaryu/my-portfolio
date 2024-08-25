@@ -13,7 +13,9 @@ import Marquee from './Marquee';
 
 gsap.registerPlugin(useGSAP);
 
-export default function TechStack() {
+type Prop = { icons: any };
+
+export default function TechStack({ icons }: Readonly<Prop>) {
   const { subscribe } = useEvent('timeline@loading');
   const [loading, setLoading] = useState(true);
   const containerRef = useRef<HTMLDivElement | null>(null);
@@ -67,7 +69,7 @@ export default function TechStack() {
         technology I use.
       </h2>
 
-      <Marquee />
+      <Marquee icons={icons} />
 
       <p className="mx-auto -rotate-1 px-8 text-right text-sm leading-tight md:px-20 md:text-xl lg:text-2xl xl:text-xl">
         <span className="md:inline-block md:w-3/4 lg:w-4/5">

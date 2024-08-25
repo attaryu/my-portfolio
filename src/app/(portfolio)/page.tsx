@@ -4,15 +4,18 @@ import Button from '@/components/Button';
 import Footer from '@/components/Footer';
 import Navbar from '@/components/Navbar';
 import ProjectCard from '@/components/ProjectCard';
-import { projects, socialMedias } from '@/utils/constant';
+import { socialMedias } from '@/utils/constant';
 import Cover from './self-components/Cover';
 import Grid from './self-components/Grid';
 import Loading from './self-components/Loading';
 import AboutMe from './self-components/AboutMe';
 import TechStack from './self-components/TechStack';
 import SomeWord from './self-components/SomeWord';
+import fetcher from '@/utils/fetcher';
 
-export default function Page() {
+export default async function Page() {
+  const landingData: any = await fetcher('/landing?populate[tech_skills][populate]=icon&populate[selected_projects][populate][0]=cover&populate[selected_projects][populate][1]=links');
+
   return (
     // ? for development, disable loading animation with uncomment below
     // <div className="root-container">
@@ -20,7 +23,7 @@ export default function Page() {
       <Loading />
 
       <Navbar />
-      
+       
       <main>
       {/* grid area */}
       <div>
@@ -37,7 +40,7 @@ export default function Page() {
       </div>
 
       {/* tech skill */}
-      <TechStack />
+      <TechStack icons={landingData.data.attributes.tech_skills.data} />
 
       {/* some word */}      
       <SomeWord />
@@ -50,9 +53,9 @@ export default function Page() {
         </h2>
 
         <ul className="mt-14 space-y-8 md:space-y-12 lg:mt-20 lg:space-y-16">
-          {projects.map((data) => (
+          {landingData.data.attributes.selected_projects.data.map((data: any) => (
             <li key={data.id}>
-              <ProjectCard project={data} detailURL={data.detailURL} />
+              <ProjectCard project={data.attributes} detailURL={data.id} />
             </li>
           ))}
         </ul>

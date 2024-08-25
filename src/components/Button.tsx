@@ -13,6 +13,7 @@ export default function Button({
   primary,
   secondary,
   href,
+  target,
   ...otherAttributes
 }: Readonly<Props>) {
   let styling =
@@ -30,6 +31,8 @@ export default function Button({
     return (
       <a
         className={styling}
+        href={href}
+        target={target}
         {...(otherAttributes as React.AnchorHTMLAttributes<HTMLAnchorElement>)}
       >
         {children}

@@ -40,3 +40,6 @@ next-env.d.ts
 
 # my own
 logging.txt
+
+
+.env
