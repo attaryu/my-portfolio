@@ -17,9 +17,7 @@ export default async function Page() {
   const landingData: any = await fetcher('/landing?populate[tech_skills][populate]=icon&populate[selected_projects][populate][0]=cover&populate[selected_projects][populate][1]=links');
 
   return (
-    // ? for development, disable loading animation with uncomment below
-    // <div className="root-container">
-    <div className="root-container h-svh overflow-hidden">
+    <div className="root-container relative h-svh overflow-hidden">
       <Loading />
 
       <Navbar />
