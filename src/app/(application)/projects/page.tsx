@@ -1,67 +1,27 @@
+'use client';
+
+import { useGSAP } from '@gsap/react';
+import gsap from 'gsap';
 import Link from 'next/link';
+import { useEffect, useState } from 'react';
 import { MdNorthEast } from 'react-icons/md';
 
-type Project = {
-  id: string;
-  title: string;
-  linkTitle: string;
-  link: string;
-  finishedDate: string;
-};
+import fetcher from '@/utils/fetcher';
+import Loading from '@/components/Loading';
 
-type ProjectGrouping = {
-  date: string;
-  projects: Project[];
-};
+gsap.registerPlugin(useGSAP);
 
 export default function Page() {
-  const projects: Project[] = [
-    {
-      id: '1404',
-      title: 'uBook',
-      linkTitle: 'ubook.app',
-      link: '/#',
-      finishedDate: '2024-08-16T07:16:53.000Z',
-    },
-    {
-      id: '1715',
-      title: 'Noto',
-      linkTitle: 'noto.so',
-      link: '/#',
-      finishedDate: '2024-08-02T07:16:53.000Z',
-    },
-    {
-      id: '1195',
-      title: "O'Chat",
-      linkTitle: 'ochat.com',
-      link: '/#',
-      finishedDate: '2024-07-25T07:16:53.000Z',
-    },
-    {
-      id: '1708',
-      title: 'Gimly',
-      linkTitle: 'gimly.org',
-      link: '/#',
-      finishedDate: '2024-07-09T07:16:53.000Z',
-    },
-    {
-      id: '1575',
-      title: 'Supa Star',
-      linkTitle: 'supastar.id',
-      link: '/#',
-      finishedDate: '2024-07-01T07:16:53.000Z',
-    },
-    {
-      id: '1154',
-      title: 'COULUMN',
-      linkTitle: 'coulumn.dev',
-      link: '/#',
-      finishedDate: '2024-06-25T07:16:53.000Z',
-    },
-  ];
+  const [data, setData] = useState<null | any>(null);
 
+  useEffect(() => {
+    fetcher(
+      '/links?filters[title]=Live Production&populate[project][fields][0]=title&populate[project][fields][1]=finish_at&fields[0]=link_title&fields[1]=link',
+    ).then((response) => setData(projectsGrouping(response.data)));
+  }, []);
+  
   // function for project grouping by month and year
-  function projectsGrouping(projects: Project[]) {
+  function projectsGrouping(projects: any) {
     const monthsName = [
       'January',
       'February',
@@ -77,27 +37,46 @@ export default function Page() {
       'December',
     ];
 
-    const groupBy: ProjectGrouping[] = [];
+    const groupBy: any[] = [];
 
-    projects.forEach((data) => {
-      const date = new Date(data.finishedDate);
+    projects.forEach((data: any) => {
+      const date = new Date(data.attributes.project.data.attributes.finish_at);
       const format = `${monthsName[date.getMonth()]} ${date.getFullYear()}`;
 
       const groupIndex = groupBy.findIndex((group) => group.date === format);
 
       if (groupIndex < 0) {
-        groupBy.push({ date: format, projects: [data] });
+        groupBy.push({
+          date: format,
+          projects: [
+            {
+              ...data.attributes.project.data.attributes,
+              id: data.attributes.project.data.id,
+              link: data.attributes.link,
+              link_title: data.attributes.link_title,
+            },
+          ],
+        });
       } else {
-        groupBy[groupIndex].projects.push(data);
+        groupBy[groupIndex].projects.push({
+          ...data.attributes.project.data.attributes,
+          id: data.attributes.project.data.id,
+          link: data.attributes.link,
+          link_title: data.attributes.link_title,
+        });
       }
     });
 
-    return groupBy;
+    return groupBy.reverse();
+  }
+
+  if (!data) {
+    return <Loading />;
   }
 
   return (
     <main className="min-h-svh px-8 md:px-16 xl:px-20">
-      <h1 className="py-14 text-center font-tusker-grotesk-semibold text-6xl md:text-[8rem] md:py-20 xl:text-[16rem]">
+      <h1 className="py-14 text-center font-tusker-grotesk-semibold text-6xl md:py-20 md:text-[8rem] xl:text-[16rem]">
         MY ALL PROJECTS
       </h1>
 
@@ -105,31 +84,31 @@ export default function Page() {
         <div className="w-[1px] rounded-full bg-zinc-900 md:w-[2px]" />
 
         <ol className="w-full">
-          {/* grouping list */}
-          {projectsGrouping(projects).map((data) => (
+          {data.map((data: any) => (
             <li key={data.date} className="pb-8 md:pb-10">
-              <h2 className="flex items-center gap-2 text-sm md:text-lg md:gap-3">
-                <span className="inline-block h-[1px] w-5 rounded-full bg-zinc-900 md:h-[2px] md:w-7" />
+              <h2 className="flex items-center gap-1 text-sm md:gap-3 md:text-lg">
+                <span className="inline-block h-[1px] w-3 rounded-full bg-zinc-900 md:h-[2px] md:w-7" />
                 {data.date}
               </h2>
 
               {/* project list */}
-              <ul className="pl-7 md:pl-9">
-                {data.projects.map((project) => (
+              <ul className="pl-4 md:pl-9">
+                {data.projects.map((project: any) => (
                   <li key={project.id} className="pt-2 md:pt-4">
-                    <div className="flex items-end justify-between py-2 md:py-3">
+                    <div className="flex gap-4 items-end justify-between py-2 md:py-3">
                       <Link
                         href={`/projects/${project.id}`}
-                        className="font-tusker-grotesk-medium text-4xl md:text-5xl lg:text-6xl"
+                        className="font-tusker-grotesk-medium text-3xl md:text-5xl lg:text-6xl whitespace-nowrap truncate !leading-tight"
                       >
                         {project.title.toUpperCase()}
                       </Link>
 
                       <Link
                         href={project.link}
-                        className="flex items-center gap-2 opacity-50 md:text-xl md:opacity-70"
+                        target="_blank"
+                        className="flex items-center gap-1 text-sm opacity-50 md:text-xl md:opacity-70"
                       >
-                        <span>{project.linkTitle}</span>
+                        <span>{project.link_title}</span>
                         <MdNorthEast />
                       </Link>
                     </div>
