@@ -1,67 +1,30 @@
+'use client';
+
+import { useEffect, useState } from 'react';
 import { MdNorthEast, MdOutlineFeedback, MdShare } from 'react-icons/md';
+import { BlocksRenderer } from '@strapi/blocks-react-renderer';
+
+import Loading from '@/components/Loading';
+import fetcher from '@/utils/fetcher';
 
 type Props = {
   params: { id: string };
 };
 
 export default function Page({ params }: Readonly<Props>) {
-  const data = {
-    title: 'uBook',
-    shortDescription: 'Bookmarking your real life books, or digital books.',
-    description:
-      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Explicabo provident, eum ullam nisi quaerat voluptates eaque nemo voluptas quisquam ea temporibus praesentium tempora accusamus est optio et error quidem cumque cum suscipit similique fuga adipisci exercitationem? Fuga iste minus tenetur accusantium veritatis eos maxime alias atque, nam velit, ducimus quis.',
-    projectType: 'Personal Project',
-    coverImage:
-      'https://images.unsplash.com/photo-1514894780887-121968d00567?q=80&w=1473&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-    previewImage: [
-      'https://images.unsplash.com/photo-1602530648160-de3acee5d7ac?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-      'https://images.unsplash.com/photo-1707836868495-3307d371aba4?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-      'https://images.unsplash.com/photo-1651573090587-750163a41ce1?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-      'https://images.unsplash.com/photo-1543069190-9d380c458bc2?q=80&w=1528&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-    ],
-    journey:
-      'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eum, sed? Fugit voluptatum dolorem aliquid ad esse facere suscipit obcaecati maxime excepturi architecto, tempore totam, iste repellat dolorum qui explicabo vitae? Explicabo perspiciatis molestiae fugiat adipisci maiores nemo! Delectus modi animi odio dolores earum quaerat magnam corporis rerum dicta magni vero ipsum sunt excepturi quod dignissimos perspiciatis dolorum minus molestias placeat, doloremque architecto. Atque ipsa facere id repellat modi at quasi, delectus distinctio vero nisi deserunt deleniti voluptatibus et quibusdam quos eaque magnam ducimus debitis, inventore earum veritatis. Aut modi beatae aperiam cum. Voluptatibus commodi fugit excepturi animi, et vel ad esse, est libero nulla sunt nemo eligendi eaque, amet blanditiis illum harum doloribus quae unde saepe consectetur voluptate asperiores provident? Animi incidunt eos consectetur atque non vero optio, id soluta molestias! Aliquam, laudantium voluptatum eligendi soluta, aspernatur maxime earum dolorem tempore ad blanditiis, recusandae consequatur deleniti veritatis! Doloremque, ipsam vel.',
-    additionalLink: [
-      {
-        title: 'Codebase',
-        linkTitle: 'GitHub',
-        link: '/#',
-      },
-      {
-        title: 'Design File',
-        linkTitle: 'Figma',
-        link: '/#',
-      },
-      {
-        title: 'Live Production',
-        linkTitle: 'uBook',
-        link: '/#',
-      },
-      {
-        title: 'Feedback',
-        linkTitle: 'Google Form',
-        link: '/#',
-      },
-    ],
-    techStack: [
-      {
-        title: 'Next JS',
-        image: 'nextjs',
-      },
-      {
-        title: 'My SQL',
-        image: 'mysql',
-      },
-      {
-        title: 'Tailwind CSS',
-        image: 'tailwindcss',
-      },
-      {
-        title: 'GSAP',
-        image: 'gsap',
-      },
-    ],
-  };
+  const [data, setData] = useState<any>(null);
+
+  useEffect(() => {
+    fetcher(
+      `/projects/${params.id}?populate[1]=cover&populate[2]=preview&populate[3]=links&populate[0]=tech_stacks.icon`,
+    )
+      .then((response) => setData(response.data.attributes))
+      .catch(() => setData(null));
+  }, []);
+
+  if (!data) {
+    return <Loading />;
+  }
 
   return (
     <main>
@@ -71,16 +34,19 @@ export default function Page({ params }: Readonly<Props>) {
         </h1>
 
         <img
-          src={data.coverImage}
+          src={
+            process.env.NEXT_PUBLIC_CMS_REQUEST_URL +
+            data.cover.data.attributes.formats.large.url
+          }
           className="col-span-2 h-full w-full overflow-hidden rounded-2xl object-cover"
           alt=""
         />
         <p className="col-span-2 justify-self-start text-xl md:col-span-1 md:col-start-2 md:row-start-2 md:self-start md:justify-self-end md:text-end md:text-lg lg:text-xl">
-          {data.shortDescription}
+          {data.short_description}
         </p>
 
         <p className="w-fit self-start justify-self-start rounded-full border border-zinc-900 px-2.5 py-1.5 md:col-start-2 md:row-start-1 md:self-end md:justify-self-end lg:px-4 lg:text-lg">
-          {data.projectType}
+          {data.label[0].toUpperCase() + data.label.slice(1)} Project
         </p>
 
         <div className="flex items-center justify-end gap-6 self-start justify-self-end md:col-start-2 md:self-center lg:gap-8">
@@ -109,7 +75,7 @@ export default function Page({ params }: Readonly<Props>) {
 
       <section className="space-y-4 px-8 md:mt-12 md:px-20 xl:space-y-6">
         <h2 className="font-neue-montreal-medium text-3xl md:text-4xl">
-          What is on over?
+          What it is?
         </h2>
 
         <p className="text-justify !leading-relaxed md:text-lg xl:text-xl">
@@ -123,10 +89,13 @@ export default function Page({ params }: Readonly<Props>) {
         </h2>
 
         <div className="flex gap-8 overflow-x-auto px-8 md:px-20">
-          {data.previewImage.map((img) => (
+          {data.preview.data.map((img: any) => (
             <img
-              key={img}
-              src={img}
+              key={img.id}
+              src={
+                process.env.NEXT_PUBLIC_CMS_REQUEST_URL +
+                img.attributes.formats.large.url
+              }
               alt=""
               className="aspect-[1/1.2] w-64 rounded-xl object-cover shadow-lg md:w-[30rem] xl:aspect-[2/1] xl:w-[75rem] xl:rounded-2xl"
             />
@@ -140,53 +109,51 @@ export default function Page({ params }: Readonly<Props>) {
         </h2>
 
         <ul className="flex flex-wrap gap-4 overflow-x-auto px-8 md:px-20">
-          {data.techStack.map((tech) => (
+          {data.tech_stacks.data.map((tech: any) => (
             <li
-              key={tech.title}
+              key={tech.id}
               className="flex items-center gap-2 rounded-full border border-zinc-900 px-2.5 py-1.5 md:gap-3 md:px-3 md:py-2"
             >
               <img
-                src={`/logo/${tech.image}.svg`}
-                alt={`${tech.title}'s logo`}
+                src={process.env.NEXT_PUBLIC_CMS_REQUEST_URL + tech.attributes.icon.data.attributes.url}
+                alt={`${tech.attributes.title}'s logo`}
                 className="size-9 p-1 md:size-10"
               />
               <p className="inline-block font-neue-montreal-medium md:text-lg">
-                {tech.title}
+                {tech.attributes.title}
               </p>
             </li>
           ))}
         </ul>
       </section>
 
-      <section className="mt-12 space-y-4 px-8 md:mt-12 md:px-20 xl:mt-20 xl:space-y-6">
-        <h2 className="font-neue-montreal-medium text-3xl md:text-4xl">
-          The Journey
-        </h2>
+      {data.journey && (
+        <section className="mt-12 space-y-4 px-8 md:mt-12 md:px-20 xl:mt-20 xl:space-y-6">
+          <h2 className="font-neue-montreal-medium text-3xl md:text-4xl">
+            The Journey
+          </h2>
 
-        <p className="text-justify !leading-relaxed md:text-lg xl:text-xl">
-          {data.journey}
-        </p>
-      </section>
+          <div className="text-justify !leading-relaxed md:text-lg xl:text-xl">
+            <BlocksRenderer content={data.journey} />
+          </div>
+        </section>
+      )}
 
-      <section className="mt-12 space-y-4 px-8 md:mt-12 md:px-20 xl:mt-20 xl:space-y-6 mb-16">
+      <section className="mb-16 mt-12 space-y-4 px-8 md:mt-12 md:px-20 xl:mt-20 xl:space-y-6">
         <h2 className="font-neue-montreal-medium text-3xl md:text-4xl">
           Additional Link
         </h2>
 
         <ul>
-          {data.additionalLink.map((link) => (
-            <li key={link.title} className="pt-2 md:pt-4">
+          {data.links.data.map((link: any) => (
+            <li key={link.id} className="pt-2 md:pt-4">
               <div className="flex items-end justify-between py-2 md:py-3">
-                <p
-                  className="font-neue-montreal-medium text-2xl md:text-4xl"
-                >
-                  {link.title}
+                <p className="font-neue-montreal-medium text-2xl md:text-4xl">
+                  {link.attributes.title}
                 </p>
 
-                <p
-                  className="flex items-center gap-2 opacity-50 md:text-xl md:opacity-70"
-                >
-                  {link.linkTitle}
+                <p className="flex items-center gap-2 opacity-50 md:text-xl md:opacity-70">
+                  {link.attributes.link_title}
                   <MdNorthEast />
                 </p>
               </div>
