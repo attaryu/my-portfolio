@@ -1,25 +1,20 @@
 'use client';
 
-import { useGSAP } from '@gsap/react';
-import gsap from 'gsap';
-import Link from 'next/link';
 import { useEffect, useState } from 'react';
-import { MdNorthEast } from 'react-icons/md';
 
-import fetcher from '@/utils/fetcher';
 import Loading from '@/components/Loading';
-
-gsap.registerPlugin(useGSAP);
+import ProjectLink from '@/components/ProjectLink';
+import fetcher from '@/utils/fetcher';
 
 export default function Page() {
-  const [data, setData] = useState<null | any>(null);
+  const [data, setData] = useState<any>(null);
 
   useEffect(() => {
     fetcher(
       '/links?filters[title]=Live Production&populate[project][fields][0]=title&populate[project][fields][1]=finish_at&fields[0]=link_title&fields[1]=link',
     ).then((response) => setData(projectsGrouping(response.data)));
   }, []);
-  
+
   // function for project grouping by month and year
   function projectsGrouping(projects: any) {
     const monthsName = [
@@ -95,24 +90,13 @@ export default function Page() {
               <ul className="pl-4 md:pl-9">
                 {data.projects.map((project: any) => (
                   <li key={project.id} className="pt-2 md:pt-4">
-                    <div className="flex gap-4 items-end justify-between py-2 md:py-3">
-                      <Link
-                        href={`/projects/${project.id}`}
-                        className="font-tusker-grotesk-medium text-3xl md:text-5xl lg:text-6xl whitespace-nowrap truncate !leading-tight"
-                      >
-                        {project.title.toUpperCase()}
-                      </Link>
-
-                      <Link
-                        href={project.link}
-                        target="_blank"
-                        className="flex items-center gap-1 text-sm opacity-50 md:text-xl md:opacity-70"
-                      >
-                        <span>{project.link_title}</span>
-                        <MdNorthEast />
-                      </Link>
-                    </div>
-                    <div className="h-[1px] w-full bg-zinc-900" />
+                    <ProjectLink
+                      title={project.title}
+                      url={`/projects/${project.id}`}
+                      subtitle={project.link_title}
+                      subtitleUrl={project.link}
+                      subtitleUrlTarget="_blank"
+                    />
                   </li>
                 ))}
               </ul>

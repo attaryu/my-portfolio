@@ -1,10 +1,11 @@
 'use client';
 
+import { BlocksRenderer } from '@strapi/blocks-react-renderer';
 import { useEffect, useState } from 'react';
 import { MdNorthEast, MdOutlineFeedback, MdShare } from 'react-icons/md';
-import { BlocksRenderer } from '@strapi/blocks-react-renderer';
 
 import Loading from '@/components/Loading';
+import ProjectLink from '@/components/ProjectLink';
 import fetcher from '@/utils/fetcher';
 
 type Props = {
@@ -115,7 +116,10 @@ export default function Page({ params }: Readonly<Props>) {
               className="flex items-center gap-2 rounded-full border border-zinc-900 px-2.5 py-1.5 md:gap-3 md:px-3 md:py-2"
             >
               <img
-                src={process.env.NEXT_PUBLIC_CMS_REQUEST_URL + tech.attributes.icon.data.attributes.url}
+                src={
+                  process.env.NEXT_PUBLIC_CMS_REQUEST_URL +
+                  tech.attributes.icon.data.attributes.url
+                }
                 alt={`${tech.attributes.title}'s logo`}
                 className="size-9 p-1 md:size-10"
               />
@@ -147,17 +151,12 @@ export default function Page({ params }: Readonly<Props>) {
         <ul>
           {data.links.data.map((link: any) => (
             <li key={link.id} className="pt-2 md:pt-4">
-              <div className="flex items-end justify-between py-2 md:py-3">
-                <p className="font-neue-montreal-medium text-2xl md:text-4xl">
-                  {link.attributes.title}
-                </p>
-
-                <p className="flex items-center gap-2 opacity-50 md:text-xl md:opacity-70">
-                  {link.attributes.link_title}
-                  <MdNorthEast />
-                </p>
-              </div>
-              <div className="h-[1px] w-full bg-zinc-900" />
+              <ProjectLink
+                title={link.attributes.title}
+                url={link.attributes.link}
+                urlTarget="_blank"
+                subtitle={link.attributes.link_title}
+              />
             </li>
           ))}
         </ul>
