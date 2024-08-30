@@ -1,3 +1,5 @@
+import Link from 'next/link';
+
 interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   children: any;
   className?: string;
@@ -29,14 +31,14 @@ export default function Button({
 
   if (href) {
     return (
-      <a
+      <Link
         className={styling}
         href={href}
         target={target}
         {...(otherAttributes as React.AnchorHTMLAttributes<HTMLAnchorElement>)}
       >
         {children}
-      </a>
+      </Link>
     );
   }
 
