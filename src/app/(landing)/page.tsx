@@ -5,12 +5,12 @@ import Footer from '@/components/Footer';
 import Navbar from '@/components/Navbar';
 import ProjectCard from '@/components/ProjectCard';
 import fetcher from '@/utils/fetcher';
-import AboutMe from './self-components/AboutMe';
-import Cover from './self-components/Cover';
-import Grid from './self-components/Grid';
-import Loading from './self-components/Loading';
-import SomeWord from './self-components/SomeWord';
-import TechStack from './self-components/TechStack';
+import AboutMe from '@/components/self-components/landing/AboutMe';
+import Cover from '@/components/self-components/landing/Cover';
+import Grid from '@/components/self-components/landing/Grid';
+import Loading from '@/components/self-components/landing/Loading';
+import SomeWord from '@/components/self-components/landing/SomeWord';
+import TechStack from '@/components/self-components/landing/TechStack';
 
 export default async function Page() {
   const landingData: any = await fetcher(
