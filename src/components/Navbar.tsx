@@ -1,21 +1,22 @@
 'use client';
 
-import gsap from 'gsap';
-import { useEffect, useRef, useState } from 'react';
-import SplitType from 'split-type';
 import { useGSAP } from '@gsap/react';
+import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Link from 'next/link';
+import { useRef, useState } from 'react';
 
 import useMatchMedia from '@/hooks/useMatchMedia';
+import textSplitter from '@/utils/textSplitter';
+import SplitType from 'split-type';
 
 gsap.registerPlugin(useGSAP);
 
 export default function Navbar() {
   const navigationRef = useRef<HTMLDivElement | null>(null);
   const [open, setOpen] = useState(false);
-  const [isAnimateDone, setIsAnimateDone] = useState(true);
-  const [splitedText, setSplitedText] = useState<SplitType | null>(null);
+  const [isAnimate, setIsAnimate] = useState(false);
+
   const links = [
     {
       id: 1,
@@ -40,42 +41,40 @@ export default function Navbar() {
   ];
 
   function setMenu() {
-    setOpen((lastState) => !lastState);
-  }
-
-  useEffect(() => {
-    if (window) {
-      setSplitedText(new SplitType('.menu-link'));
+    if (!isAnimate) {
+      setIsAnimate(true);
+      setOpen((lastState) => !lastState);
     }
-  }, []);
+  }
 
   useMatchMedia(
     ({ isExtraLarge }) => {
-      if (splitedText) {
-        const menuStateBefore: GSAPTweenVars = {
-          bottom: '-100%',
-          borderTopLeftRadius: isExtraLarge ? '1000px' : '500px',
-          borderTopRightRadius: isExtraLarge ? '1000px' : '500px',
-          duration: 0.6,
-          ease: 'power4.in',
-        };
+      const menuStateBefore: GSAPTweenVars = {
+        bottom: '-100%',
+        borderTopLeftRadius: isExtraLarge ? '1000px' : '500px',
+        borderTopRightRadius: isExtraLarge ? '1000px' : '500px',
+        duration: 0.6,
+        ease: 'power4.in',
+      };
 
-        const splitTextStateBefore: GSAPTweenVars = {
-          yPercent: 100,
-          ease: 'power4.in',
-          stagger: {
-            amount: 0.3,
-          },
-        };
+      const splitTextStateBefore: GSAPTweenVars = {
+        yPercent: 100,
+        ease: 'power4.in',
+        stagger: {
+          amount: 0.3,
+        },
+      };
 
-        const closeIconState: GSAPTweenVars = {
-          ease: 'power4.out',
-          stagger: {
-            amount: 0.1,
-          },
-        };
+      const closeIconState: GSAPTweenVars = {
+        ease: 'power4.out',
+        stagger: {
+          amount: 0.1,
+        },
+      };
 
-        const timeline = gsap.timeline().call(() => setIsAnimateDone(false));
+      if (isAnimate) {
+        const splitedText = new SplitType('.navbar__link', { types: 'chars', tagName: 'span' });
+        const timeline = gsap.timeline();
 
         if (open) {
           timeline
@@ -110,7 +109,7 @@ export default function Navbar() {
             .to('.menu', menuStateBefore, '<50%');
         }
 
-        timeline.call(() => setIsAnimateDone(true));
+        timeline.call(setIsAnimate, [false]);
       }
     },
     [open],
@@ -164,7 +163,7 @@ export default function Navbar() {
           <button
             className="group z-20 flex items-center text-sm md:text-lg"
             onClick={setMenu}
-            disabled={!isAnimateDone}
+            disabled={isAnimate}
           >
             [
             <div className="h-[1.5px] w-0 bg-zinc-900 transition-all duration-300 group-hover:xl:w-8" />
@@ -181,7 +180,7 @@ export default function Navbar() {
         <button
           onClick={setMenu}
           className="relative flex size-8 items-center justify-center md:size-12 lg:size-14 xl:size-10"
-          disabled={!isAnimateDone}
+          disabled={isAnimate}
         >
           <span className="close-icon absolute block h-1 rotate-45 rounded-full bg-zinc-900 md:h-2 xl:h-1.5" />
           <span className="close-icon absolute block h-1 -rotate-45 rounded-full bg-zinc-900 md:h-2 xl:h-1.5" />
@@ -192,7 +191,8 @@ export default function Navbar() {
             <li key={id}>
               <Link
                 href={link}
-                className="menu-link block w-fit overflow-hidden text-5xl font-semibold leading-tight md:text-6xl md:leading-snug lg:text-7xl lg:leading-normal xl:text-6xl xl:leading-snug"
+                className="navbar__link block w-fit overflow-hidden text-5xl font-semibold leading-tight md:text-6xl md:leading-snug lg:text-7xl lg:leading-normal xl:text-6xl xl:leading-snug"
+                onClick={setMenu}
               >
                 {title}
               </Link>
