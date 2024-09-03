@@ -13,50 +13,21 @@ type Prop = {
 };
 
 export default function Marquee({ icons }: Readonly<Prop>) {
-  const scrollerPercentage = useRef(0);
-  const lastScrollPosition = useRef(0);
-  const scrollDirection = useRef(1);
-  const { contextSafe } = useGSAP();
-
   const length = Math.round(icons.length / 2);
   const firstSectionLogo = icons.slice(0, length);
   const secondSectionLogo = icons.slice(length);
 
-  useEffect(() => {
-    if (window) {
-      requestAnimationFrame(play);
-      window.addEventListener('scroll', scrollHandler);
-
-      return () => window.removeEventListener('scroll', scrollHandler);
-    }
-  }, []);
-
   // play marquee animation
-  const play = contextSafe(() => {
-    if (scrollerPercentage.current >= 100) {
-      // for right direction
-      scrollerPercentage.current = 0;
-    } else if (scrollerPercentage.current < 0) {
-      // for left direction
-      scrollerPercentage.current = 100;
-    }
+  useGSAP(() => {
+    const animation: GSAPTweenVars = {
+      repeat: -1,
+      ease: 'none',
+      duration: 30,
+    };
 
-    gsap.set('.scroller-1', { xPercent: -scrollerPercentage.current });
-    gsap.set('.scroller-2', { xPercent: scrollerPercentage.current });
-
-    scrollerPercentage.current += 0.08 * scrollDirection.current;
-
-    requestAnimationFrame(play);
-  });
-
-  // to control scroll direction
-  function scrollHandler() {
-    const scrollPosition = window.scrollY;
-
-    scrollDirection.current =
-      lastScrollPosition.current > scrollPosition ? -1 : 1;
-    lastScrollPosition.current = scrollPosition;
-  }
+    gsap.to('.scroller-1', {...animation, xPercent: -100 });
+    gsap.to('.scroller-2', {...animation, xPercent: 100 });
+  }, []);
 
   return (
     <div className="before:contents-[''] after:contents-[''] relative my-16 -rotate-1 before:pointer-events-none before:absolute before:-left-1 before:z-10 before:block before:h-full before:w-1/4 before:bg-gradient-to-l before:from-transparent before:to-white after:pointer-events-none after:absolute after:-right-1 after:top-0 after:z-10 after:block after:h-full after:w-1/4 after:bg-gradient-to-r after:from-transparent after:to-white md:my-20 before:xl:w-1/6 after:xl:w-1/6">
