@@ -4,7 +4,7 @@ import useEvent from '@/hooks/useEvent';
 import { useEffect, useRef } from 'react';
 
 export default function Time() {
-  const { subscribe } = useEvent('timeline@cover-opening');
+  const { subscribe } = useEvent('cover-opening@end');
   const timeRef = useRef<HTMLTimeElement | null>(null);
 
   const updateTime = () => {
@@ -30,5 +30,9 @@ export default function Time() {
     };
   }, []);
 
-  return <time className="time" ref={timeRef}>x/xx/xxxx, xx:xx:xx AM</time>;
+  return (
+    <time className="time" ref={timeRef}>
+      x/xx/xxxx, xx:xx:xx AM
+    </time>
+  );
 }

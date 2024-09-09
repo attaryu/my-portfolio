@@ -6,6 +6,7 @@ import gsap from 'gsap';
 import Link from 'next/link';
 import { MouseEvent, useRef } from 'react';
 import { MdNorthEast } from 'react-icons/md';
+import AnimatedLink from './AnimatedLink';
 
 type Props = {
   title: string;
@@ -65,7 +66,7 @@ export default function ProjectLink({
       ref={containerRef}
     >
       <div className="relative flex items-end justify-between">
-        <Link
+        <AnimatedLink
           href={url}
           target={urlTarget}
           className="w-full truncate whitespace-nowrap px-3 py-2 font-tusker-grotesk-medium text-3xl !leading-tight transition duration-150 group-hover:text-white md:py-3 md:text-5xl lg:text-6xl"
@@ -78,7 +79,7 @@ export default function ProjectLink({
               {title.toUpperCase()}
             </span>
           </span>
-        </Link>
+        </AnimatedLink>
 
         <Link
           href={subtitleUrl ?? url}

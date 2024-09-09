@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from 'react';
 
-import Loading from '@/components/Loading';
 import ProjectLink from '@/components/ProjectLink';
 import fetcher from '@/utils/fetcher';
 
@@ -65,10 +64,6 @@ export default function Page() {
     return groupBy.reverse();
   }
 
-  if (!data) {
-    return <Loading />;
-  }
-
   return (
     <main className="min-h-svh px-8 md:px-16 xl:px-20">
       <h1 className="py-14 text-center font-tusker-grotesk-semibold text-6xl md:py-20 md:text-[8rem] xl:text-[16rem]">
@@ -79,7 +74,7 @@ export default function Page() {
         <div className="w-[1px] rounded-full bg-zinc-900 md:w-[2px]" />
 
         <ol className="w-full">
-          {data.map((data: any) => (
+          {data?.map((data: any) => (
             <li key={data.date} className="pb-8 md:pb-10">
               <h2 className="flex items-center gap-1 text-sm md:gap-3 md:text-lg">
                 <span className="inline-block h-[1px] w-3 rounded-full bg-zinc-900 md:h-[2px] md:w-7" />
@@ -101,7 +96,7 @@ export default function Page() {
                 ))}
               </ul>
             </li>
-          ))}
+          )) ?? 'Loading...'}
         </ol>
       </div>
     </main>

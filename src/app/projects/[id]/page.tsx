@@ -4,7 +4,6 @@ import { BlocksRenderer } from '@strapi/blocks-react-renderer';
 import { useEffect, useState } from 'react';
 import { MdNorthEast, MdOutlineFeedback, MdShare } from 'react-icons/md';
 
-import Loading from '@/components/Loading';
 import ProjectLink from '@/components/ProjectLink';
 import fetcher from '@/utils/fetcher';
 
@@ -24,7 +23,7 @@ export default function Page({ params }: Readonly<Props>) {
   }, []);
 
   if (!data) {
-    return <Loading />;
+    return null;
   }
 
   return (

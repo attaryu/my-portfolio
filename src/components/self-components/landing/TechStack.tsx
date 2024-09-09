@@ -16,7 +16,7 @@ gsap.registerPlugin(useGSAP);
 type Prop = { icons: any };
 
 export default function TechStack({ icons }: Readonly<Prop>) {
-  const { subscribe } = useEvent('timeline@loading');
+  const { subscribe } = useEvent('loadingAnimation@end');
   const [loading, setLoading] = useState(true);
   const containerRef = useRef<HTMLDivElement | null>(null);
 

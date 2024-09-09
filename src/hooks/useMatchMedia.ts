@@ -4,7 +4,7 @@ import { useCallback, useEffect, useState } from 'react';
 
 import debounce from '@/utils/debounce';
 
-type Conditions = {
+export type MatchMediaConditions = {
   isSmall: boolean,
   isMedium: boolean,
   isLarge: boolean,
@@ -19,28 +19,19 @@ interface Config extends useGSAPConfig {
 gsap.registerPlugin(useGSAP);
 
 export default function useMatchMedia(
-  fn: (context: Conditions) => (() => void) | void,
+  fn: (context: MatchMediaConditions) => (() => void) | void,
   config: Config | unknown[] | undefined,
 ) {
   const [screenWidth, setScreenWidth] = useState(0);
 
   const handleResize = useCallback(debounce(() => {
-    const newWidth = window.innerWidth;
-
-    if (screenWidth !== newWidth) {
-      setScreenWidth(newWidth);
-    }
-  }, 200), [screenWidth]);
+    setScreenWidth(window.innerWidth);
+  }, 200), []);
 
   useEffect(() => {
-    if (window) {
-      handleResize();
-    }
-
     window.addEventListener('resize', handleResize);
-
     return () => window.removeEventListener('resize', handleResize);
-  }, []);
+  }, [handleResize]);
 
   useEffect(() => gsap.matchMediaRefresh(), [screenWidth]);
 
@@ -51,8 +42,8 @@ export default function useMatchMedia(
       isLarge: '(min-width: 1024px)',
       isExtraLarge: '(min-width: 1280px)',
       isDoubleExtraLarge: '(min-width: 1536px)',
-    }, (context) => fn(context.conditions as Conditions));
-    
+    }, (context) => fn(context.conditions as MatchMediaConditions));
+
     if (config && !Array.isArray(config)) {
       if (config.revert) {
         return () => matchMedia.revert();

@@ -8,7 +8,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useEffect, useRef, useState } from 'react';
 
 export default function AboutMe() {
-  const { subscribe } = useEvent('timeline@loading');
+  const { subscribe } = useEvent('loadingAnimation@end');
   const [loading, setLoading] = useState(true);
   const containerRef = useRef<HTMLDivElement | null>(null);
 

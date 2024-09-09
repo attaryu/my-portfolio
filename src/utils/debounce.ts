@@ -1,4 +1,4 @@
-export default function debounce(fn: (...args: any) => any, timeout: number) {
+export default function debounce(callback: (...args: any) => any, timeout: number) {
   let timer: NodeJS.Timeout | null = null;
 
   return (...args: any[]) => {
@@ -6,6 +6,6 @@ export default function debounce(fn: (...args: any) => any, timeout: number) {
       clearTimeout(timer);
     }
 
-    timer = setTimeout(() => { fn.apply(args) }, timeout);
+    timer = setTimeout(() => { callback(...args) }, timeout);
   }
 }

@@ -8,14 +8,14 @@ import useEvent from '@/hooks/useEvent';
 import sequenceAnimation from '@/utils/text-animation/sequence';
 import wipeAnimation from '@/utils/text-animation/wipe';
 import textSplitter from '@/utils/textSplitter';
-import Time from './Time';
 import { SplitTypeOptions } from 'split-type';
+import Time from './Time';
 
 gsap.registerPlugin(useGSAP);
 
 export default function Cover() {
-  const { subscribe } = useEvent('timeline@loading');
-  const { publish } = useEvent('timeline@cover-opening');
+  const { subscribe } = useEvent('loadingAnimation@end');
+  const { publish } = useEvent('cover-opening@end');
   const containerRef = useRef<HTMLElement | null>(null);
 
   useGSAP(() => {
@@ -29,9 +29,21 @@ export default function Cover() {
       };
 
       const timeText = textSplitter('.time', containerRef.current, options);
-      const firstRoleText = textSplitter('.role-1', containerRef.current, options);
-      const secondRoleText = textSplitter('.role-2', containerRef.current, options);
-      const thirdRoleText = textSplitter('.role-3', containerRef.current, options);
+      const firstRoleText = textSplitter(
+        '.role-1',
+        containerRef.current,
+        options,
+      );
+      const secondRoleText = textSplitter(
+        '.role-2',
+        containerRef.current,
+        options,
+      );
+      const thirdRoleText = textSplitter(
+        '.role-3',
+        containerRef.current,
+        options,
+      );
 
       return subscribe(() => {
         setTimeout(() => {

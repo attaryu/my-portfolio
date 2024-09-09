@@ -1,6 +1,7 @@
 import { MdArrowOutward, MdOpenInFull } from 'react-icons/md';
 
 import Button from './Button';
+import AnimatedLink from './AnimatedLink';
 
 interface Prop {
   project: {
@@ -12,18 +13,25 @@ interface Prop {
   detailURL: string;
 }
 
-export default function ProjectCard({ project, detailURL }: Readonly<Prop>) {  
+export default function ProjectCard({ project, detailURL }: Readonly<Prop>) {
   return (
     <div className="relative flex aspect-[2/3] w-full flex-col overflow-hidden rounded-3xl bg-zinc-300 p-6 text-zinc-100 md:aspect-[2/1.5] md:p-8 lg:aspect-[3/2] xl:aspect-[16/7.5] xl:p-10">
       {/* background image */}
       <img
-        src={process.env.NEXT_PUBLIC_CMS_REQUEST_URL + project.cover.data.attributes.formats.medium.url}
+        src={
+          process.env.NEXT_PUBLIC_CMS_REQUEST_URL +
+          project.cover.data.attributes.formats.medium.url
+        }
         alt=""
         className="absolute left-0 top-0 h-full w-full object-cover brightness-[0.3]"
       />
 
       <Button
-        href={project.links.data.find((link: any) => link.attributes.title === 'Live Production').attributes.link}
+        href={
+          project.links.data.find(
+            (link: any) => link.attributes.title === 'Live Production',
+          ).attributes.link
+        }
         secondary
         target="_blank"
         className="z-10 self-end !border-zinc-100 !p-3 !text-2xl lg:!text-3xl"
@@ -42,13 +50,12 @@ export default function ProjectCard({ project, detailURL }: Readonly<Prop>) {
           </p>
         </div>
 
-        <Button
+        <AnimatedLink
           href={`/projects/${detailURL}`}
-          secondary
-          className="w-full !border-zinc-100 md:w-fit"
+          className="flex h-fit w-full cursor-pointer items-center justify-center gap-3 rounded-full border border-zinc-100 px-4 py-2 md:w-fit md:px-6 md:py-3 md:text-xl lg:text-2xl xl:gap-4"
         >
           Detail <MdOpenInFull />
-        </Button>
+        </AnimatedLink>
       </div>
     </div>
   );

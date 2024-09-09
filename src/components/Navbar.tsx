@@ -3,18 +3,16 @@
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import Link from 'next/link';
 import { useRef, useState } from 'react';
-
-import useMatchMedia from '@/hooks/useMatchMedia';
-import textSplitter from '@/utils/textSplitter';
 import SplitType from 'split-type';
+
+import debounce from '@/utils/debounce';
+import AnimatedLink from './AnimatedLink';
 
 gsap.registerPlugin(useGSAP);
 
 export default function Navbar() {
   const navigationRef = useRef<HTMLDivElement | null>(null);
-  const [open, setOpen] = useState(false);
   const [isAnimate, setIsAnimate] = useState(false);
 
   const links = [
@@ -40,83 +38,29 @@ export default function Navbar() {
     },
   ];
 
-  function setMenu() {
-    if (!isAnimate) {
-      setIsAnimate(true);
-      setOpen((lastState) => !lastState);
-    }
-  }
-
-  useMatchMedia(
-    ({ isExtraLarge }) => {
-      const menuStateBefore: GSAPTweenVars = {
-        bottom: '-100%',
-        borderTopLeftRadius: isExtraLarge ? '1000px' : '500px',
-        borderTopRightRadius: isExtraLarge ? '1000px' : '500px',
-        duration: 0.6,
-        ease: 'power4.in',
-      };
-
-      const splitTextStateBefore: GSAPTweenVars = {
-        yPercent: 100,
-        ease: 'power4.in',
-        stagger: {
-          amount: 0.3,
-        },
-      };
-
-      const closeIconState: GSAPTweenVars = {
-        ease: 'power4.out',
-        stagger: {
-          amount: 0.1,
-        },
-      };
-
-      if (isAnimate) {
-        const splitedText = new SplitType('.navbar__link', { types: 'chars', tagName: 'span' });
-        const timeline = gsap.timeline();
-
-        if (open) {
-          timeline
-            // menu background animation
-            .fromTo('.menu', menuStateBefore, {
-              ...menuStateBefore,
-              bottom: '0%',
-              borderTopLeftRadius: isExtraLarge ? '0px' : '40px',
-              borderTopRightRadius: isExtraLarge ? '0px' : '40px',
-              ease: 'power4.out',
-            })
-            // text link animation
-            .fromTo(
-              splitedText.chars,
-              splitTextStateBefore,
-              {
-                ...splitTextStateBefore,
-                ease: 'power4.out',
-                yPercent: 0,
-              },
-              '<50%',
-            )
-            // close icon animation
-            .to('.close-icon', { ...closeIconState, width: '100%' }, '<45%');
-        } else {
-          timeline
-            // close icon animation
-            .to('.close-icon', { ...closeIconState, width: '0%' })
-            // text link animation
-            .to(splitedText.chars, splitTextStateBefore, '<')
-            // menu background animation
-            .to('.menu', menuStateBefore, '<50%');
-        }
-
-        timeline.call(setIsAnimate, [false]);
-      }
+  const animation = {
+    menuStateBefore: {
+      right: '-100%',
+      duration: 0.6,
+      ease: 'power3.in',
     },
-    [open],
-  );
+    splitTextStateBefore: {
+      yPercent: 100,
+      ease: 'power3.in',
+      stagger: {
+        amount: 0.3,
+      },
+    },
+    closeIconState: {
+      ease: 'power3.out',
+      stagger: {
+        amount: 0.1,
+      },
+    },
+  };
 
   // change navbar background on scroll
-  useGSAP(() => {
+  const { contextSafe } = useGSAP(() => {
     gsap.registerPlugin(ScrollTrigger);
 
     const scrolledNavbarStyle = [
@@ -141,6 +85,70 @@ export default function Navbar() {
     });
   }, []);
 
+  const setMenu = contextSafe(
+    debounce((state: boolean) => {
+      if (!isAnimate) {
+        setIsAnimate(true);
+
+        const splitedText = new SplitType('.navbar__link', {
+          types: 'chars',
+          tagName: 'span',
+        });
+
+        const timeline = gsap.timeline();
+
+        if (state) {
+          openMenu(timeline, splitedText);
+        } else {
+          closeMenu(timeline, splitedText);
+        }
+
+        timeline.call(setIsAnimate, [false]);
+      }
+    }, 200),
+  );
+
+  const openMenu = contextSafe(
+    (timeline: GSAPTimeline, splitedText: SplitType) => {
+      timeline
+        // menu background animation
+        .fromTo('.menu', animation.menuStateBefore, {
+          ...animation.menuStateBefore,
+          right: '0%',
+          ease: 'power3.out',
+        })
+        // text link animation
+        .fromTo(
+          splitedText.chars,
+          animation.splitTextStateBefore,
+          {
+            ...animation.splitTextStateBefore,
+            ease: 'power3.out',
+            yPercent: 0,
+          },
+          '<50%',
+        )
+        // close icon animation
+        .to(
+          '.close-icon',
+          { ...animation.closeIconState, width: '100%' },
+          '<45%',
+        );
+    },
+  );
+
+  const closeMenu = contextSafe(
+    (timeline: GSAPTimeline, splitedText: SplitType) => {
+      timeline
+        // close icon animation
+        .to('.close-icon', { ...animation.closeIconState, width: '0%' })
+        // text link animation
+        .to(splitedText.chars, animation.splitTextStateBefore, '<')
+        // menu background animation
+        .to('.menu', animation.menuStateBefore, '<50%');
+    },
+  );
+
   return (
     <>
       <nav
@@ -162,7 +170,7 @@ export default function Navbar() {
         <div className="flex w-full justify-end">
           <button
             className="group z-20 flex items-center text-sm md:text-lg"
-            onClick={setMenu}
+            onClick={() => setMenu(true)}
             disabled={isAnimate}
           >
             [
@@ -176,9 +184,9 @@ export default function Navbar() {
       </nav>
 
       {/* menu */}
-      <div className="menu fixed -bottom-full left-0 z-50 flex h-[70dvh] w-full flex-col items-end bg-white p-8 outline outline-2 outline-zinc-900 md:p-20 xl:h-dvh">
+      <div className="menu fixed -right-full top-0 z-40 flex h-dvh w-full flex-col items-end bg-white p-8 outline outline-2 outline-zinc-900 md:p-20">
         <button
-          onClick={setMenu}
+          onClick={() => setMenu(false)}
           className="relative flex size-8 items-center justify-center md:size-12 lg:size-14 xl:size-10"
           disabled={isAnimate}
         >
@@ -189,13 +197,14 @@ export default function Navbar() {
         <ul className="mt-12 h-full w-full space-y-4 md:space-y-6 xl:mt-0">
           {links.map(({ id, link, title }) => (
             <li key={id}>
-              <Link
+              <AnimatedLink
                 href={link}
                 className="navbar__link block w-fit overflow-hidden text-5xl font-semibold leading-tight md:text-6xl md:leading-snug lg:text-7xl lg:leading-normal xl:text-6xl xl:leading-snug"
-                onClick={setMenu}
+                onClick={() => setMenu(false)}
+                disabled={isAnimate}
               >
                 {title}
-              </Link>
+              </AnimatedLink>
             </li>
           ))}
         </ul>
