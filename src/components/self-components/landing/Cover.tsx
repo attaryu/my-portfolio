@@ -5,7 +5,6 @@ import gsap from 'gsap';
 import { useRef } from 'react';
 
 import useEvent from '@/hooks/useEvent';
-import sequenceAnimation from '@/utils/text-animation/sequence';
 import wipeAnimation from '@/utils/text-animation/wipe';
 import textSplitter from '@/utils/textSplitter';
 import { SplitTypeOptions } from 'split-type';
@@ -49,8 +48,8 @@ export default function Cover() {
         setTimeout(() => {
           gsap
             .timeline()
-            .add(sequenceAnimation(titleText).play())
             .add(wipeAnimation(timeText).play())
+            .add(wipeAnimation(titleText).play(), '<20%')
             .add(wipeAnimation(firstRoleText).play(), '<20%')
             .add(wipeAnimation(secondRoleText).play(), '<20%')
             .add(wipeAnimation(thirdRoleText).play(), '<20%')

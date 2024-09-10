@@ -28,7 +28,7 @@ export default function TechStack({ icons }: Readonly<Prop>) {
         gsap.registerPlugin(ScrollTrigger);
 
         const setting: Partial<SplitTypeOptions> = {
-          types: 'chars,lines',
+          types: 'words,lines',
         };
 
         const titleText = textSplitter('h2', containerRef.current!, setting);
@@ -44,13 +44,13 @@ export default function TechStack({ icons }: Readonly<Prop>) {
           .timeline({
             scrollTrigger: { ...scrollTriggerSetting, trigger: 'h2' },
           })
-          .add(sequenceAnimation(titleText).play());
+          .add(sequenceAnimation(titleText, { animatedType: 'words' }).play());
 
         gsap
           .timeline({
             scrollTrigger: { ...scrollTriggerSetting, trigger: 'p' },
           })
-          .add(sequenceAnimation(noteText).play());
+          .add(sequenceAnimation(noteText, { animatedType: 'words' }).play());
       }
     },
     {

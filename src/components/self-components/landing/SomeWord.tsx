@@ -80,7 +80,7 @@ export default function SomeWord() {
           textSplitterConfig,
         );
 
-        const secondTextTimeline = sequenceAnimation(secondText, 'top');
+        const secondTextTimeline = sequenceAnimation(secondText, { from: 'top' });
 
         let startSecondTextEnter = '60%';
         let endSecondTextEnter = 'top';
