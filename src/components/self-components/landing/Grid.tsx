@@ -18,11 +18,12 @@ export default function Grid() {
   }, []);
 
   const { contextSafe } = useMatchMedia(
-    ({ isSmall }) => subscribe(() => playAnimation(isSmall)),
-    {
-      dependencies: [],
-      revert: true,
+    ({ isSmall }) => {
+      if (totalBox) {
+        subscribe(() => playAnimation(isSmall));
+      }
     },
+    { dependencies: [totalBox], revert: true },
   );
 
   const playAnimation = contextSafe((isSmall: boolean) => {
