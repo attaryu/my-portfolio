@@ -52,7 +52,11 @@ export default function RootLayout({
         <Lenis>
           <Loading />
 
-          <div className="root-container relative h-svh overflow-hidden" id="top">
+          {/* <div className="root-container relative" id="top"> */}
+          <div
+            className="root-container relative h-svh overflow-hidden"
+            id="top"
+          >
             <Navbar />
             {children}
             <Footer />

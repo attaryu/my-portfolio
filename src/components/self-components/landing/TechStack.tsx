@@ -35,7 +35,7 @@ export default function TechStack({ icons }: Readonly<Prop>) {
         const noteText = textSplitter('p span', containerRef.current!, setting);
 
         const scrollTriggerSetting: ScrollTrigger.Vars = {
-          start: 'top 80%',
+          start: 'top 90%',
           end: 'top bottom',
           toggleActions: 'play none none reverse',
         };

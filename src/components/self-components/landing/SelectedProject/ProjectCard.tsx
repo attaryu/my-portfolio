@@ -1,7 +1,13 @@
+'use client';
+
+import { useGSAP } from '@gsap/react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useRef } from 'react';
 import { MdArrowOutward, MdOpenInFull } from 'react-icons/md';
 
-import Button from './Button';
-import AnimatedLink from './AnimatedLink';
+import AnimatedLink from '@/components/AnimatedLink';
+import Button from '@/components/Button';
 
 interface Prop {
   project: {
@@ -13,9 +19,32 @@ interface Prop {
   detailURL: string;
 }
 
+gsap.registerPlugin(useGSAP);
+
 export default function ProjectCard({ project, detailURL }: Readonly<Prop>) {
+  const containerRef = useRef<HTMLDivElement | null>(null);
+
+  useGSAP(() => {
+    gsap.registerPlugin(ScrollTrigger);
+
+    gsap.from(containerRef.current, {
+      scale: 0.8,
+      opacity: 0.5,
+      filter: 'blur(10px)',
+      scrollTrigger: {
+        trigger: containerRef.current,
+        start: 'top bottom',
+        end: 'top center',
+        scrub: true,
+      },
+    });
+  }, []);
+
   return (
-    <div className="relative flex aspect-[2/3] w-full flex-col overflow-hidden rounded-3xl bg-zinc-300 p-6 text-zinc-100 md:aspect-[2/1.5] md:p-8 lg:aspect-[3/2] xl:aspect-[16/7.5] xl:p-10">
+    <div
+      className="card relative flex aspect-[2/3] w-full flex-col overflow-hidden rounded-3xl bg-zinc-300 p-6 text-zinc-100 blur-0 md:aspect-[2/1.5] md:p-8 lg:aspect-[3/2] xl:aspect-[16/7.5] xl:p-10"
+      ref={containerRef}
+    >
       {/* background image */}
       <img
         src={
