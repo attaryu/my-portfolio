@@ -13,6 +13,8 @@ gsap.registerPlugin(useGSAP);
 
 export default function Navbar() {
   const navigationRef = useRef<HTMLDivElement | null>(null);
+  const scrollProgress = useRef(0);
+  const scrollDirection = useRef<'down' | 'up'>('up');
   const [isAnimate, setIsAnimate] = useState(false);
 
   const links = [
@@ -58,6 +60,42 @@ export default function Navbar() {
       },
     },
   };
+
+  useGSAP(() => {
+    function navbarScroll() {
+      const { scrollY } = window;
+
+      if (
+        scrollY >= scrollProgress.current &&
+        scrollDirection.current === 'up'
+      ) {
+        gsap.fromTo(
+          navigationRef.current,
+          { yPercent: 0 },
+          { yPercent: -100, duration: 0.3, ease: 'none' },
+        );
+
+        scrollDirection.current = 'down';
+      } else if (
+        scrollY < scrollProgress.current &&
+        scrollDirection.current === 'down'
+      ) {
+        gsap.fromTo(
+          navigationRef.current,
+          { yPercent: -100 },
+          { yPercent: 0, duration: 0.3, ease: 'none' },
+        );
+
+        scrollDirection.current = 'up';
+      }
+      
+      scrollProgress.current = scrollY;
+    }
+
+    window.addEventListener('scroll', navbarScroll);
+
+    return () => window.removeEventListener('scroll', navbarScroll);
+  }, []);
 
   // change navbar background on scroll
   const { contextSafe } = useGSAP(() => {
@@ -152,24 +190,24 @@ export default function Navbar() {
   return (
     <>
       <nav
-        className="fixed top-0 z-20 flex h-fit w-full max-w-widhest items-center justify-between border border-transparent px-8 py-1 transition-all duration-300 md:px-20 md:text-xl lg:text-2xl xl:py-0 xl:text-xl"
+        className="fixed top-0 z-20 flex h-fit w-full max-w-widhest items-center justify-between border border-transparent px-8 py-1 transition-all duration-300 md:px-20 xl:py-0"
         ref={navigationRef}
       >
         <div className="w-full">
           <img
             src="/logo/ma.svg"
             alt=""
-            className="size-10 md:size-12 lg:size-14"
+            className="size-9 md:size-11 lg:size-14 xl:size-12"
           />
         </div>
 
-        <p className="hidden w-full text-center font-neue-montreal-medium md:block">
+        <p className="hidden w-full text-center font-neue-montreal-medium md:block xl:text-base">
           M Attar
         </p>
 
         <div className="flex w-full justify-end">
           <button
-            className="group z-20 flex items-center text-sm md:text-lg"
+            className="group z-20 flex items-center text-sm md:text-lg xl:text-base"
             onClick={() => setMenu(true)}
             disabled={isAnimate}
           >
