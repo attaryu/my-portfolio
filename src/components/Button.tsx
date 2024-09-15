@@ -7,6 +7,7 @@ interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   primary?: boolean;
   secondary?: boolean;
   target?: string;
+  'data-hover-scale'?: number;
 }
 
 export default function Button({
@@ -35,6 +36,8 @@ export default function Button({
         className={styling}
         href={href}
         target={target}
+        data-hover
+        data-hover-scale={otherAttributes['data-hover-scale'] ?? 3.2}
         {...(otherAttributes as React.AnchorHTMLAttributes<HTMLAnchorElement>)}
       >
         {children}
@@ -43,7 +46,12 @@ export default function Button({
   }
 
   return (
-    <button className={styling} {...otherAttributes}>
+    <button
+      className={styling}
+      data-hover
+      data-hover-scale={otherAttributes['data-hover-scale'] ?? 3.2}
+      {...otherAttributes}
+    >
       {children}
     </button>
   );

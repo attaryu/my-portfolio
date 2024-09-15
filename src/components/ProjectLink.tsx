@@ -72,6 +72,7 @@ export default function ProjectLink({
           className="w-full truncate whitespace-nowrap px-3 py-2 font-tusker-grotesk-medium text-3xl !leading-tight transition duration-150 group-hover:text-white md:py-3 md:text-5xl lg:text-6xl"
           onMouseOver={onMouseOverHandler}
           onMouseLeave={onMouseLeaveHandler}
+          data-hover-scale={6}
         >
           <span className="pointer-events-none relative block overflow-hidden">
             <span className="first-text">{title.toUpperCase()}</span>
@@ -87,6 +88,7 @@ export default function ProjectLink({
           className="absolute bottom-2 right-3 flex items-center gap-2 opacity-50 transition duration-150 group-hover:text-white md:bottom-3 md:text-xl md:opacity-70"
           onMouseOver={onMouseOverHandler}
           onMouseLeave={onMouseLeaveHandler}
+          data-hover
         >
           <span className="pointer-events-none relative block overflow-hidden">
             <span className="first-text">{subtitle}</span>

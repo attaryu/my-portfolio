@@ -9,6 +9,7 @@ import debounce from '@/utils/debounce';
 interface Props extends LinkProps, Omit<React.ComponentProps<'a'>, 'href'> {
   children: string | React.ReactNode;
   disabled?: boolean;
+  'data-hover-scale'?: number;
 }
 
 export default function AnimatedLink({
@@ -48,7 +49,13 @@ export default function AnimatedLink({
   }
 
   return (
-    <Link href={href} onClick={onClickHandler} {...otherAttributes}>
+    <Link
+      href={href}
+      onClick={onClickHandler}
+      data-hover
+      data-hover-scale={otherAttributes['data-hover-scale'] ?? 3.2}
+      {...otherAttributes}
+    >
       {children}
     </Link>
   );

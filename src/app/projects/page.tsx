@@ -1,18 +1,10 @@
-'use client';
-
-import { useEffect, useState } from 'react';
-
 import ProjectLink from '@/components/ProjectLink';
 import fetcher from '@/utils/fetcher';
 
-export default function Page() {
-  const [data, setData] = useState<any>(null);
-
-  useEffect(() => {
-    fetcher(
-      '/links?filters[title]=Live Production&populate[project][fields][0]=title&populate[project][fields][1]=finish_at&fields[0]=link_title&fields[1]=link',
-    ).then((response) => setData(projectsGrouping(response.data)));
-  }, []);
+export default async function Page() {
+  const data = await fetcher(
+    '/links?filters[title]=Live Production&populate[project][fields][0]=title&populate[project][fields][1]=finish_at&fields[0]=link_title&fields[1]=link',
+  ).then((res) => projectsGrouping(res.data));
 
   // function for project grouping by month and year
   function projectsGrouping(projects: any) {
@@ -74,7 +66,7 @@ export default function Page() {
         <div className="w-[1px] rounded-full bg-zinc-900 md:w-[2px]" />
 
         <ol className="w-full">
-          {data?.map((data: any) => (
+          {data.map((data: any) => (
             <li key={data.date} className="pb-8 md:pb-10">
               <h2 className="flex items-center gap-1 text-sm md:gap-3 md:text-lg">
                 <span className="inline-block h-[1px] w-3 rounded-full bg-zinc-900 md:h-[2px] md:w-7" />
@@ -96,7 +88,7 @@ export default function Page() {
                 ))}
               </ul>
             </li>
-          )) ?? 'Loading...'}
+          ))}
         </ol>
       </div>
     </main>

@@ -210,6 +210,7 @@ export default function Navbar() {
             className="group z-20 flex items-center text-sm md:text-lg xl:text-base"
             onClick={() => setMenu(true)}
             disabled={isAnimate}
+            data-hover
           >
             [
             <div className="h-[1.5px] w-0 bg-zinc-900 transition-all duration-300 group-hover:xl:w-8" />
@@ -227,6 +228,8 @@ export default function Navbar() {
           onClick={() => setMenu(false)}
           className="relative flex size-8 items-center justify-center md:size-12 lg:size-14 xl:size-10"
           disabled={isAnimate}
+          data-hover
+          data-hover-scale="3.5"
         >
           <span className="close-icon absolute block h-1 rotate-45 rounded-full bg-zinc-900 md:h-2 xl:h-1.5" />
           <span className="close-icon absolute block h-1 -rotate-45 rounded-full bg-zinc-900 md:h-2 xl:h-1.5" />
@@ -240,6 +243,7 @@ export default function Navbar() {
                 className="navbar__link block w-fit overflow-hidden text-5xl font-semibold leading-tight md:text-6xl md:leading-snug lg:text-7xl lg:leading-normal xl:text-6xl xl:leading-snug"
                 onClick={() => setMenu(false)}
                 disabled={isAnimate}
+                data-hover-scale={6}
               >
                 {title}
               </AnimatedLink>

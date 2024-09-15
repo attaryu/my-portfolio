@@ -1,11 +1,10 @@
-import type { Metadata } from 'next';
-
-import localFont from 'next/font/local';
-
 import Lenis from '@/app/Lenis';
+import Cursor from '@/components/Cursor';
 import Footer from '@/components/Footer';
 import Loading from '@/components/Loading';
 import Navbar from '@/components/Navbar';
+import { Metadata } from 'next';
+import localFont from 'next/font/local';
 
 import './globals.css';
 
@@ -48,7 +47,7 @@ export default function RootLayout({
 
   return (
     <html lang="en">
-      <body className={`mx-auto max-w-widhest ${fontVariables}`}>
+      <body className={`mx-auto max-w-widhest ${fontVariables} bg-white`}>
         <Lenis>
           <Loading />
 
@@ -62,6 +61,8 @@ export default function RootLayout({
             <Footer />
           </div>
         </Lenis>
+
+        <Cursor />
       </body>
     </html>
   );

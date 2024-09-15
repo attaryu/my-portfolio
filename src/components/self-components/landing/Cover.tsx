@@ -65,7 +65,11 @@ export default function Cover() {
       className="flex h-svh max-h-highest flex-col justify-end gap-10 px-8 pt-28 md:items-center md:px-20 md:pt-40 lg:pt-52 xl:h-svh xl:pt-44"
       ref={containerRef}
     >
-      <h1 className="title mt-auto font-tusker-grotesk-medium text-7xl !leading-tight md:text-6xl lg:text-7xl xl:text-6xl">
+      <h1
+        className="title mt-auto font-tusker-grotesk-medium text-7xl !leading-tight md:text-6xl lg:text-7xl xl:text-6xl"
+        data-hover
+        data-hover-scale="10"
+      >
         HELLO, <br className="md:hidden" />
         I'M ATTAR
       </h1>
