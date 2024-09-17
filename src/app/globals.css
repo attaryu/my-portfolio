@@ -6,6 +6,9 @@
   body {
     @apply font-neue-montreal-normal;
   }
+  :root {
+    --radius: 0.5rem;
+  }
 }
 
 @layer components {

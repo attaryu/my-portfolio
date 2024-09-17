@@ -1,8 +1,3 @@
-import Lenis from '@/app/Lenis';
-import Cursor from '@/components/Cursor';
-import Footer from '@/components/Footer';
-import Loading from '@/components/Loading';
-import Navbar from '@/components/Navbar';
 import { Metadata } from 'next';
 import localFont from 'next/font/local';
 
@@ -47,22 +42,8 @@ export default function RootLayout({
 
   return (
     <html lang="en">
-      <body className={`mx-auto max-w-widhest ${fontVariables} bg-white`}>
-        <Lenis>
-          <Loading />
-
-          {/* <div className="root-container relative" id="top"> */}
-          <div
-            className="root-container relative h-svh overflow-hidden"
-            id="top"
-          >
-            <Navbar />
-            {children}
-            <Footer />
-          </div>
-        </Lenis>
-
-        <Cursor />
+      <body className={fontVariables}>
+          {children}
       </body>
     </html>
   );
