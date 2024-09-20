@@ -114,18 +114,6 @@ export default function Dump({ data, id }: Readonly<Props>) {
         </ul>
       </section>
 
-      {/* {data.journey && (
-        <section className="mt-12 space-y-4 px-8 md:mt-12 md:px-20 xl:mt-20 xl:space-y-6">
-          <h2 className="font-neue-montreal-medium text-3xl md:text-4xl">
-            The Journey
-          </h2>
-
-          <div className="text-justify !leading-relaxed md:text-lg xl:text-xl">
-            <BlocksRenderer content={data.journey} />
-          </div>
-        </section>
-      )} */}
-
       <section className="mb-16 mt-12 space-y-4 px-8 md:mt-12 md:px-20 xl:mt-20 xl:space-y-6">
         <h2 className="font-neue-montreal-medium text-3xl md:text-4xl">
           Additional Link
