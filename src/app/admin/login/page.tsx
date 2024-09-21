@@ -1,13 +1,15 @@
 'use client';
 
+import { redirect, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { useFormState } from 'react-dom';
 
 import Button from '@/components/shadcn-ui/Button';
 import Input from '@/components/shadcn-ui/Input';
-import { authenticationAction } from './actions';
+import { authenticationAction, logoutAction } from './actions';
 
 export default function Page() {
+  const searchParams = useSearchParams();
   const [isLoading, setIsLoading] = useState(false);
   const [formState, formActionOrigin] = useFormState(authenticationAction, {
     error: true,
@@ -15,6 +17,13 @@ export default function Page() {
   });
 
   useEffect(() => setIsLoading(false), [formState]);
+
+  useEffect(() => {
+    if (searchParams.get('action') === 'log_out') {
+      logoutAction();
+      redirect('/admin/login');
+    }
+  }, []);
 
   function formAction(form: FormData) {
     if (!isLoading) {

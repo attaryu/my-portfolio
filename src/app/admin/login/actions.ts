@@ -7,6 +7,8 @@ import path from 'node:path';
 
 import { makeToken } from '@/utils/jwt';
 
+const credentialFilePath = path.resolve('storages', 'credentials.txt');
+
 export async function authenticationAction(
   _prevState: { error: boolean; message: string },
   form: FormData,
@@ -26,10 +28,9 @@ export async function authenticationAction(
     };
   }
 
-  const filePath = path.resolve('storages', 'credentials.txt');
   const token = await makeToken();
 
-  await fs.writeFile(filePath, token);
+  await fs.writeFile(credentialFilePath, token);
 
   cookies().set('auth', token, {
     secure: true,
@@ -39,4 +40,15 @@ export async function authenticationAction(
   });
 
   return redirect('/admin');
+}
+
+export async function logoutAction() {
+  try {
+    await fs.access(credentialFilePath);
+    await fs.unlink(credentialFilePath);
+
+    cookies().delete('auth');
+  } catch {}
+
+  return;
 }
