@@ -7,6 +7,117 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Media {
+  id             Int             @id @default(autoincrement()) @db.SmallInt
+  title          String          @unique
+  extension      MediaExtension
+  created_at     DateTime        @default(now())
+  updated_at     DateTime        @updatedAt
+  project        Project?
+  projectPreview ProjectPreview?
+  tech           Tech?
+
+  @@map("media")
+}
+
+model Link {
+  id          Int          @id @default(autoincrement()) @db.SmallInt
+  title       String
+  url         String       @unique
+  status      Status       @default(draft)
+  created_at  DateTime     @default(now())
+  updated_at  DateTime     @updatedAt
+  projectLink ProjectLink?
+  socialMedia SocialMedia?
+
+  @@map("link")
+}
+
+model Tech {
+  id         Int       @id @default(autoincrement()) @db.SmallInt
+  name       String    @unique
+  status     Status    @default(draft)
+  logoId     Int       @unique
+  created_at DateTime  @default(now())
+  updated_at DateTime  @updatedAt
+  media      Media     @relation(fields: [logoId], references: [id])
+  projects   Project[] @relation("ProjectToTech")
+
+  @@map("tech")
+}
+
+model Project {
+  id              Int              @id @default(autoincrement()) @db.SmallInt
+  title           String           @unique
+  subtitle        String
+  description     String
+  status          Status           @default(draft)
+  label           ProjectLabel
+  coverId         Int              @unique
+  created_at      DateTime         @default(now())
+  updated_at      DateTime         @updatedAt
+  cover           Media            @relation(fields: [coverId], references: [id])
+  links           ProjectLink[]
+  previews        ProjectPreview[]
+  selectedProject SelectedProject?
+  techStacks      Tech[]           @relation("ProjectToTech")
+
+  @@map("project")
+}
+
+model ProjectLink {
+  subtitle  String
+  linkId    Int     @unique
+  projectId Int
+  link      Link    @relation(fields: [linkId], references: [id])
+  project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@unique([linkId, projectId])
+  @@map("project_link")
+}
+
+model ProjectPreview {
+  id        Int     @id @default(autoincrement()) @db.SmallInt
+  order     Int
+  projectId Int
+  imageId   Int     @unique
+  image     Media   @relation(fields: [imageId], references: [id])
+  project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@unique([projectId, order, imageId])
+  @@map("project_preview")
+}
+
+model Landing {
+  id               Int               @id @default(autoincrement()) @db.SmallInt
+  email            String
+  address          String
+  description      String
+  status           Status            @default(draft)
+  selectedProjects SelectedProject[]
+  socialMedias     SocialMedia[]
+
+  @@map("landing")
+}
+
+model SocialMedia {
+  linkId    Int     @unique
+  landingId Int
+  landing   Landing @relation(fields: [landingId], references: [id], onDelete: Cascade)
+  link      Link    @relation(fields: [linkId], references: [id])
+
+  @@map("social_media")
+}
+
+model SelectedProject {
+  projectId Int     @unique
+  landingId Int
+  landing   Landing @relation(fields: [landingId], references: [id], onDelete: Cascade)
+  project   Project @relation(fields: [projectId], references: [id])
+
+  @@map("selected_project")
+}
+
 enum MediaExtension {
   svg
   jpg
@@ -23,115 +134,4 @@ enum Status {
 enum ProjectLabel {
   personal
   paid
-}
-
-model Media {
-  id             Int             @id @default(autoincrement()) @db.Oid
-  title          String          @unique
-  extension      MediaExtension
-  created_at     DateTime        @default(now())
-  updated_at     DateTime        @updatedAt
-  tech           Tech?
-  project        Project?
-  projectPreview ProjectPreview?
-
-  @@map("media")
-}
-
-model Link {
-  id          Int          @id @default(autoincrement()) @db.Oid
-  title       String
-  url         String       @unique
-  status      Status       @default(draft)
-  created_at  DateTime     @default(now())
-  updated_at  DateTime     @updatedAt
-  projectLink ProjectLink?
-  socialMedia SocialMedia?
-
-  @@map("link")
-}
-
-model Tech {
-  id         Int       @id @default(autoincrement()) @db.Oid
-  name       String    @unique
-  status     Status    @default(draft)
-  logoId     Int       @unique
-  media      Media     @relation(fields: [logoId], references: [id], onDelete: Restrict, onUpdate: Cascade)
-  created_at DateTime  @default(now())
-  updated_at DateTime  @updatedAt
-  projects   Project[]
-
-  @@map("tech")
-}
-
-model Project {
-  id              Int              @id @default(autoincrement()) @db.Oid
-  title           String           @unique
-  subtitle        String
-  description     String
-  status          Status           @default(draft)
-  label           ProjectLabel
-  coverId         Int              @unique
-  cover           Media            @relation(fields: [coverId], references: [id], onDelete: Restrict, onUpdate: Cascade)
-  created_at      DateTime         @default(now())
-  updated_at      DateTime         @updatedAt
-  previews        ProjectPreview[]
-  links           ProjectLink[]
-  techStacks      Tech[]
-  selectedProject SelectedProject?
-
-  @@map("project")
-}
-
-model ProjectLink {
-  subtitle  String
-  linkId    Int     @unique
-  link      Link    @relation(fields: [linkId], references: [id], onDelete: Restrict, onUpdate: Cascade)
-  projectId Int
-  project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-
-  @@unique([linkId, projectId])
-  @@map("project_link")
-}
-
-model ProjectPreview {
-  id        Int     @id @default(autoincrement()) @db.Oid
-  order     Int
-  projectId Int
-  imageId   Int     @unique
-  image     Media   @relation(fields: [imageId], references: [id], onDelete: Restrict, onUpdate: Cascade)
-  project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-
-  @@unique([projectId, order, imageId])
-  @@map("project_preview")
-}
-
-model Landing {
-  id               Int               @id @default(autoincrement()) @db.Oid
-  email            String
-  address          String
-  description      String
-  status           Status            @default(draft)
-  socialMedias     SocialMedia[]
-  selectedProjects SelectedProject[]
-
-  @@map("landing")
-}
-
-model SocialMedia {
-  linkId    Int     @unique
-  link      Link    @relation(fields: [linkId], references: [id], onDelete: Restrict, onUpdate: Cascade)
-  landingId Int
-  landing   Landing @relation(fields: [landingId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-
-  @@map("social_media")
-}
-
-model SelectedProject {
-  projectId Int     @unique
-  project   Project @relation(fields: [projectId], references: [id], onDelete: Restrict, onUpdate: Cascade)
-  landingId Int
-  landing   Landing @relation(fields: [landingId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-
-  @@map("selected_project")
 }

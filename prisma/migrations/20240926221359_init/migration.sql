@@ -9,7 +9,7 @@ CREATE TYPE "ProjectLabel" AS ENUM ('personal', 'paid');
 
 -- CreateTable
 CREATE TABLE "media" (
-    "id" OID NOT NULL,
+    "id" SMALLSERIAL NOT NULL,
     "title" TEXT NOT NULL,
     "extension" "MediaExtension" NOT NULL,
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -20,7 +20,7 @@ CREATE TABLE "media" (
 
 -- CreateTable
 CREATE TABLE "link" (
-    "id" OID NOT NULL,
+    "id" SMALLSERIAL NOT NULL,
     "title" TEXT NOT NULL,
     "url" TEXT NOT NULL,
     "status" "Status" NOT NULL DEFAULT 'draft',
@@ -32,7 +32,7 @@ CREATE TABLE "link" (
 
 -- CreateTable
 CREATE TABLE "tech" (
-    "id" OID NOT NULL,
+    "id" SMALLSERIAL NOT NULL,
     "name" TEXT NOT NULL,
     "status" "Status" NOT NULL DEFAULT 'draft',
     "logoId" INTEGER NOT NULL,
@@ -44,7 +44,7 @@ CREATE TABLE "tech" (
 
 -- CreateTable
 CREATE TABLE "project" (
-    "id" OID NOT NULL,
+    "id" SMALLSERIAL NOT NULL,
     "title" TEXT NOT NULL,
     "subtitle" TEXT NOT NULL,
     "description" TEXT NOT NULL,
@@ -66,7 +66,7 @@ CREATE TABLE "project_link" (
 
 -- CreateTable
 CREATE TABLE "project_preview" (
-    "id" OID NOT NULL,
+    "id" SMALLSERIAL NOT NULL,
     "order" INTEGER NOT NULL,
     "projectId" INTEGER NOT NULL,
     "imageId" INTEGER NOT NULL,
@@ -76,7 +76,7 @@ CREATE TABLE "project_preview" (
 
 -- CreateTable
 CREATE TABLE "landing" (
-    "id" OID NOT NULL,
+    "id" SMALLSERIAL NOT NULL,
     "email" TEXT NOT NULL,
     "address" TEXT NOT NULL,
     "description" TEXT NOT NULL,
@@ -99,8 +99,8 @@ CREATE TABLE "selected_project" (
 
 -- CreateTable
 CREATE TABLE "_ProjectToTech" (
-    "A" OID NOT NULL,
-    "B" OID NOT NULL
+    "A" SMALLINT NOT NULL,
+    "B" SMALLINT NOT NULL
 );
 
 -- CreateIndex
@@ -164,16 +164,16 @@ ALTER TABLE "project_preview" ADD CONSTRAINT "project_preview_imageId_fkey" FORE
 ALTER TABLE "project_preview" ADD CONSTRAINT "project_preview_projectId_fkey" FOREIGN KEY ("projectId") REFERENCES "project"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "social_media" ADD CONSTRAINT "social_media_linkId_fkey" FOREIGN KEY ("linkId") REFERENCES "link"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
 ALTER TABLE "social_media" ADD CONSTRAINT "social_media_landingId_fkey" FOREIGN KEY ("landingId") REFERENCES "landing"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "selected_project" ADD CONSTRAINT "selected_project_projectId_fkey" FOREIGN KEY ("projectId") REFERENCES "project"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "social_media" ADD CONSTRAINT "social_media_linkId_fkey" FOREIGN KEY ("linkId") REFERENCES "link"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "selected_project" ADD CONSTRAINT "selected_project_landingId_fkey" FOREIGN KEY ("landingId") REFERENCES "landing"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "selected_project" ADD CONSTRAINT "selected_project_projectId_fkey" FOREIGN KEY ("projectId") REFERENCES "project"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "_ProjectToTech" ADD CONSTRAINT "_ProjectToTech_A_fkey" FOREIGN KEY ("A") REFERENCES "project"("id") ON DELETE CASCADE ON UPDATE CASCADE;
