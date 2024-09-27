@@ -4,8 +4,8 @@ import { redirect, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { useFormState } from 'react-dom';
 
-import Button from '@/components/shadcn-ui/Button';
-import Input from '@/components/shadcn-ui/Input';
+import { Button } from '@/components/shadcn-ui/button';
+import { Input } from '@/components/shadcn-ui/input';
 import { authenticationAction, logoutAction } from './actions';
 
 export default function Page() {

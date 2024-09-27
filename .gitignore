@@ -42,3 +42,4 @@ next-env.d.ts
 logging.txt
 .env
 /storages/*
+/public/images/*

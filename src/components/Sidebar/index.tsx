@@ -3,7 +3,7 @@ import { MdPermMedia, MdSpaceDashboard } from 'react-icons/md';
 import { PiSignOutBold } from 'react-icons/pi';
 
 import Link from 'next/link';
-import Button from '../shadcn-ui/Button';
+import { Button } from '../shadcn-ui/button';
 import LinkItem from './LinkItem';
 
 export default function Sidebar() {
@@ -39,7 +39,7 @@ export default function Sidebar() {
   ];
 
   return (
-    <nav className="flex h-dvh w-1/4 flex-col border-r border-r-zinc-800 p-6">
+    <nav className="flex h-dvh w-1/4 flex-col border-r border-r-zinc-800 p-6 sticky top-0">
       <img
         src="/logo/ma.svg"
         alt=""

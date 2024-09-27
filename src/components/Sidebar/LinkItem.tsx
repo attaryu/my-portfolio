@@ -5,7 +5,7 @@ import { usePathname } from 'next/navigation';
 import { useState } from 'react';
 import { IoIosArrowDown } from 'react-icons/io';
 
-import Button from '../shadcn-ui/Button';
+import { Button } from '../shadcn-ui/button';
 
 type Props = {
   title: string;
@@ -54,7 +54,7 @@ export default function LinkItem({ title, icon, link }: Readonly<Props>) {
 
       {open && (
         <div className="flex gap-2.5 pl-5">
-          <div className="max-h-fit w-0.5 rounded-full bg-gradient-to-b from-zinc-400 to-transparent" />
+          <div className="w-0.5 rounded-full bg-zinc-800" />
 
           <ul className="w-full">
             {link.map((sublink) => (
