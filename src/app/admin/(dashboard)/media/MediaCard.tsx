@@ -19,7 +19,7 @@ type Props = {
   data: Media;
 };
 
-export default function MediaCard({ data }: Props) {
+export default function MediaCard({ data }: Readonly<Props>) {
   const { toast } = useToast();
   const { id, title, extension } = data;
 

@@ -49,21 +49,24 @@ export async function addMedia(
   _: { error: boolean; message: string; id?: number } | null,
   formData: FormData,
 ) {
-  const media = formData.get('media') as File | null;
+  const media = formData.get('media') as File;
 
   const payload = {
     title: formData.get('title')?.toString().split(' ').join('_'),
-    extension: media?.type.split('/')[1] as MediaExtension,
+    extension: media.name.match(/^.*\.(svg|jpg|jpeg|png)$/i),
   };
 
   try {
     const { id } = await prisma.$transaction(async (client) => {
-      if (!(payload.title && payload.extension) || !media) {
+      if (!(payload.title && payload.extension)) {
         throw new Error('Empty form');
       }
 
       const newData = await client.media.create({
-        data: payload as Pick<Media, 'title' | 'extension'>,
+        data: {
+          title: payload.title,
+          extension: payload.extension[1] as MediaExtension,
+        },
       });
 
       await createFile(newData, Buffer.from(await media.arrayBuffer()));
@@ -112,9 +115,7 @@ export async function updateMedia(
   const payload = {
     id: formData.get('id')?.toString(),
     title: formData.get('title')?.toString().split(' ').join('_'),
-    extension: media.size
-      ? (media.type.split('/')[1] as MediaExtension)
-      : undefined,
+    extension: media.name.match(/^.*\.(svg|jpg|jpeg|png)$/i),
   };
 
   try {
@@ -136,7 +137,12 @@ export async function updateMedia(
       // update data
       const updatedData = await client.media.update({
         where: { id },
-        data: { title: payload.title, extension: payload.extension },
+        data: {
+          title: payload.title,
+          extension: payload.extension
+            ? (payload.extension[1] as MediaExtension)
+            : undefined,
+        },
       });
 
       // rename media or change media
@@ -185,7 +191,7 @@ export async function deleteMedia(id: number) {
     };
   } catch (error) {
     console.error(error);
-    
+
     return {
       error: true,
       message: 'Unexpected error, try again!',
