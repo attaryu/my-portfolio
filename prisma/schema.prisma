@@ -23,6 +23,7 @@ model Media {
 model Link {
   id          Int          @id @default(autoincrement()) @db.SmallInt
   title       String
+  subtitle    String
   url         String       @unique
   status      Status       @default(draft)
   created_at  DateTime     @default(now())
@@ -66,7 +67,6 @@ model Project {
 }
 
 model ProjectLink {
-  subtitle  String
   linkId    Int     @unique
   projectId Int
   link      Link    @relation(fields: [linkId], references: [id])
