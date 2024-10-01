@@ -18,16 +18,16 @@ export default function Sidebar() {
       icon: <FaNewspaper />,
       link: [
         {
+          title: 'Tech',
+          link: '/admin/contents/techs',
+        },
+        {
           title: 'Project',
-          link: '/admin/content/projects',
+          link: '/admin/contents/projects',
         },
         {
           title: 'Link',
-          link: '/admin/content/links',
-        },
-        {
-          title: 'Tech',
-          link: '/admin/content/techs',
+          link: '/admin/contents/links',
         },
       ],
     },
