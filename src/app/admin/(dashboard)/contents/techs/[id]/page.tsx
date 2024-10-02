@@ -15,7 +15,6 @@ export default async function TechDetail({ params }: Readonly<Props>) {
     select: {
       id: true,
       name: true,
-      status: true,
       updated_at: true,
       media: true,
     },

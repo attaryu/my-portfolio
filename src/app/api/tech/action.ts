@@ -12,11 +12,10 @@ export async function addTech(
   const bodyRequest = {
     name: form.get('name')?.toString(),
     logoId: form.get('logoId')?.toString(),
-    status: form.get('status')?.toString(),
   };
 
   try {
-    if (!(bodyRequest.name && bodyRequest.logoId && bodyRequest.status)) {
+    if (!(bodyRequest.name && bodyRequest.logoId)) {
       return {
         error: true,
         message: 'Invalid input, try again!',
@@ -26,7 +25,6 @@ export async function addTech(
     const newData = await prisma.tech.create({
       data: {
         name: bodyRequest.name,
-        status: bodyRequest.status as Status,
         logoId: parseInt(bodyRequest.logoId),
       },
     });
@@ -60,7 +58,6 @@ export async function updateTech(
     id: form.get('id')?.toString(),
     name: form.get('name')?.toString(),
     logoId: form.get('logoId')?.toString(),
-    status: form.get('status')?.toString(),
   };
 
   try {
@@ -76,12 +73,10 @@ export async function updateTech(
       data: {
         name: bodyRequest.name,
         logoId: bodyRequest.logoId ? parseInt(bodyRequest.logoId) : undefined,
-        status: bodyRequest.status as Status | undefined,
       },
       select: {
         id: true,
         name: true,
-        status: true,
         updated_at: true,
         media: true,
       },

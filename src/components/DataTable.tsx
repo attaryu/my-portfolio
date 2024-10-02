@@ -6,6 +6,7 @@ import {
   getCoreRowModel,
   useReactTable
 } from '@tanstack/react-table';
+
 import { TfiLayoutColumn3Alt } from 'react-icons/tfi';
 
 import {
@@ -14,6 +15,7 @@ import {
   DropdownMenuContent,
   DropdownMenuTrigger,
 } from '@/components/shadcn-ui/dropdown-menu';
+
 import {
   Table,
   TableBody,
@@ -30,7 +32,7 @@ interface DataTableProps<TData, TValue> {
   data: TData[];
 }
 
-export function DataTable<TData, TValue>({
+export default function DataTable<TData, TValue>({
   columns,
   data,
 }: Readonly<DataTableProps<TData, TValue>>) {

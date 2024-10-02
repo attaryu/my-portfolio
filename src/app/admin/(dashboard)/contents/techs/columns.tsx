@@ -1,6 +1,6 @@
 'use client';
 
-import { Media, Status, Tech } from '@prisma/client';
+import { Media, Tech } from '@prisma/client';
 import { ColumnDef } from '@tanstack/react-table';
 import dayjs from 'dayjs';
 import Link from 'next/link';
@@ -54,30 +54,6 @@ export const columns: ColumnDef<TechColumn>[] = [
             className="h-full w-full object-contain"
           />
         </div>
-      );
-    },
-  },
-  {
-    accessorKey: 'status',
-    header: 'Status',
-    cell: ({ row }) => {
-      const value: Status = row.getValue('status');
-      let className: string = 'px-2 py-1.5 border rounded-sm';
-
-      if (value === 'published') {
-        className += ' border-emerald-400 text-emerald-400 bg-emerald-950/50';
-      } else if (value === 'draft') {
-        className += ' border-sky-400 text-sky-400 bg-sky-950/50';
-      } else {
-        className += ' border-zinc-400 text-zinc-400 bg-zinc-900';
-      }
-
-      return (
-        <span className={className}>
-          {value === 'draft'
-            ? 'Drafted'
-            : value.charAt(0).toUpperCase() + value.slice(1)}
-        </span>
       );
     },
   },

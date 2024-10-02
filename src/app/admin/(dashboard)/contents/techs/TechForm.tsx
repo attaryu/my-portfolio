@@ -30,7 +30,6 @@ const TechForm = forwardRef<HTMLFormElement, Props>(
     const [formState, setFormState] = useState({
       name: techData?.name ?? '',
       logoId: techData?.media.id.toString() ?? '',
-      status: techData?.status ?? '',
     });
 
     const selectedLogoPreviewUrl = useMemo(() => {
@@ -72,7 +71,6 @@ const TechForm = forwardRef<HTMLFormElement, Props>(
       setFormState({
         name: techData?.name ?? '',
         logoId: techData?.media.id.toString() ?? '',
-        status: techData?.status ?? '',
       });
     };
 
@@ -99,30 +97,6 @@ const TechForm = forwardRef<HTMLFormElement, Props>(
               required
               disabled={disabled}
             />
-          </div>
-          <div className="w-full space-y-2">
-            <Text tag="p" styling="lead">
-              Status
-            </Text>
-
-            <Select
-              value={formState.status}
-              onValueChange={(value) => changeFormState(value, 'status')}
-              name="status"
-              required
-              disabled={disabled}
-            >
-              <SelectTrigger>
-                <SelectValue placeholder="Status" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectGroup>
-                  <SelectItem value="draft">Drafted</SelectItem>
-                  <SelectItem value="published">Published</SelectItem>
-                  <SelectItem value="archived">Archived</SelectItem>
-                </SelectGroup>
-              </SelectContent>
-            </Select>
           </div>
         </div>
 

@@ -25,7 +25,6 @@ model Link {
   title       String
   subtitle    String
   url         String       @unique
-  status      Status       @default(draft)
   created_at  DateTime     @default(now())
   updated_at  DateTime     @updatedAt
   projectLink ProjectLink?
@@ -37,7 +36,6 @@ model Link {
 model Tech {
   id         Int       @id @default(autoincrement()) @db.SmallInt
   name       String    @unique
-  status     Status    @default(draft)
   logoId     Int       @unique
   created_at DateTime  @default(now())
   updated_at DateTime  @updatedAt
@@ -51,7 +49,7 @@ model Project {
   id              Int              @id @default(autoincrement()) @db.SmallInt
   title           String           @unique
   subtitle        String
-  description     String
+  description     String?
   status          Status           @default(draft)
   label           ProjectLabel
   coverId         Int              @unique
