@@ -1,9 +1,9 @@
 'use server';
 
-import { Media, Status, Tech } from '@prisma/client';
-import { ActionResponse } from '../response-type';
-import prisma from '../database';
+import { Media, Tech } from '@prisma/client';
 import { revalidatePath } from 'next/cache';
+import prisma from '../database';
+import { ActionResponse } from '../response-type';
 
 export async function addTech(
   _: ActionResponse<{ tech: Tech }> | null,

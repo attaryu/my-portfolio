@@ -31,7 +31,6 @@ export default function Text({
     case 'lead':
     case 'muted':
       Tag = 'p';
-      break;
   }
 
   switch (styling) {
