@@ -16,6 +16,7 @@ export async function addProject(
     description: form.get('description')?.toString(),
     status: form.get('status')!.toString() as Status,
     label: form.get('label')!.toString() as ProjectLabel,
+    finished_at: new Date(form.get('finished_at')!.toString()).toISOString(),
   };
 
   // Data of arrays is transported in the JSON format through the data form
@@ -87,6 +88,7 @@ export async function updateProject(
     description: form.get('description')?.toString(),
     status: form.get('status')!.toString() as Status,
     label: form.get('label')!.toString() as ProjectLabel,
+    finished_at: new Date(form.get('finished_at')!.toString()).toISOString(),
   };
 
   // Data of arrays is transported in the JSON format through the data form

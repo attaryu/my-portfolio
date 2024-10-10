@@ -1,6 +1,6 @@
 'use client';
 
-import { Project, Status, Tech } from '@prisma/client';
+import { Project, ProjectLabel, Status, Tech } from '@prisma/client';
 import { ColumnDef } from '@tanstack/react-table';
 import dayjs from 'dayjs';
 import Link from 'next/link';
@@ -32,7 +32,7 @@ export const columns: ColumnDef<ProjectColumn>[] = [
     header: 'Title',
     cell: ({ row }) => (
       <Button variant="link" className="p-0" asChild>
-        <Link href={`/admin/contents/techs/${row.getValue('id')}`}>
+        <Link href={`/admin/contents/projects/${row.getValue('id')}`}>
           {row.getValue('title')}
         </Link>
       </Button>
@@ -92,6 +92,28 @@ export const columns: ColumnDef<ProjectColumn>[] = [
   {
     accessorKey: 'label',
     header: 'Label',
+    cell: ({ row }) => {
+      const value: ProjectLabel = row.getValue('label');
+      let className: string = 'px-2 py-1.5 border rounded-sm';
+
+      if (value === 'paid') {
+        className += ' border-yellow-500 text-yellow-500 bg-yellow-900/50';
+      } else {
+        className += ' border-indigo-400 text-indigo-400 bg-indigo-900/50';
+      }
+
+      return (
+        <span className={className}>
+          {value.charAt(0).toUpperCase() + value.slice(1) + ' Project'}
+        </span>
+      );
+    },
+  },
+  {
+    accessorKey: 'finished_at',
+    header: 'Finish at',
+    cell: ({ row }) =>
+      dayjs(row.getValue('finished_at')).format('MMMM D, YYYY'),
   },
   {
     accessorKey: 'update_at',

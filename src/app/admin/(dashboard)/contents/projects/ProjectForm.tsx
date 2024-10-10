@@ -35,6 +35,7 @@ import {
 } from '@/components/shadcn-ui/select';
 import { Textarea } from '@/components/shadcn-ui/textarea';
 import Text from '@/components/Text';
+import dayjs from 'dayjs';
 
 interface Props extends React.FormHTMLAttributes<HTMLFormElement> {
   disabled?: boolean;
@@ -64,6 +65,9 @@ const ProjectForm = forwardRef<HTMLFormElement, Props>(
       label: projectData?.label ?? '',
       status: projectData?.status ?? '',
       description: projectData?.description ?? '',
+      finished_at: dayjs(projectData?.finished_at ?? Date.now()).format(
+        'YYYY-MM-DD',
+      ),
     });
 
     /* 
@@ -145,6 +149,9 @@ const ProjectForm = forwardRef<HTMLFormElement, Props>(
         label: projectData?.label ?? '',
         status: projectData?.status ?? '',
         description: projectData?.description ?? '',
+        finished_at: dayjs(projectData?.finished_at ?? Date.now()).format(
+          'YYYY-MM-DD',
+        ),
       });
 
       setCoverId(projectData?.cover.id ?? null);
@@ -205,7 +212,7 @@ const ProjectForm = forwardRef<HTMLFormElement, Props>(
         {projectData && (
           <input type="hidden" value={projectData.id} name="id" />
         )}
-        {/* title & subtitle */}
+        {/* title & finished date */}
         <div className="flex justify-between gap-8">
           <FormGrouping title="Title" required>
             <Input
@@ -220,19 +227,31 @@ const ProjectForm = forwardRef<HTMLFormElement, Props>(
             />
           </FormGrouping>
 
-          <FormGrouping title="Subtitle" required>
+          <FormGrouping title="Finished at">
             <Input
-              type="text"
-              title="Subtitle"
-              placeholder="Subtitle"
-              name="subtitle"
+              type="date"
+              title="Finished at"
+              placeholder="Finished at"
+              name="finished_at"
               disabled={disabled}
-              required
-              value={formState.subtitle}
+              value={formState.finished_at.toString()}
               onChange={formStateChange}
             />
           </FormGrouping>
         </div>
+
+        <FormGrouping title="Subtitle" required>
+          <Input
+            type="text"
+            title="Subtitle"
+            placeholder="Subtitle"
+            name="subtitle"
+            disabled={disabled}
+            required
+            value={formState.subtitle}
+            onChange={formStateChange}
+          />
+        </FormGrouping>
 
         {/* label & status */}
         <div className="flex justify-between gap-8">
