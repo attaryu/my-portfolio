@@ -1,63 +1,59 @@
 'use client';
 
-import { MdNorthEast, MdOutlineFeedback, MdShare } from 'react-icons/md';
+import {
+  Link,
+  Media,
+  Project,
+  ProjectLink as ProjectLinkType,
+  ProjectPreview,
+  Tech,
+} from '@prisma/client';
 
 import ProjectLink from '@/components/ProjectLink';
+import dayjs from 'dayjs';
 
 type Props = {
   id: string;
-  data: any;
+  data: Project & {
+    cover: Media;
+    techStacks: Array<Tech & { media: Media }>;
+    previews: Array<ProjectPreview & { image: Media }>;
+    links: Array<ProjectLinkType & { link: Link }>;
+  };
 };
 
-export default function Dump({ data, id }: Readonly<Props>) {
+export default function Dump({ data }: Readonly<Props>) {
   return (
     <main>
-      <section className="detail-project-grid-template grid h-screen place-items-center gap-y-4 px-8 py-2 md:px-20 xl:gap-y-4 xl:py-6">
-        <h1 className="col-span-2 font-tusker-grotesk-medium text-6xl md:col-span-1 md:row-span-2 md:justify-self-start md:text-8xl">
+      <section className="flex h-[90vh] flex-col gap-6 px-8 py-4 xl:gap-4 md:px-20">
+        <h1 className="font-tusker-grotesk-medium text-6xl md:text-8xl">
           {data.title.toUpperCase()}
         </h1>
 
         <img
-          src={
-            process.env.NEXT_PUBLIC_CMS_REQUEST_URL +
-            data.cover.data.attributes.formats.large.url
-          }
-          className="col-span-2 h-full w-full overflow-hidden rounded-2xl object-cover"
+          src={`/images/${data.cover.extension}/${data.cover.title}.${data.cover.extension}`}
+          className="grow overflow-hidden rounded-2xl object-cover"
           alt=""
         />
-        <p className="col-span-2 justify-self-start text-xl md:col-span-1 md:col-start-2 md:row-start-2 md:self-start md:justify-self-end md:text-end md:text-lg lg:text-xl">
-          {data.short_description}
-        </p>
 
-        <p className="w-fit self-start justify-self-start rounded-full border border-zinc-900 px-2.5 py-1.5 md:col-start-2 md:row-start-1 md:self-end md:justify-self-end lg:px-4 lg:text-lg">
-          {data.label[0].toUpperCase() + data.label.slice(1)} Project
-        </p>
+        <div className="flex flex-col gap-6 xl:flex-row xl:justify-between">
+          <p className="text-xl md:self-start md:text-end md:text-lg lg:text-xl">
+            {data.subtitle}
+          </p>
 
-        <div className="flex items-center justify-end gap-6 self-start justify-self-end md:col-start-2 md:self-center lg:gap-8">
-          <a
-            href={`/project/${id}`}
-            className="text-2xl md:text-3xl lg:text-4xl xl:text-3xl"
-          >
-            <MdShare />
-          </a>
+          <div className="flex items-center gap-6 xl:flex-row-reverse xl:items-start">
+            <p className="w-fit rounded-full border border-zinc-900 px-2.5 py-1.5 lg:px-4 lg:text-lg">
+              {data.label[0].toUpperCase() + data.label.slice(1)} Project
+            </p>
 
-          <a
-            href={`/project/${id}`}
-            className="text-2xl md:text-3xl lg:text-4xl xl:text-3xl"
-          >
-            <MdOutlineFeedback />
-          </a>
-
-          <a
-            href={`/project/${id}`}
-            className="text-2xl md:text-3xl lg:text-4xl xl:text-3xl"
-          >
-            <MdNorthEast />
-          </a>
+            <p className="text-sm">
+              Launched {dayjs(data.finished_at).format('MMMM D, YYYY')}
+            </p>
+          </div>
         </div>
       </section>
 
-      <section className="space-y-4 px-8 md:mt-12 md:px-20 xl:space-y-6">
+      <section className="mt-8 space-y-4 px-8 md:mt-12 md:px-20 xl:space-y-6">
         <h2 className="font-neue-montreal-medium text-3xl md:text-4xl">
           What it is?
         </h2>
@@ -73,13 +69,10 @@ export default function Dump({ data, id }: Readonly<Props>) {
         </h2>
 
         <div className="flex gap-8 overflow-x-auto px-8 md:px-20">
-          {data.preview.data.map((img: any) => (
+          {data.previews.map((preview) => (
             <img
-              key={img.id}
-              src={
-                process.env.NEXT_PUBLIC_CMS_REQUEST_URL +
-                img.attributes.formats.large.url
-              }
+              key={preview.id}
+              src={`/images/${preview.image.extension}/${preview.image.title}.${preview.image.extension}`}
               alt=""
               className="aspect-[1/1.2] w-64 rounded-xl object-cover shadow-lg md:w-[30rem] xl:aspect-[2/1] xl:w-[75rem] xl:rounded-2xl"
             />
@@ -93,21 +86,18 @@ export default function Dump({ data, id }: Readonly<Props>) {
         </h2>
 
         <ul className="flex flex-wrap gap-4 overflow-x-auto px-8 md:px-20">
-          {data.tech_stacks.data.map((tech: any) => (
+          {data.techStacks.map((tech) => (
             <li
               key={tech.id}
               className="flex items-center gap-2 rounded-full border border-zinc-900 px-2.5 py-1.5 md:gap-3 md:px-3 md:py-2"
             >
               <img
-                src={
-                  process.env.NEXT_PUBLIC_CMS_REQUEST_URL +
-                  tech.attributes.icon.data.attributes.url
-                }
-                alt={`${tech.attributes.title}'s logo`}
+                src={`/images/${tech.media.extension}/${tech.media.title}.${tech.media.extension}`}
+                alt={`${tech.name}'s logo`}
                 className="size-9 p-1 md:size-10"
               />
               <p className="inline-block font-neue-montreal-medium md:text-lg">
-                {tech.attributes.title}
+                {tech.name}
               </p>
             </li>
           ))}
@@ -120,13 +110,13 @@ export default function Dump({ data, id }: Readonly<Props>) {
         </h2>
 
         <ul>
-          {data.links.data.map((link: any) => (
+          {data.links.map(({ link }) => (
             <li key={link.id} className="pt-2 md:pt-4">
               <ProjectLink
-                title={link.attributes.title}
-                url={link.attributes.link}
+                title={link.title}
+                url={link.url}
                 urlTarget="_blank"
-                subtitle={link.attributes.link_title}
+                subtitle={link.subtitle}
               />
             </li>
           ))}

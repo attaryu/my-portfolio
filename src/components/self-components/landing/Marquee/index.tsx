@@ -1,15 +1,15 @@
 'use client';
 
 import { useGSAP } from '@gsap/react';
+import { Media, Tech } from '@prisma/client';
 import gsap from 'gsap';
-import { useEffect, useRef } from 'react';
 
 import BoxLogo from './BoxLogo';
 
 gsap.registerPlugin(useGSAP);
 
 type Prop = {
-  icons: any;
+  icons: Array<Tech & { media: Media }>;
 };
 
 export default function Marquee({ icons }: Readonly<Prop>) {
@@ -25,8 +25,8 @@ export default function Marquee({ icons }: Readonly<Prop>) {
       duration: 30,
     };
 
-    gsap.to('.scroller-1', {...animation, xPercent: -100 });
-    gsap.to('.scroller-2', {...animation, xPercent: 100 });
+    gsap.to('.scroller-1', { ...animation, xPercent: -100 });
+    gsap.to('.scroller-2', { ...animation, xPercent: 100 });
   }, []);
 
   return (
@@ -35,21 +35,21 @@ export default function Marquee({ icons }: Readonly<Prop>) {
         {/* direction 1 */}
         <div className="relative flex w-max">
           <div className="scroller-1 grid w-max grid-flow-col grid-rows-1 gap-5 pr-5 md:gap-8 md:pr-8 lg:gap-10 lg:pr-10">
-            {firstSectionLogo.map((data: any) => (
+            {firstSectionLogo.map((data) => (
               <BoxLogo
                 key={data.id}
-                url={data.attributes.icon.data.attributes.url}
-                name={data.attributes.icon.data.attributes.alternativeText}
+                url={`/images/${data.media.extension}/${data.media.title}.${data.media.extension}`}
+                name={data.name}
               />
             ))}
           </div>
 
           <div className="scroller-1 absolute left-full grid w-max grid-flow-col grid-rows-1 gap-5 pr-5 md:gap-8 md:pr-8 lg:gap-10 lg:pr-10">
-            {firstSectionLogo.map((data: any) => (
+            {firstSectionLogo.map((data) => (
               <BoxLogo
                 key={data.id}
-                url={data.attributes.icon.data.attributes.url}
-                name={data.attributes.icon.data.attributes.alternativeText}
+                url={`/images/${data.media.extension}/${data.media.title}.${data.media.extension}`}
+                name={data.name}
                 aria-hidden
               />
             ))}
@@ -59,21 +59,21 @@ export default function Marquee({ icons }: Readonly<Prop>) {
         {/* direction 2 */}
         <div className="relative flex w-max">
           <div className="scroller-2 grid w-max grid-flow-col grid-rows-1 gap-5 pr-5 md:gap-8 md:pr-8 lg:gap-10 lg:pr-10">
-            {secondSectionLogo.map((data: any) => (
+            {secondSectionLogo.map((data) => (
               <BoxLogo
                 key={data.id}
-                url={data.attributes.icon.data.attributes.url}
-                name={data.attributes.icon.data.attributes.alternativeText}
+                url={`/images/${data.media.extension}/${data.media.title}.${data.media.extension}`}
+                name={data.name}
               />
             ))}
           </div>
 
           <div className="scroller-2 absolute right-full grid w-max grid-flow-col grid-rows-1 gap-5 pr-5 md:gap-8 md:pr-8 lg:gap-10 lg:pr-10">
-            {secondSectionLogo.map((data: any) => (
+            {secondSectionLogo.map((data) => (
               <BoxLogo
                 key={data.id}
-                url={data.attributes.icon.data.attributes.url}
-                name={data.attributes.icon.data.attributes.alternativeText}
+                url={`/images/${data.media.extension}/${data.media.title}.${data.media.extension}`}
+                name={data.name}
                 aria-hidden
               />
             ))}

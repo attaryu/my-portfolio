@@ -8,12 +8,12 @@ type Props = { children: React.ReactNode };
 
 export default function Layout({ children }: Readonly<Props>) {
   return (
-    <div className="${fontVariables} mx-auto max-w-widhest bg-white">
+    <div className="${fontVariables} mx-auto max-w-widhest">
       <Lenis>
         <Loading />
 
         {/* <div className="root-container relative" id="top"> */}
-        <div className="root-container relative h-svh overflow-hidden" id="top">
+        <div className="root-container relative h-svh overflow-hidden bg-white" id="top">
           <Navbar />
           {children}
           <Footer />

@@ -7,19 +7,29 @@ import SocialMedia from '@/components/self-components/landing/SocialMedia';
 import SomeWord from '@/components/self-components/landing/SomeWord';
 import TechStack from '@/components/self-components/landing/TechStack';
 
-import fetcher from '@/utils/fetcher';
+import prisma from '../api/database';
 
 export default async function Page() {
-  const landingData: any = await fetcher(
-    '/landing?populate[tech_skills][populate]=icon&populate[selected_projects][populate][0]=cover&populate[selected_projects][populate][1]=links&populate=social_medias',
-  );
+  const techs = await prisma.tech.findMany({ include: { media: true } });
+
+  const selectedProjects = await prisma.project.findMany({
+    include: {
+      cover: true,
+      links: {
+        include: { link: true },
+        where: { link: { title: 'Live Production' } },
+      },
+    },
+    orderBy: { created_at: 'desc' },
+    take: 5,
+  });
 
   return (
     <main>
       {/* grid area */}
       <div>
         {/* grid backgroud */}
-        <div className="absolute top-0 -z-10 h-[240vh] w-full">
+        <div className="absolute top-0 h-[240vh] w-full">
           <Grid />
         </div>
 
@@ -31,21 +41,20 @@ export default async function Page() {
       </div>
 
       {/* tech skill */}
-      <TechStack icons={landingData.data.attributes.tech_skills.data} />
+      <TechStack icons={techs} />
 
       {/* some word */}
       <SomeWord />
 
       {/* showcase selected project */}
-      <SelectedProject
-        data={landingData.data.attributes.selected_projects.data}
-      />
+      <SelectedProject data={selectedProjects} />
 
       {/* offering project */}
       <Collaboration />
 
       {/* my social media and etc */}
-      <SocialMedia data={landingData.data.attributes.social_medias.data} />
+      {/* BACKLOG: membuat link media sosial dari sisi admin, bukan static */}
+      <SocialMedia />
     </main>
   );
 }

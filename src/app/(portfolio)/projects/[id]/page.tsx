@@ -1,4 +1,5 @@
-import fetcher from '@/utils/fetcher';
+import prisma from '@/app/api/database';
+
 import Dump from './Dump';
 
 type Props = {
@@ -6,9 +7,19 @@ type Props = {
 };
 
 export default async function Page({ params }: Readonly<Props>) {
-  const data = await fetcher(
-    `/projects/${params.id}?populate[1]=cover&populate[2]=preview&populate[3]=links&populate[0]=tech_stacks.icon`,
-  );
+  const data = await prisma.project.findUnique({
+    where: { id: parseInt(params.id) },
+    include: {
+      cover: true,
+      techStacks: { include: { media: true } },
+      previews: { include: { image: true } },
+      links: { include: { link: true } },
+    },
+  });
 
-  return <Dump data={data.data.attributes} id={params.id} />;
+  if (!data) {
+    return <p>Project with id {params.id} doesn't exist</p>
+  }
+
+  return <Dump data={data} id={params.id} />;
 }

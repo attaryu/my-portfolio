@@ -7,17 +7,15 @@ import { useRef } from 'react';
 import { MdLocationOn, MdMail } from 'react-icons/md';
 
 import Button from '@/components/Button';
+
 import sequenceAnimation from '@/utils/text-animation/sequence';
 import wipeAnimation from '@/utils/text-animation/wipe';
 import textSplitter from '@/utils/textSplitter';
-
-type Props = {
-  data: any;
-};
+import { socialMedias } from '@/utils/constant';
 
 gsap.registerPlugin(useGSAP);
 
-export default function SocialMedia({ data }: Readonly<Props>) {
+export default function SocialMedia() {
   const containerRef = useRef<HTMLDivElement | null>(null);
 
   // title animation
@@ -88,14 +86,14 @@ export default function SocialMedia({ data }: Readonly<Props>) {
         </h2>
 
         <div className="flex flex-wrap content-end items-end gap-x-4 gap-y-4 md:justify-end">
-          {data.map((data: any) => (
+          {socialMedias.map((data) => (
             <Button
               key={data.id}
-              href={data.attributes.link}
+              href={data.url}
               target="_blank"
               secondary
             >
-              {data.attributes.title}
+              {data.title}
             </Button>
           ))}
         </div>

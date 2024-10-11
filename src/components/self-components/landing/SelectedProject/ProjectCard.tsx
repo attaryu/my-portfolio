@@ -1,6 +1,7 @@
 'use client';
 
 import { useGSAP } from '@gsap/react';
+import { Link, Media, Project, ProjectLink } from '@prisma/client';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useRef } from 'react';
@@ -10,18 +11,15 @@ import AnimatedLink from '@/components/AnimatedLink';
 import Button from '@/components/Button';
 
 interface Prop {
-  project: {
-    title: string;
-    short_description: string;
-    cover: any;
-    links: any;
+  project: Project & {
+    cover: Media;
+    links: Array<ProjectLink & { link: Link }>;
   };
-  detailURL: string;
 }
 
 gsap.registerPlugin(useGSAP);
 
-export default function ProjectCard({ project, detailURL }: Readonly<Prop>) {
+export default function ProjectCard({ project }: Readonly<Prop>) {
   const containerRef = useRef<HTMLDivElement | null>(null);
 
   useGSAP(() => {
@@ -47,20 +45,13 @@ export default function ProjectCard({ project, detailURL }: Readonly<Prop>) {
     >
       {/* background image */}
       <img
-        src={
-          process.env.NEXT_PUBLIC_CMS_REQUEST_URL +
-          project.cover.data.attributes.formats.medium.url
-        }
+        src={`/images/${project.cover.extension}/${project.cover.title}.${project.cover.extension}`}
         alt=""
         className="absolute left-0 top-0 h-full w-full object-cover brightness-[0.3]"
       />
 
       <Button
-        href={
-          project.links.data.find(
-            (link: any) => link.attributes.title === 'Live Production',
-          ).attributes.link
-        }
+        href={project.links[0].link.url}
         secondary
         target="_blank"
         className="z-10 self-end !border-zinc-100 !p-3 !text-2xl lg:!text-3xl"
@@ -75,12 +66,12 @@ export default function ProjectCard({ project, detailURL }: Readonly<Prop>) {
           </h3>
 
           <p className="mt-3 text-sm md:mt-2 md:text-lg lg:text-xl xl:mt-4">
-            {project.short_description}
+            {project.subtitle}
           </p>
         </div>
 
         <AnimatedLink
-          href={`/projects/${detailURL}`}
+          href={`/projects/${project.id}`}
           className="flex h-fit w-full cursor-pointer items-center justify-center gap-3 rounded-full border border-zinc-100 px-4 py-2 md:w-fit md:px-6 md:py-3 md:text-xl lg:text-2xl xl:gap-4"
         >
           Detail <MdOpenInFull />

@@ -15,29 +15,4 @@
   .debug {
     @apply outline outline-2 outline-red-500;
   }
-
-  .detail-project-grid-template {
-    grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: 1fr 4fr 1fr 1fr;
-  }
-
-  @media screen and (min-width: 768px) {
-    .detail-project-grid-template {
-      grid-template-columns: 1fr 1fr;
-      grid-template-rows: 0.7fr 0.7fr 7fr 0.4fr;
-    }
-  }
-  
-  @media screen and (min-width: 1366px) {
-    .detail-project-grid-template {
-      grid-template-columns: 1fr 1fr;
-      grid-template-rows: 1fr 1fr 10fr 1fr;
-    }
-  }
-  
-  @media screen and (min-width: 1920px) {
-    .detail-project-grid-template {
-      grid-template-rows: 0.8fr 0.8fr 6fr 1fr;
-    }
-  }
 }

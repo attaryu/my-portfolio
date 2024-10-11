@@ -1,6 +1,7 @@
 'use client';
 
 import { useGSAP } from '@gsap/react';
+import { Media, Tech } from '@prisma/client';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useEffect, useRef, useState } from 'react';
@@ -13,7 +14,7 @@ import Marquee from './Marquee';
 
 gsap.registerPlugin(useGSAP);
 
-type Prop = { icons: any };
+type Prop = { icons: Array<Tech & { media: Media }> };
 
 export default function TechStack({ icons }: Readonly<Prop>) {
   const { subscribe } = useEvent('loadingAnimation@end');

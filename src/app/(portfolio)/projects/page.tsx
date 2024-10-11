@@ -1,13 +1,26 @@
+import { Link, Project, ProjectLink as ProjectLinkType } from '@prisma/client';
+
+import prisma from '@/app/api/database';
 import ProjectLink from '@/components/ProjectLink';
-import fetcher from '@/utils/fetcher';
+
+type ProjectRelation = Project & {
+  links: Array<ProjectLinkType & { link: Link }>;
+};
 
 export default async function Page() {
-  const data = await fetcher(
-    '/links?filters[title]=Live Production&populate[project][fields][0]=title&populate[project][fields][1]=finish_at&fields[0]=link_title&fields[1]=link',
-  ).then((res) => projectsGrouping(res.data));
+  const data = await prisma.project
+    .findMany({
+      include: {
+        links: {
+          include: { link: true },
+          where: { link: { title: 'Live Production' } },
+        },
+      },
+    })
+    .then((res) => projectsGrouping(res));
 
   // function for project grouping by month and year
-  function projectsGrouping(projects: any) {
+  function projectsGrouping(projects: ProjectRelation[]) {
     const monthsName = [
       'January',
       'February',
@@ -23,10 +36,10 @@ export default async function Page() {
       'December',
     ];
 
-    const groupBy: any[] = [];
+    const groupBy: { date: string; projects: ProjectRelation[] }[] = [];
 
-    projects.forEach((data: any) => {
-      const date = new Date(data.attributes.project.data.attributes.finish_at);
+    projects.forEach((data) => {
+      const date = new Date(data.finished_at);
       const format = `${monthsName[date.getMonth()]} ${date.getFullYear()}`;
 
       const groupIndex = groupBy.findIndex((group) => group.date === format);
@@ -34,22 +47,10 @@ export default async function Page() {
       if (groupIndex < 0) {
         groupBy.push({
           date: format,
-          projects: [
-            {
-              ...data.attributes.project.data.attributes,
-              id: data.attributes.project.data.id,
-              link: data.attributes.link,
-              link_title: data.attributes.link_title,
-            },
-          ],
+          projects: [data],
         });
       } else {
-        groupBy[groupIndex].projects.push({
-          ...data.attributes.project.data.attributes,
-          id: data.attributes.project.data.id,
-          link: data.attributes.link,
-          link_title: data.attributes.link_title,
-        });
+        groupBy[groupIndex].projects.push(data);
       }
     });
 
@@ -66,7 +67,7 @@ export default async function Page() {
         <div className="w-[1px] rounded-full bg-zinc-900 md:w-[2px]" />
 
         <ol className="w-full">
-          {data.map((data: any) => (
+          {data.map((data) => (
             <li key={data.date} className="pb-8 md:pb-10">
               <h2 className="flex items-center gap-1 text-sm md:gap-3 md:text-lg">
                 <span className="inline-block h-[1px] w-3 rounded-full bg-zinc-900 md:h-[2px] md:w-7" />
@@ -75,13 +76,13 @@ export default async function Page() {
 
               {/* project list */}
               <ul className="pl-4 md:pl-9">
-                {data.projects.map((project: any) => (
+                {data.projects.map((project) => (
                   <li key={project.id} className="pt-2 md:pt-4">
                     <ProjectLink
                       title={project.title}
                       url={`/projects/${project.id}`}
-                      subtitle={project.link_title}
-                      subtitleUrl={project.link}
+                      subtitle={project.links[0].link.title}
+                      subtitleUrl={project.links[0].link.url}
                       subtitleUrlTarget="_blank"
                     />
                   </li>

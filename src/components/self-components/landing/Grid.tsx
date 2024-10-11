@@ -28,7 +28,7 @@ export default function Grid() {
 
   const playAnimation = contextSafe((isSmall: boolean) => {
     gsap.to('.grid-box', {
-      borderColor: 'white',
+      borderColor: 'transparent',
       stagger: {
         from: Math.floor(Math.random() * (totalBox * 0.6)),
         grid: 'auto',
