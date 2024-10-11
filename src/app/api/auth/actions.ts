@@ -49,6 +49,4 @@ export async function logoutAction() {
 
     cookies().delete('auth');
   } catch {}
-
-  return;
 }
