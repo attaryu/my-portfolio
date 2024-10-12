@@ -1,16 +1,11 @@
 'use server';
 
 import { cookies } from 'next/headers';
-import { redirect } from 'next/navigation';
-import fs from 'node:fs/promises';
-import path from 'node:path';
 
 import { makeToken } from '@/utils/jwt';
 
-const credentialFilePath = path.resolve('storages', 'credentials.txt');
-
 export async function authenticationAction(
-  _prevState: { error: boolean; message: string },
+  _prevState: { error: boolean; message: string } | null,
   form: FormData,
 ) {
   const credentials = {
@@ -24,13 +19,11 @@ export async function authenticationAction(
   ) {
     return {
       error: true,
-      message: 'Kredensial tidak sesuai, ulangi lagi!',
+      message: 'The credentials are not match, try again!',
     };
   }
 
   const token = await makeToken();
-
-  await fs.writeFile(credentialFilePath, token);
 
   cookies().set('auth', token, {
     secure: true,
@@ -39,14 +32,12 @@ export async function authenticationAction(
     expires: Date.now() + 1000 * 60 * 60 * 24,
   });
 
-  return redirect('/admin');
+  return {
+    error: false,
+    message: 'Success!'
+  };
 }
 
 export async function logoutAction() {
-  try {
-    await fs.access(credentialFilePath);
-    await fs.unlink(credentialFilePath);
-
-    cookies().delete('auth');
-  } catch {}
+  cookies().delete('auth');
 }

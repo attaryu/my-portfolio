@@ -1,6 +1,6 @@
 'use client';
 
-import { redirect, useSearchParams } from 'next/navigation';
+import { redirect, useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { useFormState } from 'react-dom';
 
@@ -9,14 +9,23 @@ import { Button } from '@/components/shadcn-ui/button';
 import { Input } from '@/components/shadcn-ui/input';
 
 export default function Page() {
+  const router = useRouter();
   const searchParams = useSearchParams();
   const [isLoading, setIsLoading] = useState(false);
-  const [formState, formActionOrigin] = useFormState(authenticationAction, {
-    error: true,
-    message: '',
-  });
+  const [formState, formActionOrigin] = useFormState(
+    authenticationAction,
+    null,
+  );
 
-  useEffect(() => setIsLoading(false), [formState]);
+  useEffect(() => {
+    if (formState && !formState.error) {
+      setTimeout(() => {
+        router.push('/admin');
+      }, 3000);
+    }
+
+    setIsLoading(false);
+  }, [formState]);
 
   useEffect(() => {
     if (searchParams.get('action') === 'log_out') {
@@ -58,11 +67,13 @@ export default function Page() {
             placeholder="Password"
           />
 
-          <small
-            className={`inline-block text-sm font-medium leading-none ${formState.error ? 'text-red-300' : 'text-green-300'}`}
-          >
-            {formState.message}
-          </small>
+          {formState && (
+            <small
+              className={`inline-block text-sm font-medium leading-none ${formState.error ? 'text-red-300' : 'text-green-300'}`}
+            >
+              {formState.message}
+            </small>
+          )}
         </div>
 
         <div className="flex gap-3">
