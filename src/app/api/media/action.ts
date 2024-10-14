@@ -78,7 +78,7 @@ export async function updateMedia(
     id: formData.get('id')!.toString(),
     title: formData.get('title')!.toString().split(' ').join('_'),
     extension: media.size
-      ? /^.*\.(svg|jpg|jpeg|png)$/i.exec(media.name)![0]
+      ? /^.*\.(svg|jpg|jpeg|png)$/i.exec(media.name)![1]
       : undefined,
   };
 
@@ -159,13 +159,10 @@ export async function deleteMedia(id: number) {
 type FileParameter = { title: string; extension: string };
 
 const createFile = async (data: FileParameter, buffer: Buffer) => {
-  const { url } = await put(
-    `${data.extension}/${data.title}.${data.extension}`,
-    buffer,
-    {
-      access: 'public',
-    },
-  );
+  const { url } = await put(mediaBlobPath(data), buffer, {
+    access: 'public',
+    addRandomSuffix: true,
+  });
 
   return url;
 };
@@ -179,11 +176,14 @@ const updateFile = async (
 
   if (buffer) {
     await deleteFile(oldData);
-    const { url } = await put(newDataPath, buffer, { access: 'public' });
+    const url = await createFile(newData, buffer);
 
     return url;
   } else {
-    const { url } = await copy(oldData.url, newDataPath, { access: 'public' });
+    const { url } = await copy(oldData.url, newDataPath, {
+      access: 'public',
+      addRandomSuffix: true,
+    });
     await deleteFile(oldData);
 
     return url;
