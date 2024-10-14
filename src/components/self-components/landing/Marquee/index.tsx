@@ -36,11 +36,7 @@ export default function Marquee({ icons }: Readonly<Prop>) {
         <div className="relative flex w-max">
           <div className="scroller-1 grid w-max grid-flow-col grid-rows-1 gap-5 pr-5 md:gap-8 md:pr-8 lg:gap-10 lg:pr-10">
             {firstSectionLogo.map((data) => (
-              <BoxLogo
-                key={data.id}
-                url={`/images/${data.media.extension}/${data.media.title}.${data.media.extension}`}
-                name={data.name}
-              />
+              <BoxLogo key={data.id} url={data.media.url} name={data.name} />
             ))}
           </div>
 
@@ -48,7 +44,7 @@ export default function Marquee({ icons }: Readonly<Prop>) {
             {firstSectionLogo.map((data) => (
               <BoxLogo
                 key={data.id}
-                url={`/images/${data.media.extension}/${data.media.title}.${data.media.extension}`}
+                url={data.media.url}
                 name={data.name}
                 aria-hidden
               />
@@ -60,11 +56,7 @@ export default function Marquee({ icons }: Readonly<Prop>) {
         <div className="relative flex w-max">
           <div className="scroller-2 grid w-max grid-flow-col grid-rows-1 gap-5 pr-5 md:gap-8 md:pr-8 lg:gap-10 lg:pr-10">
             {secondSectionLogo.map((data) => (
-              <BoxLogo
-                key={data.id}
-                url={`/images/${data.media.extension}/${data.media.title}.${data.media.extension}`}
-                name={data.name}
-              />
+              <BoxLogo key={data.id} url={data.media.url} name={data.name} />
             ))}
           </div>
 
@@ -72,7 +64,7 @@ export default function Marquee({ icons }: Readonly<Prop>) {
             {secondSectionLogo.map((data) => (
               <BoxLogo
                 key={data.id}
-                url={`/images/${data.media.extension}/${data.media.title}.${data.media.extension}`}
+                url={data.media.url}
                 name={data.name}
                 aria-hidden
               />

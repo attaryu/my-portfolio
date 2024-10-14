@@ -16,10 +16,7 @@ import {
 import Text from '@/components/Text';
 
 interface Props extends React.FormHTMLAttributes<HTMLFormElement> {
-  techData?: Omit<
-    Tech & { media: Media },
-    'created_at' | 'logoId' | 'projects'
-  >;
+  techData?: Tech & { media: Media };
   mediaData: Media[];
   id: string;
   disabled?: boolean;
@@ -32,28 +29,19 @@ const TechForm = forwardRef<HTMLFormElement, Props>(
       logoId: techData?.media.id.toString() ?? '',
     });
 
-    const selectedLogoPreviewUrl = useMemo(() => {
-      const logo = mediaData.find(
-        ({ id }) => id === parseInt(formState.logoId),
-      );
+    const selectedLogoPreviewUrl = useMemo(
+      () =>
+        mediaData.find(({ id }) => id === parseInt(formState.logoId))?.url ??
+        '#',
+      [formState.logoId],
+    );
 
-      if (logo) {
-        return `/images/${logo.extension}/${logo.title}.${logo.extension}`;
-      }
-
-      return '#';
-    }, [formState.logoId]);
-
-    useEffect(() => {
-      resetFormState();
-    }, [disabled]);
+    useEffect(() => resetFormState(), [disabled]);
 
     const changeFormState = (
       e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement> | string,
       name?: string,
     ) => {
-      console.log('formState: ', formState);
-
       if (typeof e === 'string') {
         return setFormState((previousState) => ({
           ...previousState,

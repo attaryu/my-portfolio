@@ -45,7 +45,7 @@ export default function ProjectCard({ project }: Readonly<Prop>) {
     >
       {/* background image */}
       <img
-        src={`/images/${project.cover.extension}/${project.cover.title}.${project.cover.extension}`}
+        src={project.cover.url}
         alt=""
         className="absolute left-0 top-0 h-full w-full object-cover brightness-[0.3]"
       />

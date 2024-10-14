@@ -12,7 +12,7 @@ import TechForm from '../TechForm';
 import Time from '@/components/Time';
 
 type Props = {
-  techData: Omit<Tech & { media: Media }, 'created_at' | 'logoId' | 'projects'>;
+  techData: Tech & { media: Media };
   mediaData: Media[];
 };
 

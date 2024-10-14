@@ -1,49 +1,12 @@
 'use server';
 
 import { Media, MediaExtension, Prisma } from '@prisma/client';
+import { copy, del, put } from '@vercel/blob';
 import { revalidatePath } from 'next/cache';
-import fs from 'node:fs/promises';
-import path from 'node:path';
 
+import { mediaBlobPath } from '@/utils/blob';
 import prisma from '../database';
 import { ActionResponse } from '../response-type';
-
-export async function getMedia(id: string) {
-  try {
-    const data = await prisma.media.findUnique({
-      where: { id: parseInt(id) },
-      select: {
-        id: true,
-        title: true,
-        extension: true,
-        created_at: true,
-        updated_at: true,
-      },
-    });
-
-    if (!data) {
-      return {
-        error: false,
-        message: `Media with id ${id} doesn't exist`,
-      };
-    }
-
-    return {
-      error: false,
-      message: 'Success',
-      payload: {
-        media: data,
-      },
-    };
-  } catch (error) {
-    console.error(error);
-
-    return {
-      error: true,
-      message: 'Unexpected error, try again!',
-    };
-  }
-}
 
 export async function addMedia(
   _: { error: boolean; message: string; id?: number } | null,
@@ -52,8 +15,10 @@ export async function addMedia(
   const media = formData.get('media') as File;
 
   const payload = {
-    title: formData.get('title')?.toString().split(' ').join('_'),
-    extension: media.name.match(/^.*\.(svg|jpg|jpeg|png)$/i),
+    title: formData.get('title')!.toString().split(' ').join('_'),
+    extension: /^.*\.(svg|jpg|jpeg|png)$/i.exec(
+      media.name,
+    )![1] as unknown as MediaExtension,
   };
 
   try {
@@ -61,15 +26,12 @@ export async function addMedia(
       if (!(payload.title && payload.extension)) {
         throw new Error('Empty form');
       }
+      const url = await createFile(
+        payload,
+        Buffer.from(await media.arrayBuffer()),
+      );
 
-      const newData = await client.media.create({
-        data: {
-          title: payload.title,
-          extension: payload.extension[1] as MediaExtension,
-        },
-      });
-
-      await createFile(newData, Buffer.from(await media.arrayBuffer()));
+      const newData = await client.media.create({ data: { ...payload, url } });
 
       return newData;
     });
@@ -113,46 +75,39 @@ export async function updateMedia(
   const media = formData.get('media') as File;
 
   const payload = {
-    id: formData.get('id')?.toString(),
-    title: formData.get('title')?.toString().split(' ').join('_'),
-    extension: media.name.match(/^.*\.(svg|jpg|jpeg|png)$/i),
+    id: formData.get('id')!.toString(),
+    title: formData.get('title')!.toString().split(' ').join('_'),
+    extension: /^.*\.(svg|jpg|jpeg|png)$/i.exec(
+      media.name,
+    )![1] as unknown as MediaExtension,
   };
+  console.log('payload:', payload);
 
   try {
-    if (!payload.id) {
-      throw new Error('Empty form');
-    }
-
     const id = parseInt(payload.id);
 
     const updatedData = await prisma.$transaction(async (client) => {
-      // get existing data
       const oldData = await client.media.findUnique({ where: { id } });
 
-      // validate it
       if (!oldData) {
         throw new Error(`Media with id ${payload.id} doesn't exist`);
       }
 
-      // update data
+      const url = await updateFile(
+        payload,
+        oldData,
+        media.size ? Buffer.from(await media.arrayBuffer()) : undefined,
+      );
+
       const updatedData = await client.media.update({
         where: { id },
         data: {
           title: payload.title,
-          extension: payload.extension
-            ? (payload.extension[1] as MediaExtension)
-            : undefined,
+          extension: payload.extension,
+          url,
         },
       });
 
-      // rename media or change media
-      await updateFile(
-        oldData,
-        updatedData,
-        media.size ? Buffer.from(await media.arrayBuffer()) : undefined,
-      );
-
-      // return new data
       return updatedData;
     });
 
@@ -199,42 +154,40 @@ export async function deleteMedia(id: number) {
   }
 }
 
-const createFile = async (data: Media, buffer: Buffer) => {
-  const mediaPath = path.resolve('public', 'images', data.extension);
+type FileParameter = { title: string; extension: string };
 
-  try {
-    await fs.mkdir(mediaPath);
-  } catch {}
-
-  await fs.writeFile(
-    mediaPath + `/${data.title}.${data.extension}`,
-    new Int8Array(buffer),
+const createFile = async (data: FileParameter, buffer: Buffer) => {
+  const { url } = await put(
+    `${data.extension}/${data.title}.${data.extension}`,
+    buffer,
+    {
+      access: 'public',
+    },
   );
+
+  return url;
 };
 
-const updateFile = async (lastData: Media, oldData: Media, buffer?: Buffer) => {
-  const lastMediaPath = path.resolve('public', 'images', lastData.extension);
-  const newMediaPath = path.resolve('public', 'images', oldData.extension);
-
-  try {
-    await fs.mkdir(newMediaPath);
-  } catch {}
+const updateFile = async (
+  newData: FileParameter,
+  oldData: Media,
+  buffer?: Buffer,
+) => {
+  const newDataPath = mediaBlobPath(newData);
 
   if (buffer) {
-    await fs.unlink(lastMediaPath + `/${lastData.title}.${lastData.extension}`);
-    await fs.writeFile(
-      newMediaPath + `/${oldData.title}.${oldData.extension}`,
-      new Int8Array(buffer),
-    );
+    await deleteFile(oldData);
+    const { url } = await put(newDataPath, buffer, { access: 'public' });
+
+    return url;
   } else {
-    await fs.rename(
-      lastMediaPath + `/${lastData.title}.${lastData.extension}`,
-      newMediaPath + `/${oldData.title}.${oldData.extension}`,
-    );
+    const { url } = await copy(oldData.url, newDataPath, { access: 'public' });
+    await deleteFile(oldData);
+
+    return url;
   }
 };
 
 const deleteFile = async (data: Media) => {
-  const mediaPath = path.resolve('public', 'images', data.extension);
-  await fs.unlink(mediaPath + `/${data.title}.${data.extension}`);
+  await del(data.url);
 };

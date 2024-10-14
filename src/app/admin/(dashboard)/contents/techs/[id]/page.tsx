@@ -12,12 +12,7 @@ export default async function TechDetail({ params }: Readonly<Props>) {
   const mediaData = await prisma.media.findMany();
   const techData = await prisma.tech.findUnique({
     where: { id: parseInt(params.id) },
-    select: {
-      id: true,
-      name: true,
-      updated_at: true,
-      media: true,
-    },
+    include: { media: true },
   });
 
   if (!techData) {

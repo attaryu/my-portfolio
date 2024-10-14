@@ -10,11 +10,10 @@ import Time from '@/components/Time';
 import MediaForm from '../MediaForm';
 
 import { updateMedia } from '@/app/api/media/action';
-import { ActionResponse } from '@/app/api/response-type';
 import { useToast } from '@/hooks/use-toast';
 
 type Props = {
-  data: ActionResponse<{ media: Media }>;
+  data: Media | null;
 };
 
 export default function Dump({ data }: Readonly<Props>) {
@@ -47,12 +46,12 @@ export default function Dump({ data }: Readonly<Props>) {
         <Text tag="h1">Detail Media</Text>
 
         <div className="flex items-center gap-4">
-          {data.payload && (
+          {data && (
             <div className="*:text-end">
               <Text tag="p" styling="small">
                 Last update at
               </Text>
-              <Time value={data.payload.media.updated_at} />
+              <Time value={data.updated_at} />
             </div>
           )}
 
@@ -62,7 +61,7 @@ export default function Dump({ data }: Readonly<Props>) {
             </Button>
           )}
 
-          {data.payload && (
+          {data && (
             <Button variant="secondary" onClick={changeMode}>
               {isEdit ? 'Cancel' : 'Edit'}
             </Button>
@@ -70,17 +69,12 @@ export default function Dump({ data }: Readonly<Props>) {
         </div>
       </header>
 
-      {data.payload ? (
-        <MediaForm
-          id={id}
-          data={data.payload.media}
-          disabled={!isEdit}
-          action={formAction}
-        />
+      {data ? (
+        <MediaForm id={id} data={data} disabled={!isEdit} action={formAction} />
       ) : (
         <div className="mt-8">
           <Text tag="h2">Error</Text>
-          <Text tag="p">{data.message}</Text>
+          <Text tag="p">Something error, check the application log</Text>
         </div>
       )}
     </main>

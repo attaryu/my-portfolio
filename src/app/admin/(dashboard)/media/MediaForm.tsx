@@ -21,9 +21,7 @@ const MediaForm = forwardRef<HTMLFormElement, Props>(
     function resetFormState() {
       setFormState({
         title: data?.title ?? '',
-        media: data
-          ? `/images/${data.extension}/${data.title}.${data.extension}`
-          : '',
+        media: data?.url ?? '',
       });
     }
 

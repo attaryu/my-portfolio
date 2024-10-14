@@ -1,5 +1,5 @@
-import { getMedia } from '@/app/api/media/action';
 import Dump from './Dump';
+import prisma from '@/app/api/database';
 
 type Props = {
   params: {
@@ -8,7 +8,9 @@ type Props = {
 };
 
 export default async function DetailMedia({ params }: Readonly<Props>) {
-  const data = await getMedia(params.id);
+  const data = await prisma.media.findUnique({
+    where: { id: parseInt(params.id) },
+  });
 
   return <Dump data={data} />;
 }

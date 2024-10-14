@@ -31,7 +31,7 @@ export default function Dump({ data }: Readonly<Props>) {
         </h1>
 
         <img
-          src={`/images/${data.cover.extension}/${data.cover.title}.${data.cover.extension}`}
+          src={data.cover.url}
           className="grow overflow-hidden rounded-2xl object-cover"
           alt=""
         />
@@ -72,7 +72,7 @@ export default function Dump({ data }: Readonly<Props>) {
           {data.previews.map((preview) => (
             <img
               key={preview.id}
-              src={`/images/${preview.image.extension}/${preview.image.title}.${preview.image.extension}`}
+              src={preview.image.url}
               alt=""
               className="aspect-[1/1.2] w-64 rounded-xl object-cover shadow-lg md:w-[30rem] xl:aspect-[2/1] xl:w-[75rem] xl:rounded-2xl"
             />
@@ -92,7 +92,7 @@ export default function Dump({ data }: Readonly<Props>) {
               className="flex items-center gap-2 rounded-full border border-zinc-900 px-2.5 py-1.5 md:gap-3 md:px-3 md:py-2"
             >
               <img
-                src={`/images/${tech.media.extension}/${tech.media.title}.${tech.media.extension}`}
+                src={tech.media.url}
                 alt={`${tech.name}'s logo`}
                 className="size-9 p-1 md:size-10"
               />

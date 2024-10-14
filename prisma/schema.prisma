@@ -11,6 +11,7 @@ model Media {
   id             Int             @id @default(autoincrement()) @db.SmallInt
   title          String          @unique
   extension      MediaExtension
+  url            String          @unique
   created_at     DateTime        @default(now())
   updated_at     DateTime        @updatedAt
   project        Project?

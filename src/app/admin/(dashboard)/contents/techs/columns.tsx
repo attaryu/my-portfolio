@@ -18,10 +18,7 @@ import { Button } from '@/components/shadcn-ui/button';
 import Text from '@/components/Text';
 import { useToast } from '@/hooks/use-toast';
 
-export type TechColumn = Omit<
-  Tech & { media: Media },
-  'created_at' | 'logoId' | 'projects'
->;
+export type TechColumn = Tech & { media: Media };
 
 export const columns: ColumnDef<TechColumn>[] = [
   {
@@ -44,12 +41,12 @@ export const columns: ColumnDef<TechColumn>[] = [
     header: 'Image',
     cell: ({ row }) => {
       const name = row.getValue('name');
-      const { title, extension }: Media = row.getValue('media');
+      const { url }: Media = row.getValue('media');
 
       return (
         <div className="size-10 rounded-full bg-white p-1.5">
           <img
-            src={`/images/${extension}/${title}.${extension}`}
+            src={url}
             alt={`${name}'s logo`}
             className="h-full w-full object-contain"
           />

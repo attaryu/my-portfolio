@@ -97,13 +97,10 @@ const ProjectForm = forwardRef<HTMLFormElement, Props>(
       [previewIds],
     );
 
-    const coverUrl = useMemo(() => {
-      const media = mediaData.find((media) => media.id === coverId);
-
-      return media
-        ? `/images/${media.extension}/${media.title}.${media.extension}`
-        : null;
-    }, [coverId]);
+    const coverUrl = useMemo(
+      () => mediaData.find((media) => media.id === coverId)?.url ?? '#',
+      [coverId],
+    );
 
     useEffect(() => formResetHandler(), [projectData, disabled]);
 
@@ -433,10 +430,8 @@ const ProjectForm = forwardRef<HTMLFormElement, Props>(
                     >
                       <IoMdClose className="text-3xl" />
                     </Button>
-                    <img
-                      src={`/images/${media.extension}/${media.title}.${media.extension}`}
-                      alt=""
-                    />
+
+                    <img src={media.url} alt="" />
                   </li>
                 ))}
               </ul>
@@ -521,10 +516,7 @@ const ProjectForm = forwardRef<HTMLFormElement, Props>(
                     <IoMdClose />
                   </button>
 
-                  <ImgPreview
-                    src={`/images/${preview.extension}/${preview.title}.${preview.extension}`}
-                    alt=""
-                  />
+                  <ImgPreview src={preview.url} alt="" />
                 </li>
               ))}
             </ul>

@@ -8,14 +8,7 @@ import prisma from '@/app/api/database';
 import { columns } from './columns';
 
 export default async function Techs() {
-  const data = await prisma.tech.findMany({
-    select: {
-      id: true,
-      name: true,
-      updated_at: true,
-      media: true,
-    },
-  });
+  const data = await prisma.tech.findMany({ include: { media: true } });
 
   return (
     <main>

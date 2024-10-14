@@ -240,10 +240,10 @@ export default function Navbar() {
             <li key={id}>
               <AnimatedLink
                 href={link}
-                className="navbar__link block w-fit overflow-hidden text-5xl font-semibold leading-tight md:text-6xl md:leading-snug lg:text-7xl lg:leading-normal xl:text-6xl xl:leading-snug"
+                className={`navbar__link block w-fit overflow-hidden text-5xl font-semibold leading-tight md:text-6xl md:leading-snug lg:text-7xl lg:leading-normal xl:text-6xl xl:leading-snug ${link === '/#' && 'opacity-20 cursor-not-allowed'}`}
                 onClick={() => setMenu(false)}
-                disabled={isAnimate}
-                data-hover-scale={6}
+                disabled={link === '/#' || isAnimate}
+                data-hover-scale={link === '/#' ? 1 : 6}
               >
                 {title}
               </AnimatedLink>
