@@ -1,7 +1,7 @@
 'use server';
 
 import { Link, Project, ProjectLabel, Status } from '@prisma/client';
-import { revalidatePath } from 'next/cache';
+import { revalidateTag } from 'next/cache';
 
 import prisma from '../database';
 import { ActionResponse } from '../response-type';
@@ -56,8 +56,7 @@ export async function addProject(
       return project;
     });
 
-    revalidatePath('/admin/contents/projects');
-    revalidatePath('/admin/contents/projects/add');
+    revalidateTag('projects');
 
     return {
       error: false,
@@ -91,7 +90,6 @@ export async function updateProject(
     finished_at: new Date(form.get('finished_at')!.toString()).toISOString(),
   };
 
-  // Data of arrays is transported in the JSON format through the data form
   const coverId = parseInt(form.get('coverId')!.toString());
   const links = JSON.parse(form.get('links')!.toString()) as Link[];
   const techIds = JSON.parse(form.get('techIds')!.toString()) as number[];
@@ -99,16 +97,13 @@ export async function updateProject(
 
   try {
     const updatedProject = await prisma.$transaction(async (client) => {
-      // simpan seluruh id link yang lama sebelum dihapus
       const willDeletedLinkIds = await client.link.findMany({
         select: { id: true },
         where: { projectLink: { projectId: id } },
       });
 
-      // menghapus seluruh relasi berdasarkan id project
       await client.projectLink.deleteMany({ where: { projectId: id } });
 
-      // hapus link berdasarkan id relasi dengan project
       await client.link.deleteMany({
         where: {
           id: {
@@ -147,8 +142,7 @@ export async function updateProject(
       return project;
     });
 
-    revalidatePath('/admin/contents/projects');
-    revalidatePath(`/admin/contents/projects/${id}`);
+    revalidateTag('projects');
 
     return {
       error: false,
@@ -184,8 +178,7 @@ export async function deleteProject(id: number) {
       return deletedProject;
     });
 
-    revalidatePath('/admin/contents/projects');
-    revalidatePath(`/admin/contents/projects/${deletedProject.id}`);
+    revalidateTag('projects');
 
     return {
       error: false,

@@ -1,3 +1,5 @@
+import { unstable_cache } from 'next/cache';
+
 import AboutMe from '@/components/self-components/landing/AboutMe';
 import Collaboration from '@/components/self-components/landing/Collaboration';
 import Cover from '@/components/self-components/landing/Cover';
@@ -9,20 +11,29 @@ import TechStack from '@/components/self-components/landing/TechStack';
 
 import prisma from '../api/database';
 
-export default async function Page() {
-  const techs = await prisma.tech.findMany({ include: { media: true } });
-
-  const selectedProjects = await prisma.project.findMany({
-    include: {
-      cover: true,
-      links: {
-        include: { link: true },
-        where: { link: { title: 'Live Production' } },
+const getData = unstable_cache(
+  async () => {
+    const techs = await prisma.tech.findMany({ include: { media: true } });
+    const selectedProjects = await prisma.project.findMany({
+      include: {
+        cover: true,
+        links: {
+          include: { link: true },
+          where: { link: { title: 'Live Production' } },
+        },
       },
-    },
-    orderBy: { created_at: 'desc' },
-    take: 5,
-  });
+      orderBy: { created_at: 'desc' },
+      take: 5,
+    });
+
+    return { techs, selectedProjects };
+  },
+  ['landing-data'],
+  { tags: ['projects', 'medias', 'techs'] },
+);
+
+export default async function Page() {
+  const { selectedProjects, techs } = await getData();
 
   return (
     <main>

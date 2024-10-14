@@ -2,7 +2,7 @@
 
 import { Media, MediaExtension, Prisma } from '@prisma/client';
 import { copy, del, put } from '@vercel/blob';
-import { revalidatePath } from 'next/cache';
+import { revalidateTag } from 'next/cache';
 
 import { mediaBlobPath } from '@/utils/blob';
 import prisma from '../database';
@@ -36,8 +36,7 @@ export async function addMedia(
       return newData;
     });
 
-    revalidatePath('/admin/media');
-    revalidatePath(`/admin/media/${id}`);
+    revalidateTag('medias');
 
     return {
       error: false,
@@ -113,8 +112,7 @@ export async function updateMedia(
       return updatedData;
     });
 
-    revalidatePath('/admin/media');
-    revalidatePath(`/admin/media/${id}`);
+    revalidateTag('medias');
 
     return {
       error: false,
@@ -140,7 +138,7 @@ export async function deleteMedia(id: number) {
       await deleteFile(oldData);
     });
 
-    revalidatePath('/admin/media');
+    revalidateTag('medias');
 
     return {
       error: false,

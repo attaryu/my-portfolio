@@ -2,22 +2,28 @@ import { Link, Project, ProjectLink as ProjectLinkType } from '@prisma/client';
 
 import prisma from '@/app/api/database';
 import ProjectLink from '@/components/ProjectLink';
+import { unstable_cache } from 'next/cache';
 
 type ProjectRelation = Project & {
   links: Array<ProjectLinkType & { link: Link }>;
 };
 
-export default async function Page() {
-  const data = await prisma.project
-    .findMany({
+const getData = unstable_cache(
+  async () =>
+    prisma.project.findMany({
       include: {
         links: {
           include: { link: true },
           where: { link: { title: 'Live Production' } },
         },
       },
-    })
-    .then((res) => projectsGrouping(res));
+    }),
+  ['portfolio-projects'],
+  { tags: ['projects'] },
+);
+
+export default async function Page() {
+  const data = await getData().then((res) => projectsGrouping(res));
 
   // function for project grouping by month and year
   function projectsGrouping(projects: ProjectRelation[]) {

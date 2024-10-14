@@ -1,7 +1,7 @@
 'use server';
 
 import { Media, Tech } from '@prisma/client';
-import { revalidatePath } from 'next/cache';
+import { revalidateTag } from 'next/cache';
 import prisma from '../database';
 import { ActionResponse } from '../response-type';
 
@@ -29,7 +29,7 @@ export async function addTech(
       },
     });
 
-    revalidatePath('/admin/contents/techs');
+    revalidateTag('techs');
 
     return {
       error: false,
@@ -82,8 +82,7 @@ export async function updateTech(
       },
     });
 
-    revalidatePath('/admin/contents/techs');
-    revalidatePath(`/admin/contents/techs/${updatedData.id}`);
+    revalidateTag('techs');
 
     return {
       error: false,
@@ -108,8 +107,7 @@ export async function deleteTech(id: string) {
       where: { id: parseInt(id) },
     });
 
-    revalidatePath('/admin/contents/techs');
-    revalidatePath(`/admin/contents/techs/${deletedData.id}`);
+    revalidateTag('techs');
 
     return {
       error: false,
