@@ -77,11 +77,10 @@ export async function updateMedia(
   const payload = {
     id: formData.get('id')!.toString(),
     title: formData.get('title')!.toString().split(' ').join('_'),
-    extension: /^.*\.(svg|jpg|jpeg|png)$/i.exec(
-      media.name,
-    )![1] as unknown as MediaExtension,
+    extension: media.size
+      ? /^.*\.(svg|jpg|jpeg|png)$/i.exec(media.name)![0]
+      : undefined,
   };
-  console.log('payload:', payload);
 
   try {
     const id = parseInt(payload.id);
@@ -94,7 +93,10 @@ export async function updateMedia(
       }
 
       const url = await updateFile(
-        payload,
+        {
+          ...payload,
+          extension: payload.extension ?? oldData.extension,
+        },
         oldData,
         media.size ? Buffer.from(await media.arrayBuffer()) : undefined,
       );
@@ -103,7 +105,7 @@ export async function updateMedia(
         where: { id },
         data: {
           title: payload.title,
-          extension: payload.extension,
+          extension: (payload.extension as MediaExtension) ?? undefined,
           url,
         },
       });
