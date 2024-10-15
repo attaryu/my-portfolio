@@ -31,7 +31,7 @@ export default function Time() {
   }, []);
 
   return (
-    <time className="time" ref={timeRef}>
+    <time className="time z-10" ref={timeRef}>
       x/xx/xxxx, xx:xx:xx AM
     </time>
   );

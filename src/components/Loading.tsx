@@ -8,8 +8,8 @@ import { useEffect, useRef, useState } from 'react';
 
 import useEvent from '@/hooks/useEvent';
 
-import OutLogo from '../../public/logo/ma-logo-reverse.json';
-import InLogo from '../../public/logo/ma-logo.json';
+import OutLogo from '../../public/assets/ma-logo-reverse.json';
+import InLogo from '../../public/assets/ma-logo.json';
 
 gsap.registerPlugin(useGSAP);
 
@@ -111,7 +111,7 @@ export default function Loading() {
         {OutLogoAnimation.View}
 
         <img
-          src="/logo/ma-logo.svg"
+          src="/assets/ma-logo.svg"
           alt=""
           className="static-logo hidden w-full"
         />

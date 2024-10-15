@@ -41,7 +41,7 @@ export default function Sidebar() {
   return (
     <nav className="flex h-dvh w-1/4 flex-col border-r border-r-zinc-800 p-6 sticky top-0">
       <img
-        src="/logo/ma.svg"
+        src="/assets/ma.svg"
         alt=""
         className="size-12 rounded-md bg-white p-2"
       />

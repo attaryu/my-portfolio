@@ -56,9 +56,9 @@ export default function Collaboration() {
       </p>
 
       <img
-        src="/ui_assets/wave-light.svg"
+        src="/assets/wave.svg"
         alt=""
-        className="-rotate-5 absolute right-1/3 top-3/4 w-full scale-[2.7] md:left-0 md:top-[55%] md:w-full md:rotate-0 md:scale-125 xl:top-1/2 xl:scale-100 -z-10"
+        className="-rotate-5 absolute right-1/3 top-3/4 w-full scale-[2.7] md:left-0 md:top-[55%] md:w-full md:rotate-0 md:scale-125 xl:top-1/2 xl:scale-100"
       />
 
       <p className="mt-auto flex items-center gap-4 self-end font-neue-montreal-medium md:gap-8">
