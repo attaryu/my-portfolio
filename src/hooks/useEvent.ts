@@ -1,6 +1,5 @@
+import _ from 'lodash';
 import { useCallback, useEffect, useRef } from 'react';
-
-import debounce from '@/utils/debounce';
 
 type CallbackEvent = (event: Event) => void;
 
@@ -14,7 +13,7 @@ export default function useEvent(event: EventName) {
   const listenersRef = useRef<Set<CallbackEvent>>(new Set());
 
   const publish = useCallback(
-    debounce((detail: any = {}) => {
+    _.debounce((detail: any = {}) => {
       document.dispatchEvent(new CustomEvent(event, { detail }));
     }, 50),
     [event],

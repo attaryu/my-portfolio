@@ -1,8 +1,7 @@
 import { useGSAP, useGSAPConfig } from '@gsap/react';
 import gsap from 'gsap';
+import _ from 'lodash';
 import { useCallback, useEffect, useState } from 'react';
-
-import debounce from '@/utils/debounce';
 
 export type MatchMediaConditions = {
   isSmall: boolean;
@@ -25,7 +24,7 @@ export default function useMatchMedia(
   const [screenWidth, setScreenWidth] = useState(0);
 
   const handleResize = useCallback(
-    debounce(() => setScreenWidth(window.innerWidth), 200),
+    _.debounce(() => setScreenWidth(window.innerWidth), 200),
     [],
   );
 

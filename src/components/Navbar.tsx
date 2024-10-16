@@ -5,8 +5,8 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useRef, useState } from 'react';
 import SplitType from 'split-type';
+import _ from 'lodash';
 
-import debounce from '@/utils/debounce';
 import AnimatedLink from './AnimatedLink';
 
 gsap.registerPlugin(useGSAP);
@@ -124,7 +124,7 @@ export default function Navbar() {
   }, []);
 
   const setMenu = contextSafe(
-    debounce((state: boolean) => {
+    _.debounce((state: boolean) => {
       if (!isAnimate) {
         setIsAnimate(true);
 
