@@ -4,10 +4,10 @@ import type { Media, Tech } from '@prisma/client';
 
 import { forwardRef, useEffect, useMemo, useState } from 'react';
 
+import FormGrouping from '@/components/FormGrouping';
 import ImgPreview from '@/components/ImgPreview';
 import { Input } from '@/components/shadcn-ui/input';
 import * as Select from '@/components/shadcn-ui/select';
-import Text from '@/components/Text';
 
 interface Props extends React.FormHTMLAttributes<HTMLFormElement> {
   techData?: Tech & { media: Media };
@@ -65,29 +65,19 @@ const TechForm = forwardRef<HTMLFormElement, Props>(
       >
         {techData && <input type="hidden" name="id" value={techData.id} />}
 
-        <div className="flex justify-between gap-8">
-          <div className="w-full space-y-2">
-            <Text tag="p" styling="lead">
-              Name
-            </Text>
-
-            <Input
-              name="name"
-              placeholder="Name"
-              value={formState.name}
-              onChange={changeFormState}
-              required
-              disabled={disabled}
-            />
-          </div>
-        </div>
+        <FormGrouping title="Name">
+          <Input
+            name="name"
+            placeholder="Name"
+            value={formState.name}
+            onChange={changeFormState}
+            required
+            disabled={disabled}
+          />
+        </FormGrouping>
 
         <div className="flex justify-between gap-8">
-          <div className="w-full space-y-2">
-            <Text tag="p" styling="lead">
-              Logo
-            </Text>
-
+          <FormGrouping title="Logo" required>
             <Select.Root
               value={formState.logoId}
               onValueChange={(value) => changeFormState(value, 'logoId')}
@@ -112,19 +102,15 @@ const TechForm = forwardRef<HTMLFormElement, Props>(
                 </Select.Group>
               </Select.Content>
             </Select.Root>
-          </div>
+          </FormGrouping>
 
-          <div className="w-full space-y-2">
-            <Text tag="p" styling="lead">
-              Preview
-            </Text>
-
+          <FormGrouping title="Preview">
             <ImgPreview
               src={selectedLogoPreviewUrl}
               alt=""
               message="Select logo"
             />
-          </div>
+          </FormGrouping>
         </div>
       </form>
     );

@@ -17,8 +17,8 @@ export default function FormGrouping({
   children,
   required,
 }: Readonly<Props>) {
-  const Tag: React.ElementType = tag
-  
+  const Tag: React.ElementType = tag;
+
   return (
     <Tag className="inline-block w-full space-y-2">
       <Text tag="p" styling={titleSize === 'base' ? 'lead' : 'p'}>

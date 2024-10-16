@@ -3,9 +3,9 @@
 import { Media } from '@prisma/client';
 import { forwardRef, useEffect, useState } from 'react';
 
-import { Input } from '@/components/shadcn-ui/input';
-import Text from '@/components/Text';
+import FormGrouping from '@/components/FormGrouping';
 import ImgPreview from '@/components/ImgPreview';
+import { Input } from '@/components/shadcn-ui/input';
 
 interface Props extends React.FormHTMLAttributes<HTMLFormElement> {
   id: string;
@@ -54,11 +54,7 @@ const MediaForm = forwardRef<HTMLFormElement, Props>(
       >
         {data && <input type="hidden" name="id" value={data.id} />}
 
-        <div className="space-y-2">
-          <Text tag="label" styling="lead">
-            Title
-          </Text>
-
+        <FormGrouping title="Title" required={!data}>
           <Input
             type="text"
             placeholder="Title"
@@ -68,26 +64,18 @@ const MediaForm = forwardRef<HTMLFormElement, Props>(
             onChange={changeFormState}
             disabled={disabled}
           />
-        </div>
+        </FormGrouping>
 
         <div className="flex justify-between gap-8">
-          <div className="w-full space-y-2">
-            <Text tag="p" styling="lead">
-              Preview
-            </Text>
-
+          <FormGrouping title="Preview">
             <ImgPreview
               src={formState.media}
               alt=""
               message="Upload something from there 👉"
             />
-          </div>
+          </FormGrouping>
 
-          <div className="w-full space-y-2">
-            <Text tag="label" styling="lead">
-              Media
-            </Text>
-
+          <FormGrouping title="Media" required={!data}>
             <Input
               type="file"
               accept=".jpg,.png,.svg,.jpeg"
@@ -96,7 +84,7 @@ const MediaForm = forwardRef<HTMLFormElement, Props>(
               name="media"
               disabled={disabled}
             />
-          </div>
+          </FormGrouping>
         </div>
       </form>
     );
