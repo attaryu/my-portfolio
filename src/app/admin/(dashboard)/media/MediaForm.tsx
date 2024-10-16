@@ -5,6 +5,7 @@ import { forwardRef, useEffect, useState } from 'react';
 
 import { Input } from '@/components/shadcn-ui/input';
 import Text from '@/components/Text';
+import ImgPreview from '@/components/ImgPreview';
 
 interface Props extends React.FormHTMLAttributes<HTMLFormElement> {
   id: string;
@@ -75,11 +76,10 @@ const MediaForm = forwardRef<HTMLFormElement, Props>(
               Preview
             </Text>
 
-            <img
+            <ImgPreview
               src={formState.media}
               alt=""
-              data-error="Upload something from there 👉"
-              className="relative h-fit w-full rounded-lg border border-dashed border-zinc-600 p-1 before:absolute before:top-0 before:grid before:h-full before:w-full before:place-items-center before:bg-zinc-900 before:content-[attr(data-error)]"
+              message="Upload something from there 👉"
             />
           </div>
 

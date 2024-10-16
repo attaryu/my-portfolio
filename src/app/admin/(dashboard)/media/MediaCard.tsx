@@ -35,8 +35,8 @@ export default function MediaCard({ data }: Readonly<Props>) {
   };
 
   return (
-    <li className="group relative aspect-[6/4] overflow-hidden rounded-lg outline outline-1 outline-offset-2 outline-transparent transition-all duration-300 hover:outline-zinc-500">
-      <div className="flex h-full w-full items-end justify-between gap-6 bg-gradient-to-t from-zinc-950 to-transparent p-4 opacity-0 transition-all duration-300 group-hover:opacity-100">
+    <li className="group relative aspect-[6/4] overflow-hidden rounded-lg outline outline-1 outline-offset-2 outline-transparent transition-all duration-300 hover:outline-zinc-500 bg-zinc-100">
+      <div className="flex h-full w-full items-end justify-between gap-6 bg-gradient-to-t from-zinc-950 to-transparent p-4 opacity-0 transition-all duration-300 group-hover:opacity-100 z-10 absolute inset-x-0 top-0">
         <Link
           href={`/admin/media/${data.id}`}
           className="inline-block w-full truncate text-sm underline-offset-4 hover:underline"
@@ -63,7 +63,7 @@ export default function MediaCard({ data }: Readonly<Props>) {
       <img
         src={data.url}
         alt={data.title}
-        className="absolute inset-x-0 top-0 -z-10 h-full object-cover"
+        className="w-full h-full object-cover"
       />
     </li>
   );

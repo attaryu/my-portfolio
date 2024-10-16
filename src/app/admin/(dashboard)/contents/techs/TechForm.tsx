@@ -4,6 +4,7 @@ import type { Media, Tech } from '@prisma/client';
 
 import { forwardRef, useEffect, useMemo, useState } from 'react';
 
+import ImgPreview from '@/components/ImgPreview';
 import { Input } from '@/components/shadcn-ui/input';
 import * as Select from '@/components/shadcn-ui/select';
 import Text from '@/components/Text';
@@ -118,11 +119,10 @@ const TechForm = forwardRef<HTMLFormElement, Props>(
               Preview
             </Text>
 
-            <img
+            <ImgPreview
               src={selectedLogoPreviewUrl}
               alt=""
-              data-error="Select logo"
-              className="relative h-fit w-full rounded-lg border border-dashed border-zinc-600 p-1 before:absolute before:top-0 before:grid before:h-full before:w-full before:place-items-center before:bg-zinc-900 before:content-[attr(data-error)]"
+              message="Select logo"
             />
           </div>
         </div>
