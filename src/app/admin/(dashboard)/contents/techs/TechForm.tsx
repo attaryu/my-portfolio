@@ -1,18 +1,11 @@
 'use client';
 
-import { Media, Tech } from '@prisma/client';
+import type { Media, Tech } from '@prisma/client';
+
 import { forwardRef, useEffect, useMemo, useState } from 'react';
 
 import { Input } from '@/components/shadcn-ui/input';
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/shadcn-ui/select';
+import * as Select from '@/components/shadcn-ui/select';
 import Text from '@/components/Text';
 
 interface Props extends React.FormHTMLAttributes<HTMLFormElement> {
@@ -94,30 +87,30 @@ const TechForm = forwardRef<HTMLFormElement, Props>(
               Logo
             </Text>
 
-            <Select
+            <Select.Root
               value={formState.logoId}
               onValueChange={(value) => changeFormState(value, 'logoId')}
               name="logoId"
               disabled={disabled}
               required
             >
-              <SelectTrigger>
-                <SelectValue placeholder="Logo" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectGroup>
-                  <SelectLabel>Logo</SelectLabel>
+              <Select.Trigger>
+                <Select.Value placeholder="Logo" />
+              </Select.Trigger>
+              <Select.Content>
+                <Select.Group>
+                  <Select.Label>Logo</Select.Label>
                   {mediaData.map((techData) => (
-                    <SelectItem
+                    <Select.Item
                       key={techData.id}
                       value={techData.id.toString()}
                     >
                       {techData.title}.{techData.extension}
-                    </SelectItem>
+                    </Select.Item>
                   ))}
-                </SelectGroup>
-              </SelectContent>
-            </Select>
+                </Select.Group>
+              </Select.Content>
+            </Select.Root>
           </div>
 
           <div className="w-full space-y-2">

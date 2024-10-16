@@ -1,6 +1,6 @@
 'use client';
 
-import {
+import type {
   Link,
   Media,
   Project,
@@ -8,15 +8,17 @@ import {
   ProjectPreview,
   Tech,
 } from '@prisma/client';
+
 import { useEffect, useState } from 'react';
 import { useFormState } from 'react-dom';
 
-import { updateProject } from '@/app/api/project/action';
 import { Button } from '@/components/shadcn-ui/button';
 import Text from '@/components/Text';
 import Time from '@/components/Time';
-import { useToast } from '@/hooks/use-toast';
 import ProjectForm from '../ProjectForm';
+
+import { updateProject } from '@/app/api/project/action';
+import { useToast } from '@/hooks/use-toast';
 
 type Props = {
   mediaData: Array<

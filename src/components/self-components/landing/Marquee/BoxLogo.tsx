@@ -18,4 +18,4 @@ function BoxLogo({ url, name, ...attributes }: Readonly<Props>) {
   );
 }
 
-export default memo(BoxLogo)
+export default memo(BoxLogo);

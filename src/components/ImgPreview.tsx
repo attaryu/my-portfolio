@@ -8,7 +8,7 @@ interface Props extends React.ImgHTMLAttributes<HTMLImageElement> {
 }
 
 const ImgPreview = forwardRef<HTMLImageElement, Props>(
-  ({ message, className, ...props }, ref) => {
+  ({ message, className, alt, ...props }, ref) => {
     return (
       <img
         data-error={message ?? 'The media was damaged :('}
@@ -17,6 +17,7 @@ const ImgPreview = forwardRef<HTMLImageElement, Props>(
           className,
         )}
         ref={ref}
+        alt={alt}
         {...props}
       />
     );

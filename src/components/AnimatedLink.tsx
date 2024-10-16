@@ -1,10 +1,10 @@
 'use client';
 
+import _ from 'lodash';
 import Link, { LinkProps } from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 
 import useEvent from '@/hooks/useEvent';
-import debounce from '@/utils/debounce';
 
 interface Props extends LinkProps, Omit<React.ComponentProps<'a'>, 'href'> {
   children: string | React.ReactNode;
@@ -25,7 +25,7 @@ export default function AnimatedLink({
   const loadingOut = useEvent('loading@out');
   const loadingAnimationEnd = useEvent('loadingAnimation@end');
 
-  const navigateTo = debounce(() => {
+  const navigateTo = _.debounce(() => {
     loadingOut.publish();
 
     const unsubscribe = loadingAnimationEnd.subscribe(() => {

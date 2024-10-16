@@ -1,13 +1,15 @@
 'use client';
 
-import Button from '@/components/Button';
-import useEvent from '@/hooks/useEvent';
-import sequenceAnimation from '@/utils/text-animation/sequence';
-import textSplitter from '@/utils/textSplitter';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useEffect, useRef, useState } from 'react';
+
+import Button from '@/components/Button';
+
+import useEvent from '@/hooks/useEvent';
+import sequenceAnimation from '@/utils/text-animation/sequence';
+import textSplitter from '@/utils/textSplitter';
 
 gsap.registerPlugin(useGSAP);
 

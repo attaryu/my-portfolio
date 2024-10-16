@@ -1,12 +1,14 @@
 'use client';
 
-import textSplitter from '@/utils/textSplitter';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import Link from 'next/link';
 import { MouseEvent, useRef } from 'react';
 import { MdNorthEast } from 'react-icons/md';
+
 import AnimatedLink from './AnimatedLink';
+
+import textSplitter from '@/utils/textSplitter';
 
 type Props = {
   title: string;

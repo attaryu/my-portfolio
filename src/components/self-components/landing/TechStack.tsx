@@ -1,16 +1,18 @@
 'use client';
 
+import type { Media, Tech } from '@prisma/client';
+import type { SplitTypeOptions } from 'split-type';
+
 import { useGSAP } from '@gsap/react';
-import { Media, Tech } from '@prisma/client';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useEffect, useRef, useState } from 'react';
-import { SplitTypeOptions } from 'split-type';
+
+import Marquee from './Marquee';
 
 import useEvent from '@/hooks/useEvent';
 import sequenceAnimation from '@/utils/text-animation/sequence';
 import textSplitter from '@/utils/textSplitter';
-import Marquee from './Marquee';
 
 gsap.registerPlugin(useGSAP);
 

@@ -1,14 +1,13 @@
 'use client';
 
-import useMatchMedia from '@/hooks/useMatchMedia';
-// TODO: adjustment for medium or higher screen size
-
-import sequenceAnimation from '@/utils/text-animation/sequence';
-import textSplitter from '@/utils/textSplitter';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useRef } from 'react';
 import { SplitTypeOptions } from 'split-type';
+
+import useMatchMedia from '@/hooks/useMatchMedia';
+import sequenceAnimation from '@/utils/text-animation/sequence';
+import textSplitter from '@/utils/textSplitter';
 
 export default function SomeWord() {
   const containerRef = useRef<HTMLDivElement | null>(null);
@@ -52,7 +51,7 @@ export default function SomeWord() {
         if (isExtraLarge) {
           endFirstTextEnter = '-=50%';
         }
-        
+
         gsap
           .timeline({
             scrollTrigger: {
@@ -73,14 +72,16 @@ export default function SomeWord() {
             '<',
           );
 
-        // second text animation area 
+        // second text animation area
         const secondText = textSplitter(
           '.second-text',
           containerRef.current,
           textSplitterConfig,
         );
 
-        const secondTextTimeline = sequenceAnimation(secondText, { from: 'top' });
+        const secondTextTimeline = sequenceAnimation(secondText, {
+          from: 'top',
+        });
 
         let startSecondTextEnter = '60%';
         let endSecondTextEnter = 'top';
@@ -106,7 +107,7 @@ export default function SomeWord() {
 
         let startSecondTextMovement = '60%';
         let endSecondTextMovement = '-=150%';
-        
+
         if (isExtraLarge) {
           startSecondTextMovement = 'center';
         } else if (isMedium) {

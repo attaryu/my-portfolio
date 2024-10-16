@@ -1,6 +1,6 @@
-import prisma from '@/app/api/database';
-
 import Dump from './Dump';
+
+import prisma from '@/app/api/database';
 
 type Props = {
   params: { id: string };
@@ -18,7 +18,7 @@ export default async function Page({ params }: Readonly<Props>) {
   });
 
   if (!data) {
-    return <p>Project with id {params.id} doesn't exist</p>
+    return <p>Project with id {params.id} doesn't exist</p>;
   }
 
   return <Dump data={data} id={params.id} />;

@@ -1,21 +1,17 @@
 'use client';
 
-import { Media, Tech } from '@prisma/client';
-import { ColumnDef } from '@tanstack/react-table';
+import type { Media, Tech } from '@prisma/client';
+import type { ColumnDef } from '@tanstack/react-table';
+
 import dayjs from 'dayjs';
 import Link from 'next/link';
 import { MdDeleteForever } from 'react-icons/md';
 
-import { deleteTech } from '@/app/api/tech/action';
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogTrigger,
-} from '@/components/shadcn-ui/alert-dialog';
+import * as AlertDialog from '@/components/shadcn-ui/alert-dialog';
 import { Button } from '@/components/shadcn-ui/button';
 import Text from '@/components/Text';
+
+import { deleteTech } from '@/app/api/tech/action';
 import { useToast } from '@/hooks/use-toast';
 
 export type TechColumn = Tech & { media: Media };
@@ -85,24 +81,24 @@ export const columns: ColumnDef<TechColumn>[] = [
       }
 
       return (
-        <AlertDialog>
-          <AlertDialogTrigger asChild>
+        <AlertDialog.Root>
+          <AlertDialog.Trigger asChild>
             <Button variant="destructive" size="icon">
               <MdDeleteForever className="text-lg" />
             </Button>
-          </AlertDialogTrigger>
-          <AlertDialogContent className="flex items-center justify-between gap-3">
+          </AlertDialog.Trigger>
+          <AlertDialog.Content className="flex items-center justify-between gap-3">
             <Text tag="p" styling="lead">
               Are you sure you want to delete {name}?
             </Text>
 
-            <AlertDialogCancel className="ml-auto">No</AlertDialogCancel>
+            <AlertDialog.Cancel className="ml-auto">No</AlertDialog.Cancel>
 
-            <AlertDialogAction onClick={deleteTechHandler}>
+            <AlertDialog.Action onClick={deleteTechHandler}>
               Sure
-            </AlertDialogAction>
-          </AlertDialogContent>
-        </AlertDialog>
+            </AlertDialog.Action>
+          </AlertDialog.Content>
+        </AlertDialog.Root>
       );
     },
   },

@@ -1,11 +1,12 @@
 'use client';
 
-import useEvent from '@/hooks/useEvent';
-import useMatchMedia from '@/hooks/useMatchMedia';
-import textSplitter from '@/utils/textSplitter';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useEffect, useRef, useState } from 'react';
+
+import useEvent from '@/hooks/useEvent';
+import useMatchMedia from '@/hooks/useMatchMedia';
+import textSplitter from '@/utils/textSplitter';
 
 export default function AboutMe() {
   const { subscribe } = useEvent('loadingAnimation@end');

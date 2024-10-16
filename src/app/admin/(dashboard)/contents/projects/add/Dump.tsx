@@ -1,16 +1,18 @@
 'use client';
 
-import { Media, Project, ProjectPreview, Tech } from '@prisma/client';
+import type { Media, Project, ProjectPreview, Tech } from '@prisma/client';
+
 import { useRouter } from 'next/navigation';
 import { useEffect, useRef } from 'react';
 import { useFormState } from 'react-dom';
 
-import { addProject } from '@/app/api/project/action';
 import { Button } from '@/components/shadcn-ui/button';
-import { ToastAction } from '@/components/shadcn-ui/toast';
+import * as Toast from '@/components/shadcn-ui/toast';
 import Text from '@/components/Text';
-import { useToast } from '@/hooks/use-toast';
 import ProjectForm from '../ProjectForm';
+
+import { addProject } from '@/app/api/project/action';
+import { useToast } from '@/hooks/use-toast';
 
 type Props = {
   techData: Array<Tech & { media: Media }>;
@@ -43,7 +45,7 @@ export default function Dump({ techData, mediaData }: Readonly<Props>) {
           title: 'Success ✅',
           description: 'Click view to see your new project',
           action: (
-            <ToastAction
+            <Toast.Action
               altText="view"
               onClick={() =>
                 router.push(
@@ -52,7 +54,7 @@ export default function Dump({ techData, mediaData }: Readonly<Props>) {
               }
             >
               View
-            </ToastAction>
+            </Toast.Action>
           ),
         });
 

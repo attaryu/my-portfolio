@@ -2,10 +2,11 @@ import { unstable_cache } from 'next/cache';
 import Link from 'next/link';
 import { IoMdAdd } from 'react-icons/io';
 
-import prisma from '@/app/api/database';
 import DataTable from '@/components/DataTable';
 import { Button } from '@/components/shadcn-ui/button';
 import Text from '@/components/Text';
+
+import prisma from '@/app/api/database';
 import { columns } from './columns';
 
 const getTechs = unstable_cache(

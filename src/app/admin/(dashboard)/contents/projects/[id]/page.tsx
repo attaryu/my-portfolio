@@ -1,8 +1,9 @@
 import _ from 'lodash';
 
-import prisma from '@/app/api/database';
 import Text from '@/components/Text';
 import ProjectDetailDump from './Dump';
+
+import prisma from '@/app/api/database';
 
 type Props = {
   params: {

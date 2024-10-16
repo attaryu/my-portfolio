@@ -1,8 +1,14 @@
-import { Link, Project, ProjectLink as ProjectLinkType } from '@prisma/client';
+import type {
+  Link,
+  Project,
+  ProjectLink as ProjectLinkType,
+} from '@prisma/client';
+
+import { unstable_cache } from 'next/cache';
+
+import ProjectLink from '@/components/ProjectLink';
 
 import prisma from '@/app/api/database';
-import ProjectLink from '@/components/ProjectLink';
-import { unstable_cache } from 'next/cache';
 
 type ProjectRelation = Project & {
   links: Array<ProjectLinkType & { link: Link }>;

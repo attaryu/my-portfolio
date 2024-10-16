@@ -88,7 +88,7 @@ export default function Navbar() {
 
         scrollDirection.current = 'up';
       }
-      
+
       scrollProgress.current = scrollY;
     }
 
@@ -240,7 +240,7 @@ export default function Navbar() {
             <li key={id}>
               <AnimatedLink
                 href={link}
-                className={`navbar__link block w-fit overflow-hidden text-5xl font-semibold leading-tight md:text-6xl md:leading-snug lg:text-7xl lg:leading-normal xl:text-6xl xl:leading-snug ${link === '/#' && 'opacity-20 cursor-not-allowed'}`}
+                className={`navbar__link block w-fit overflow-hidden text-5xl font-semibold leading-tight md:text-6xl md:leading-snug lg:text-7xl lg:leading-normal xl:text-6xl xl:leading-snug ${link === '/#' && 'cursor-not-allowed opacity-20'}`}
                 onClick={() => setMenu(false)}
                 disabled={link === '/#' || isAnimate}
                 data-hover-scale={link === '/#' ? 1 : 6}

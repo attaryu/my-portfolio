@@ -5,11 +5,12 @@ import gsap from 'gsap';
 import { useRef } from 'react';
 import { SplitTypeOptions } from 'split-type';
 
+import Time from './Time';
+
 import useEvent from '@/hooks/useEvent';
 import sequenceAnimation from '@/utils/text-animation/sequence';
 import wipeAnimation from '@/utils/text-animation/wipe';
 import textSplitter from '@/utils/textSplitter';
-import Time from './Time';
 
 gsap.registerPlugin(useGSAP);
 

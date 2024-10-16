@@ -1,16 +1,18 @@
 'use client';
 
-import { Media } from '@prisma/client';
+import type { Media } from '@prisma/client';
+
 import { useRouter } from 'next/navigation';
 import { useEffect, useRef } from 'react';
 import { useFormState } from 'react-dom';
 
-import { addTech } from '@/app/api/tech/action';
 import { Button } from '@/components/shadcn-ui/button';
-import { ToastAction } from '@/components/shadcn-ui/toast';
+import * as Toast from '@/components/shadcn-ui/toast';
 import Text from '@/components/Text';
-import { useToast } from '@/hooks/use-toast';
 import TechForm from '../TechForm';
+
+import { addTech } from '@/app/api/tech/action';
+import { useToast } from '@/hooks/use-toast';
 
 type Props = {
   mediaData: Media[];
@@ -36,7 +38,7 @@ export default function Dump({ mediaData }: Readonly<Props>) {
           title: 'Success ✅',
           description: 'Click view to see your new media',
           action: (
-            <ToastAction
+            <Toast.Action
               altText="view"
               onClick={() =>
                 router.push(
@@ -45,7 +47,7 @@ export default function Dump({ mediaData }: Readonly<Props>) {
               }
             >
               View
-            </ToastAction>
+            </Toast.Action>
           ),
         });
 
@@ -70,7 +72,12 @@ export default function Dump({ mediaData }: Readonly<Props>) {
         </div>
       </header>
 
-      <TechForm id={id} mediaData={mediaData} action={formAction} ref={formRef} />
+      <TechForm
+        id={id}
+        mediaData={mediaData}
+        action={formAction}
+        ref={formRef}
+      />
     </main>
   );
 }

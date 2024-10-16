@@ -1,6 +1,7 @@
 'use server';
 
-import { Link, Project, ProjectLabel, Status } from '@prisma/client';
+import type { Link, Project, ProjectLabel, Status } from '@prisma/client';
+
 import { revalidateTag } from 'next/cache';
 
 import prisma from '../database';

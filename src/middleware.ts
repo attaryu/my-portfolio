@@ -1,12 +1,8 @@
-import { MiddlewareConfig, NextRequest, NextResponse } from 'next/server';
+import type { MiddlewareConfig, NextRequest } from 'next/server';
+
+import { NextResponse } from 'next/server';
 
 import { verifyToken } from './utils/jwt';
-
-export const config: MiddlewareConfig = {
-  matcher: [
-    '/((?!_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt).*)',
-  ],
-};
 
 export async function middleware(request: NextRequest) {
   const url = new URL(request.url);
@@ -32,3 +28,9 @@ export async function middleware(request: NextRequest) {
 
   return NextResponse.next();
 }
+
+export const config: MiddlewareConfig = {
+  matcher: [
+    '/((?!_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt).*)',
+  ],
+};

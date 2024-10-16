@@ -1,15 +1,17 @@
 'use client';
 
-import { Media, Tech } from '@prisma/client';
+import type { Media, Tech } from '@prisma/client';
+
 import { useEffect, useState } from 'react';
 import { useFormState } from 'react-dom';
 
-import { updateTech } from '@/app/api/tech/action';
 import { Button } from '@/components/shadcn-ui/button';
 import Text from '@/components/Text';
-import { useToast } from '@/hooks/use-toast';
-import TechForm from '../TechForm';
 import Time from '@/components/Time';
+import TechForm from '../TechForm';
+
+import { updateTech } from '@/app/api/tech/action';
+import { useToast } from '@/hooks/use-toast';
 
 type Props = {
   techData: Tech & { media: Media };

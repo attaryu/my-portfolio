@@ -1,6 +1,7 @@
-import prisma from '@/app/api/database';
 import TechDetailDump from './Dump';
 import Text from '@/components/Text';
+
+import prisma from '@/app/api/database';
 
 type Props = {
   params: {

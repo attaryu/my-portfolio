@@ -1,6 +1,8 @@
 'use server';
 
-import { Media, MediaExtension, Prisma } from '@prisma/client';
+import type { Media, MediaExtension } from '@prisma/client';
+
+import { Prisma } from '@prisma/client';
 import { copy, del, put } from '@vercel/blob';
 import { revalidateTag } from 'next/cache';
 

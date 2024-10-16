@@ -1,41 +1,27 @@
 'use client';
 
-import {
+import type {
   Link,
   Media,
   Project,
-  ProjectLabel,
   ProjectLink,
   ProjectPreview,
   Tech,
 } from '@prisma/client';
+
+import { ProjectLabel } from '@prisma/client';
+import dayjs from 'dayjs';
 import { forwardRef, useEffect, useMemo, useState } from 'react';
 import { IoMdAdd, IoMdClose } from 'react-icons/io';
 
 import FormGrouping from '@/components/FormGrouping';
 import ImgPreview from '@/components/ImgPreview';
 import { Button } from '@/components/shadcn-ui/button';
-import {
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from '@/components/shadcn-ui/dialog';
+import * as Dialog from '@/components/shadcn-ui/dialog';
 import { Input } from '@/components/shadcn-ui/input';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/shadcn-ui/select';
+import * as Select from '@/components/shadcn-ui/select';
 import { Textarea } from '@/components/shadcn-ui/textarea';
 import Text from '@/components/Text';
-import dayjs from 'dayjs';
 
 interface Props extends React.FormHTMLAttributes<HTMLFormElement> {
   disabled?: boolean;
@@ -237,6 +223,7 @@ const ProjectForm = forwardRef<HTMLFormElement, Props>(
           </FormGrouping>
         </div>
 
+        {/* subtitle */}
         <FormGrouping title="Subtitle" required>
           <Input
             type="text"
@@ -253,28 +240,28 @@ const ProjectForm = forwardRef<HTMLFormElement, Props>(
         {/* label & status */}
         <div className="flex justify-between gap-8">
           <FormGrouping title="Label" required tag="div">
-            <Select
+            <Select.Root
               name="label"
               required
               value={formState.label}
               onValueChange={(value) => formStateChange('label', value)}
               disabled={disabled}
             >
-              <SelectTrigger>
-                <SelectValue placeholder="Label" />
-              </SelectTrigger>
-              <SelectContent>
+              <Select.Trigger>
+                <Select.Value placeholder="Label" />
+              </Select.Trigger>
+              <Select.Content>
                 {Object.keys(ProjectLabel).map((label) => (
-                  <SelectItem key={label} value={label}>
+                  <Select.Item key={label} value={label}>
                     {label.charAt(0).toUpperCase() + label.slice(1)} Project
-                  </SelectItem>
+                  </Select.Item>
                 ))}
-              </SelectContent>
-            </Select>
+              </Select.Content>
+            </Select.Root>
           </FormGrouping>
 
           <FormGrouping title="Status" required tag="div">
-            <Select
+            <Select.Root
               name="status"
               defaultValue="draft"
               required
@@ -282,15 +269,15 @@ const ProjectForm = forwardRef<HTMLFormElement, Props>(
               onValueChange={(value) => formStateChange('status', value)}
               disabled={disabled}
             >
-              <SelectTrigger>
-                <SelectValue placeholder="Status" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="draft">Drafted</SelectItem>
-                <SelectItem value="published">Published</SelectItem>
-                <SelectItem value="archived">Archived</SelectItem>
-              </SelectContent>
-            </Select>
+              <Select.Trigger>
+                <Select.Value placeholder="Status" />
+              </Select.Trigger>
+              <Select.Content>
+                <Select.Item value="draft">Drafted</Select.Item>
+                <Select.Item value="published">Published</Select.Item>
+                <Select.Item value="archived">Archived</Select.Item>
+              </Select.Content>
+            </Select.Root>
           </FormGrouping>
         </div>
 
@@ -346,8 +333,8 @@ const ProjectForm = forwardRef<HTMLFormElement, Props>(
               </ul>
             )}
 
-            <Dialog>
-              <DialogTrigger asChild>
+            <Dialog.Root>
+              <Dialog.Trigger asChild>
                 <Button
                   className="w-full"
                   variant="outline"
@@ -356,18 +343,18 @@ const ProjectForm = forwardRef<HTMLFormElement, Props>(
                   <IoMdAdd className="mr-2 text-lg" />
                   Add
                 </Button>
-              </DialogTrigger>
+              </Dialog.Trigger>
 
-              <DialogContent>
-                <DialogTitle hidden>Add link</DialogTitle>
-                <DialogDescription hidden>
+              <Dialog.Content>
+                <Dialog.Title hidden>Add link</Dialog.Title>
+                <Dialog.Description hidden>
                   For add new link on project
-                </DialogDescription>
+                </Dialog.Description>
 
                 <form className="space-y-4" action={addLink}>
-                  <DialogHeader>
+                  <Dialog.Header>
                     <Text tag="h2">Add link</Text>
-                  </DialogHeader>
+                  </Dialog.Header>
 
                   <div className="flex justify-between gap-8">
                     <FormGrouping title="Title" titleSize="sm" required>
@@ -398,19 +385,19 @@ const ProjectForm = forwardRef<HTMLFormElement, Props>(
                     />
                   </FormGrouping>
 
-                  <DialogFooter>
-                    <DialogClose asChild>
+                  <Dialog.Footer>
+                    <Dialog.Close asChild>
                       <Button variant="secondary" type="reset">
                         Cancel
                       </Button>
-                    </DialogClose>
-                    <DialogClose asChild>
+                    </Dialog.Close>
+                    <Dialog.Close asChild>
                       <Button type="submit">Add</Button>
-                    </DialogClose>
-                  </DialogFooter>
+                    </Dialog.Close>
+                  </Dialog.Footer>
                 </form>
-              </DialogContent>
-            </Dialog>
+              </Dialog.Content>
+            </Dialog.Root>
           </FormGrouping>
 
           <FormGrouping title="Tech" tag="div" required>
@@ -437,44 +424,44 @@ const ProjectForm = forwardRef<HTMLFormElement, Props>(
               </ul>
             )}
 
-            <Select
+            <Select.Root
               onValueChange={(value) => addTech(parseInt(value))}
               value=""
               disabled={disabled || Boolean(!techs.unselected.length)}
             >
-              <SelectTrigger>Tech</SelectTrigger>
-              <SelectContent>
+              <Select.Trigger>Tech</Select.Trigger>
+              <Select.Content>
                 {techs.unselected.map((tech) => (
-                  <SelectItem key={tech.id} value={tech.id.toString()}>
+                  <Select.Item key={tech.id} value={tech.id.toString()}>
                     {tech.name}
-                  </SelectItem>
+                  </Select.Item>
                 ))}
-              </SelectContent>
-            </Select>
+              </Select.Content>
+            </Select.Root>
           </FormGrouping>
         </div>
 
         {/* cover */}
         <FormGrouping title="Cover" tag="div" required>
-          <Select
+          <Select.Root
             name="coverId"
             onValueChange={(value) => setCoverId(parseInt(value))}
             value={coverId?.toString() ?? ''}
             disabled={disabled}
             required
           >
-            <SelectTrigger>
-              <SelectValue placeholder="Cover" />
-            </SelectTrigger>
+            <Select.Trigger>
+              <Select.Value placeholder="Cover" />
+            </Select.Trigger>
 
-            <SelectContent>
+            <Select.Content>
               {mediaData.map((media) => (
-                <SelectItem key={media.id} value={media.id.toString()}>
+                <Select.Item key={media.id} value={media.id.toString()}>
                   {media.title}
-                </SelectItem>
+                </Select.Item>
               ))}
-            </SelectContent>
-          </Select>
+            </Select.Content>
+          </Select.Root>
 
           {coverUrl && (
             <ImgPreview className="!mt-4 inline-block" src={coverUrl} alt="" />
@@ -483,25 +470,25 @@ const ProjectForm = forwardRef<HTMLFormElement, Props>(
 
         {/* preview */}
         <FormGrouping title="Preview" tag="div" required>
-          <Select
+          <Select.Root
             onValueChange={(value) => addPreview(parseInt(value))}
             disabled={disabled}
             value=""
           >
-            <SelectTrigger>
-              <SelectValue placeholder="Preview" />
-            </SelectTrigger>
+            <Select.Trigger>
+              <Select.Value placeholder="Preview" />
+            </Select.Trigger>
 
             {!!previews.unselected.length && (
-              <SelectContent>
+              <Select.Content>
                 {previews.unselected.map((media) => (
-                  <SelectItem key={media.id} value={media.id.toString()}>
+                  <Select.Item key={media.id} value={media.id.toString()}>
                     {media.title}
-                  </SelectItem>
+                  </Select.Item>
                 ))}
-              </SelectContent>
+              </Select.Content>
             )}
-          </Select>
+          </Select.Root>
 
           {!!previews.selected.length && (
             <ul className="grid auto-rows-auto grid-cols-2 gap-4 py-2">

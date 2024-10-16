@@ -1,8 +1,8 @@
+import Link from 'next/link';
 import { FaNewspaper } from 'react-icons/fa6';
 import { MdPermMedia, MdSpaceDashboard } from 'react-icons/md';
 import { PiSignOutBold } from 'react-icons/pi';
 
-import Link from 'next/link';
 import { Button } from '../shadcn-ui/button';
 import LinkItem from './LinkItem';
 
@@ -39,7 +39,7 @@ export default function Sidebar() {
   ];
 
   return (
-    <nav className="flex h-dvh w-1/4 flex-col border-r border-r-zinc-800 p-6 sticky top-0">
+    <nav className="sticky top-0 flex h-dvh w-1/4 flex-col border-r border-r-zinc-800 p-6">
       <img
         src="/assets/ma.svg"
         alt=""

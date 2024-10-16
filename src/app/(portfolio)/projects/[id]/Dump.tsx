@@ -1,6 +1,6 @@
 'use client';
 
-import {
+import type {
   Link,
   Media,
   Project,
@@ -9,8 +9,9 @@ import {
   Tech,
 } from '@prisma/client';
 
-import ProjectLink from '@/components/ProjectLink';
 import dayjs from 'dayjs';
+
+import ProjectLink from '@/components/ProjectLink';
 
 type Props = {
   id: string;
@@ -25,7 +26,7 @@ type Props = {
 export default function Dump({ data }: Readonly<Props>) {
   return (
     <main>
-      <section className="flex h-[90vh] flex-col gap-6 px-8 py-4 xl:gap-4 md:px-20">
+      <section className="flex h-[90vh] flex-col gap-6 px-8 py-4 md:px-20 xl:gap-4">
         <h1 className="font-tusker-grotesk-medium text-6xl md:text-8xl">
           {data.title.toUpperCase()}
         </h1>

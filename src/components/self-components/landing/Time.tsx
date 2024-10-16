@@ -1,7 +1,8 @@
 'use client';
 
-import useEvent from '@/hooks/useEvent';
 import { useEffect, useRef } from 'react';
+
+import useEvent from '@/hooks/useEvent';
 
 export default function Time() {
   const { subscribe } = useEvent('cover-opening@end');

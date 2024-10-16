@@ -1,20 +1,24 @@
 'use client';
 
+import type { Link, Media, Project, ProjectLink } from '@prisma/client';
+
 import { useGSAP } from '@gsap/react';
-import { Link, Media, Project, ProjectLink } from '@prisma/client';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useRef } from 'react';
 
-import sequenceAnimation from '@/utils/text-animation/sequence';
-import textSplitter from '@/utils/textSplitter';
 import ProjectCard from './ProjectCard';
 
+import sequenceAnimation from '@/utils/text-animation/sequence';
+import textSplitter from '@/utils/textSplitter';
+
 type Props = {
-  data: Array<Project & {
-    cover: Media;
-    links: Array<ProjectLink & { link: Link }>
-  }>;
+  data: Array<
+    Project & {
+      cover: Media;
+      links: Array<ProjectLink & { link: Link }>;
+    }
+  >;
 };
 
 gsap.registerPlugin(useGSAP);

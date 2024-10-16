@@ -1,5 +1,6 @@
+import type React from 'react';
+
 import dayjs from 'dayjs';
-import React from 'react';
 
 interface Props extends React.TimeHTMLAttributes<HTMLTimeElement> {
   value: string | number | Date;

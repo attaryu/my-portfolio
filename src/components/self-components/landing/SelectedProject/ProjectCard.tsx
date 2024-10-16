@@ -1,7 +1,8 @@
 'use client';
 
+import type { Link, Media, Project, ProjectLink } from '@prisma/client';
+
 import { useGSAP } from '@gsap/react';
-import { Link, Media, Project, ProjectLink } from '@prisma/client';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useRef } from 'react';

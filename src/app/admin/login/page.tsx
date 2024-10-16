@@ -4,9 +4,10 @@ import { redirect, useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { useFormState } from 'react-dom';
 
-import { authenticationAction, logoutAction } from '@/app/api/auth/actions';
 import { Button } from '@/components/shadcn-ui/button';
 import { Input } from '@/components/shadcn-ui/input';
+
+import { authenticationAction, logoutAction } from '@/app/api/auth/actions';
 
 export default function Page() {
   const router = useRouter();

@@ -1,6 +1,7 @@
 'use client';
 
-import { Media } from '@prisma/client';
+import type { Media } from '@prisma/client';
+
 import { useEffect, useState } from 'react';
 import { useFormState } from 'react-dom';
 

@@ -1,7 +1,8 @@
 'use client';
 
+import type { Media, Tech } from '@prisma/client';
+
 import { useGSAP } from '@gsap/react';
-import { Media, Tech } from '@prisma/client';
 import gsap from 'gsap';
 
 import BoxLogo from './BoxLogo';

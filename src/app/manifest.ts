@@ -1,4 +1,4 @@
-import { MetadataRoute } from 'next';
+import type { MetadataRoute } from 'next';
 
 const manifest = (): MetadataRoute.Manifest => ({
   name: "M Attar's Portfolio",

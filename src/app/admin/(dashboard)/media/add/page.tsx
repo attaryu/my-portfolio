@@ -4,12 +4,13 @@ import { useRouter } from 'next/navigation';
 import { useEffect, useRef } from 'react';
 import { useFormState } from 'react-dom';
 
-import { addMedia } from '@/app/api/media/action';
 import { Button } from '@/components/shadcn-ui/button';
-import { ToastAction } from '@/components/shadcn-ui/toast';
+import * as Toast from '@/components/shadcn-ui/toast';
 import Text from '@/components/Text';
 import { useToast } from '@/hooks/use-toast';
 import MediaForm from '../MediaForm';
+
+import { addMedia } from '@/app/api/media/action';
 
 export default function Page() {
   const [formState, createMediaAction] = useFormState(addMedia, null);
@@ -32,12 +33,12 @@ export default function Page() {
           title: 'Success ✅',
           description: 'Click view to see your new media',
           action: (
-            <ToastAction
+            <Toast.Action
               altText="view"
               onClick={() => router.push(`/admin/media/${formState.id}`)}
             >
               View
-            </ToastAction>
+            </Toast.Action>
           ),
         });
 

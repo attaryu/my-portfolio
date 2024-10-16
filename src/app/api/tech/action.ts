@@ -1,7 +1,9 @@
 'use server';
 
-import { Media, Tech } from '@prisma/client';
+import type { Media, Tech } from '@prisma/client';
+
 import { revalidateTag } from 'next/cache';
+
 import prisma from '../database';
 import { ActionResponse } from '../response-type';
 

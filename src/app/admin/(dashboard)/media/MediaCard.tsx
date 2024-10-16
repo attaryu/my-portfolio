@@ -5,12 +5,7 @@ import Link from 'next/link';
 import { LuMoreHorizontal } from 'react-icons/lu';
 
 import { Button } from '@/components/shadcn-ui/button';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from '@/components/shadcn-ui/dropdown-menu';
+import * as DropdownMenu from '@/components/shadcn-ui/dropdown-menu';
 
 import { useToast } from '@/hooks/use-toast';
 import { deleteMedia } from '@/app/api/media/action';
@@ -50,19 +45,19 @@ export default function MediaCard({ data }: Readonly<Props>) {
           {data.title}.{data.extension}
         </Link>
 
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
+        <DropdownMenu.Root>
+          <DropdownMenu.Trigger asChild>
             <Button size="icon" className="rounded-full">
               <LuMoreHorizontal />
             </Button>
-          </DropdownMenuTrigger>
+          </DropdownMenu.Trigger>
 
-          <DropdownMenuContent>
-            <DropdownMenuItem onClick={deleteMediaHandler}>
+          <DropdownMenu.Content>
+            <DropdownMenu.Item onClick={deleteMediaHandler}>
               Delete
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+            </DropdownMenu.Item>
+          </DropdownMenu.Content>
+        </DropdownMenu.Root>
       </div>
 
       <img

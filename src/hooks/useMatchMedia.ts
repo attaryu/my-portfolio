@@ -5,15 +5,15 @@ import { useCallback, useEffect, useState } from 'react';
 import debounce from '@/utils/debounce';
 
 export type MatchMediaConditions = {
-  isSmall: boolean,
-  isMedium: boolean,
-  isLarge: boolean,
-  isExtraLarge: boolean,
-  isDoubleExtraLarge: boolean,
-}
+  isSmall: boolean;
+  isMedium: boolean;
+  isLarge: boolean;
+  isExtraLarge: boolean;
+  isDoubleExtraLarge: boolean;
+};
 
 interface Config extends useGSAPConfig {
-  revert?: boolean
+  revert?: boolean;
 }
 
 gsap.registerPlugin(useGSAP);
@@ -24,9 +24,10 @@ export default function useMatchMedia(
 ) {
   const [screenWidth, setScreenWidth] = useState(0);
 
-  const handleResize = useCallback(debounce(() => {
-    setScreenWidth(window.innerWidth);
-  }, 200), []);
+  const handleResize = useCallback(
+    debounce(() => setScreenWidth(window.innerWidth), 200),
+    [],
+  );
 
   useEffect(() => {
     window.addEventListener('resize', handleResize);
@@ -36,13 +37,16 @@ export default function useMatchMedia(
   useEffect(() => gsap.matchMediaRefresh(), [screenWidth]);
 
   return useGSAP(() => {
-    const matchMedia = gsap.matchMedia().add({
-      isSmall: '(max-width: 766px)',
-      isMedium: '(min-width: 768px)',
-      isLarge: '(min-width: 1024px)',
-      isExtraLarge: '(min-width: 1280px)',
-      isDoubleExtraLarge: '(min-width: 1536px)',
-    }, (context) => fn(context.conditions as MatchMediaConditions));
+    const matchMedia = gsap.matchMedia().add(
+      {
+        isSmall: '(max-width: 766px)',
+        isMedium: '(min-width: 768px)',
+        isLarge: '(min-width: 1024px)',
+        isExtraLarge: '(min-width: 1280px)',
+        isDoubleExtraLarge: '(min-width: 1536px)',
+      },
+      (context) => fn(context.conditions as MatchMediaConditions),
+    );
 
     if (config && !Array.isArray(config)) {
       if (config.revert) {

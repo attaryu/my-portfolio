@@ -1,7 +1,8 @@
 import { unstable_cache } from 'next/cache';
 
-import prisma from '@/app/api/database';
 import Dump from './Dump';
+
+import prisma from '@/app/api/database';
 
 const getData = unstable_cache(
   async () => {

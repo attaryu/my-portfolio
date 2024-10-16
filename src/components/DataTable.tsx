@@ -1,31 +1,17 @@
 'use client';
 
+import type { ColumnDef } from '@tanstack/react-table';
+
 import {
-  ColumnDef,
   flexRender,
   getCoreRowModel,
-  useReactTable
+  useReactTable,
 } from '@tanstack/react-table';
-
 import { TfiLayoutColumn3Alt } from 'react-icons/tfi';
 
-import {
-  DropdownMenu,
-  DropdownMenuCheckboxItem,
-  DropdownMenuContent,
-  DropdownMenuTrigger,
-} from '@/components/shadcn-ui/dropdown-menu';
-
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from '@/components/shadcn-ui/table';
-
 import { Button } from '@/components/shadcn-ui/button';
+import * as DropdownMenu from '@/components/shadcn-ui/dropdown-menu';
+import * as Table from '@/components/shadcn-ui/table';
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -45,79 +31,79 @@ export default function DataTable<TData, TValue>({
   return (
     <div className="space-y-4">
       <div className="flex justify-end">
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
+        <DropdownMenu.Root>
+          <DropdownMenu.Trigger asChild>
             <Button variant="outline" className="gap-3">
               Column <TfiLayoutColumn3Alt />
             </Button>
-          </DropdownMenuTrigger>
+          </DropdownMenu.Trigger>
 
-          <DropdownMenuContent align="end">
+          <DropdownMenu.Content align="end">
             {table
               .getAllColumns()
               .filter((column) => column.getCanHide())
               .map((column) => (
-                <DropdownMenuCheckboxItem
+                <DropdownMenu.CheckboxItem
                   key={column.id}
                   checked={column.getIsVisible()}
                   onCheckedChange={(value) => column.toggleVisibility(value)}
                 >
                   {column.columnDef.header?.toString()}
-                </DropdownMenuCheckboxItem>
+                </DropdownMenu.CheckboxItem>
               ))}
-          </DropdownMenuContent>
-        </DropdownMenu>
+          </DropdownMenu.Content>
+        </DropdownMenu.Root>
       </div>
 
       <div className="rounded-md border border-zinc-800">
-        <Table>
-          <TableHeader>
+        <Table.Root>
+          <Table.Header>
             {table.getHeaderGroups().map((headerGroup) => (
-              <TableRow key={headerGroup.id} className="border-b-zinc-800">
+              <Table.Row key={headerGroup.id} className="border-b-zinc-800">
                 {headerGroup.headers.map((header) => (
-                  <TableHead key={header.id}>
+                  <Table.Head key={header.id}>
                     {header.isPlaceholder
                       ? null
                       : flexRender(
                           header.column.columnDef.header,
                           header.getContext(),
                         )}
-                  </TableHead>
+                  </Table.Head>
                 ))}
-              </TableRow>
+              </Table.Row>
             ))}
-          </TableHeader>
+          </Table.Header>
 
-          <TableBody>
+          <Table.Body>
             {table.getRowModel()?.rows.length ? (
               table.getRowModel().rows.map((row) => (
-                <TableRow
+                <Table.Row
                   key={row.id}
                   data-state={row.getIsSelected() && 'selected'}
                   className="border-b-zinc-800"
                 >
                   {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id}>
+                    <Table.Cell key={cell.id}>
                       {flexRender(
                         cell.column.columnDef.cell,
                         cell.getContext(),
                       )}
-                    </TableCell>
+                    </Table.Cell>
                   ))}
-                </TableRow>
+                </Table.Row>
               ))
             ) : (
-              <TableRow>
-                <TableCell
+              <Table.Row>
+                <Table.Cell
                   colSpan={columns.length}
                   className="h-24 text-center"
                 >
                   No results.
-                </TableCell>
-              </TableRow>
+                </Table.Cell>
+              </Table.Row>
             )}
-          </TableBody>
-        </Table>
+          </Table.Body>
+        </Table.Root>
       </div>
     </div>
   );
