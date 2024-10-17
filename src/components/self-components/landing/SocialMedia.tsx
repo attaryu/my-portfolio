@@ -87,13 +87,10 @@ export default function SocialMedia() {
 
         <div className="flex flex-wrap content-end items-end gap-x-4 gap-y-4 md:justify-end">
           {socialMedias.map((data) => (
-            <Button
-              key={data.id}
-              href={data.url}
-              target="_blank"
-              secondary
-            >
-              {data.title}
+            <Button key={data.id} variant="secondary" asChild>
+              <a href={data.url} target="_blank">
+                {data.title}
+              </a>
             </Button>
           ))}
         </div>

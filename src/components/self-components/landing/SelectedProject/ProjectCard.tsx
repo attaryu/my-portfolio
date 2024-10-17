@@ -52,12 +52,14 @@ export default function ProjectCard({ project }: Readonly<Prop>) {
       />
 
       <Button
-        href={project.links[0].link.url}
-        secondary
-        target="_blank"
-        className="z-10 self-end !border-zinc-100 !p-3 !text-2xl lg:!text-3xl"
+        className="z-10 self-end border-zinc-100"
+        variant="secondary"
+        size="icon"
+        asChild
       >
-        <MdArrowOutward />
+        <a href={project.links[0].link.url} target="_blank">
+          <MdArrowOutward />
+        </a>
       </Button>
 
       <div className="z-10 mt-auto flex flex-col items-end justify-between gap-8 md:flex-row xl:gap-32">

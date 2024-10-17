@@ -64,11 +64,10 @@ export default function Collaboration() {
       />
 
       <p className="mt-auto flex items-center gap-4 self-end font-neue-montreal-medium md:gap-8">
-        <Button
-          href="mailto:mattarannaufal@gmail.com?subject=Project Collaboration Inquiry&body=Hi Matt, I'm interested in collaborating with you on a new project. Could you let me know if your schedule is open for a discussion? Looking forward to hearing from you!"
-          primary
-        >
-          Mail Me
+        <Button asChild>
+          <a href="mailto:mattarannaufal@gmail.com?subject=Project Collaboration Inquiry&body=Hi Matt, I'm interested in collaborating with you on a new project. Could you let me know if your schedule is open for a discussion? Looking forward to hearing from you!">
+            Mail Me
+          </a>
         </Button>{' '}
         <span className="md:text-xl lg:text-2xl">right now!</span>
       </p>
