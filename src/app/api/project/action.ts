@@ -7,6 +7,8 @@ import { revalidateTag } from 'next/cache';
 import prisma from '../database';
 import { ActionResponse } from '../response-type';
 
+const transactionDBSetting = { maxWait: 30000, timeout: 60000 };
+
 export async function addProject(
   _: ActionResponse<{ project: Project }> | null,
   form: FormData,
@@ -55,7 +57,7 @@ export async function addProject(
       });
 
       return project;
-    });
+    }, transactionDBSetting);
 
     revalidateTag('projects');
 
@@ -141,7 +143,7 @@ export async function updateProject(
       });
 
       return project;
-    });
+    }, transactionDBSetting);
 
     revalidateTag('projects');
 
@@ -177,7 +179,7 @@ export async function deleteProject(id: number) {
       });
 
       return deletedProject;
-    });
+    }, transactionDBSetting);
 
     revalidateTag('projects');
 
