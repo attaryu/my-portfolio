@@ -8,7 +8,8 @@
     "vercel-build": "prisma generate && prisma migrate deploy && next build",
     "start": "next start",
     "lint": "next lint",
-    "postinstall": "prisma generate"
+    "postinstall": "prisma generate",
+    "test:manual": "next build && next start"
   },
   "dependencies": {
     "@gsap/react": "^2.1.1",
