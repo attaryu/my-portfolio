@@ -1,3 +1,1 @@
-# My Portfolio
-
-yeah that's it.
+# My personal portfolio and a long term project 😊

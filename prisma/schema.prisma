@@ -1,0 +1,137 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Media {
+  id             Int             @id @default(autoincrement()) @db.SmallInt
+  title          String          @unique
+  extension      MediaExtension
+  url            String          @unique
+  created_at     DateTime        @default(now())
+  updated_at     DateTime        @updatedAt
+  project        Project?
+  projectPreview ProjectPreview?
+  tech           Tech?
+
+  @@map("media")
+}
+
+model Link {
+  id          Int          @id @default(autoincrement()) @db.SmallInt
+  title       String
+  subtitle    String
+  url         String       @unique
+  created_at  DateTime     @default(now())
+  updated_at  DateTime     @updatedAt
+  projectLink ProjectLink?
+  socialMedia SocialMedia?
+
+  @@map("link")
+}
+
+model Tech {
+  id         Int       @id @default(autoincrement()) @db.SmallInt
+  name       String    @unique
+  logoId     Int       @unique
+  created_at DateTime  @default(now())
+  updated_at DateTime  @updatedAt
+  media      Media     @relation(fields: [logoId], references: [id])
+  projects   Project[] @relation("ProjectToTech")
+
+  @@map("tech")
+}
+
+model Project {
+  id              Int              @id @default(autoincrement()) @db.SmallInt
+  title           String           @unique
+  subtitle        String
+  description     String?
+  status          Status           @default(draft)
+  label           ProjectLabel
+  coverId         Int              @unique
+  finished_at     DateTime         @default(now())
+  created_at      DateTime         @default(now())
+  updated_at      DateTime         @updatedAt
+  cover           Media            @relation(fields: [coverId], references: [id])
+  links           ProjectLink[]
+  previews        ProjectPreview[]
+  selectedProject SelectedProject?
+  techStacks      Tech[]           @relation("ProjectToTech")
+
+  @@map("project")
+}
+
+model ProjectLink {
+  linkId    Int     @unique
+  projectId Int
+  link      Link    @relation(fields: [linkId], references: [id])
+  project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@unique([linkId, projectId])
+  @@map("project_link")
+}
+
+model ProjectPreview {
+  id        Int     @id @default(autoincrement()) @db.SmallInt
+  order     Int
+  projectId Int
+  imageId   Int     @unique
+  image     Media   @relation(fields: [imageId], references: [id])
+  project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@unique([projectId, order, imageId])
+  @@map("project_preview")
+}
+
+model Landing {
+  id               Int               @id @default(autoincrement()) @db.SmallInt
+  email            String
+  address          String
+  description      String
+  status           Status            @default(draft)
+  selectedProjects SelectedProject[]
+  socialMedias     SocialMedia[]
+
+  @@map("landing")
+}
+
+model SocialMedia {
+  linkId    Int     @unique
+  landingId Int
+  landing   Landing @relation(fields: [landingId], references: [id], onDelete: Cascade)
+  link      Link    @relation(fields: [linkId], references: [id])
+
+  @@map("social_media")
+}
+
+model SelectedProject {
+  projectId Int     @unique
+  landingId Int
+  landing   Landing @relation(fields: [landingId], references: [id], onDelete: Cascade)
+  project   Project @relation(fields: [projectId], references: [id])
+
+  @@map("selected_project")
+}
+
+enum MediaExtension {
+  svg
+  jpg
+  jpeg
+  png
+}
+
+enum Status {
+  draft
+  published
+  archived
+}
+
+enum ProjectLabel {
+  personal
+  paid
+}
