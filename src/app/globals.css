@@ -1,26 +1,45 @@
-@import "tailwindcss";
-
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@import 'tailwindcss';
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+	--font-unbounded: var(--font-unbounded);
+	--font-neue-montreal: var(--font-neue-montreal);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+
+@base {
+	body {
+		font-family: var(--font-neue-montreal), sans-serif;
+	}
+
+	/* lenis styling */
+	html.lenis,
+	html.lenis body {
+		height: auto;
+	}
+
+	.lenis:not(.lenis-autoToggle).lenis-stopped {
+		overflow: clip;
+	}
+
+	.lenis [data-lenis-prevent],
+	.lenis [data-lenis-prevent-wheel],
+	.lenis [data-lenis-prevent-touch] {
+		overscroll-behavior: contain;
+	}
+
+	.lenis.lenis-smooth iframe {
+		pointer-events: none;
+	}
+
+	.lenis.lenis-autoToggle {
+		transition-property: overflow;
+		transition-duration: 1ms;
+		transition-behavior: allow-discrete;
+	}
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer utilities {
+	.debug {
+		@apply outline outline-red-500;
+	}
 }
