@@ -14,11 +14,11 @@ export default function Home() {
 			<main className="mt-14">
 				{/* hero image */}
 				<section>
-					<h1 className="text-5xl text-start lg:text-7xl xl:text-8xl font-unbounded font-black lg:text-center p-4 py-6">
+					<h1 className="text-5xl text-start lg:text-7xl xl:text-8xl font-unbounded font-black md:text-center p-4 py-6">
 						THIS IS MY STYLE
 					</h1>
 
-					<div className="relative h-[80vh] lg:h-[90vh] border-y border-y-zinc-900">
+					<div className="relative h-[80vh] md:h-[90vh] border-y border-y-zinc-900">
 						<Image
 							src="/images/statue-2.jpg"
 							alt="Statue"
