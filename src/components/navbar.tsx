@@ -1,6 +1,5 @@
 'use client';
 
-import { useMobile } from '@/hooks/use-mobile';
 import { useGSAP } from '@gsap/react';
 import { format } from 'date-fns';
 import gsap from 'gsap';
@@ -9,6 +8,8 @@ import { Menu, X } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRef } from 'react';
+
+import { useMobile } from '@/hooks/use-mobile';
 
 gsap.registerPlugin(useGSAP, Flip);
 
