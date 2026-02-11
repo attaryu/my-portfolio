@@ -37,10 +37,10 @@ export function Footer() {
 							</li>
 							<li>
 								<Link
-									href="/"
+									href="/my-works"
 									className="font-unbounded text-sm lg:text-base font-medium"
 								>
-									/works
+									/my-works
 								</Link>
 							</li>
 							<li>

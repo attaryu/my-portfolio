@@ -6,6 +6,6 @@ type Props = {
 	children: React.ReactNode;
 };
 
-export default function LenisProvider({ children }: Props) {
+export function LenisProvider({ children }: Props) {
 	return <ReactLenis root>{children}</ReactLenis>;
 }

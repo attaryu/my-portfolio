@@ -3,7 +3,9 @@ import type { Metadata } from 'next';
 import { Unbounded } from 'next/font/google';
 import localFont from 'next/font/local';
 
-import LenisProvider from '@/providers/lenis-provider';
+import { Footer } from '@/components/footer';
+import { Navbar } from '@/components/navbar';
+import { LenisProvider } from '@/providers/lenis-provider';
 
 import './globals.css';
 
@@ -46,9 +48,15 @@ export default function RootLayout({
 	return (
 		<html lang="en">
 			<body
-				className={`${unbounded.variable} ${neueMontreal.variable} antialiased bg-zinc-100`}
+				className={`${unbounded.variable} ${neueMontreal.variable} antialiased bg-zinc-100 2xl:max-w-384 2xl:border-x 2xl:border-zinc-950 mx-auto relative`}
 			>
-				<LenisProvider>{children}</LenisProvider>
+				<Navbar />
+
+				<div className="mt-14">
+					<LenisProvider>{children}</LenisProvider>
+				</div>
+
+				<Footer />
 			</body>
 		</html>
 	);
