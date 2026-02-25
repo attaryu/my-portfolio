@@ -127,7 +127,7 @@ export default function Home() {
 				<Link href="/my-works">
 					<button
 						type="button"
-						className="px-6 py-4 bg-zinc-900 text-white font-unbounded font-bold text-sm w-full text-center"
+						className="px-6 py-4 border-b border-zinc-950 font-unbounded font-bold text-sm w-full text-center"
 					>
 						SEE MORE
 					</button>

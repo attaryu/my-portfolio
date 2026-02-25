@@ -1,8 +1,34 @@
+'use client';
+
+import { horizontalLoop } from '@/utils/gsap/seamless-loop';
+import { useGSAP } from '@gsap/react';
+import gsap from 'gsap';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRef } from 'react';
+
+gsap.registerPlugin(useGSAP);
 
 export function Footer() {
+	const marqueeRef = useRef<HTMLDivElement>(null);
 	const now = new Date();
+
+	useGSAP(
+		() => {
+			if (!marqueeRef.current) return;
+
+			const items = marqueeRef.current.querySelectorAll('.marquee-item');
+			const loop = horizontalLoop(items, {
+				speed: 3,
+				repeat: -1,
+			});
+
+			return () => {
+				loop.kill();
+			};
+		},
+		{ scope: marqueeRef },
+	);
 
 	return (
 		<footer className="bg-zinc-950 text-zinc-100 mt-16">
@@ -88,18 +114,22 @@ export function Footer() {
 			</div>
 
 			<div className="w-full overflow-hidden border-y border-y-zinc-100 mt-12 lg:mt-16 p-4 lg:py-8">
-				<div className="flex items-center gap-4 w-fit">
-					<p className="whitespace-nowrap font-unbounded font-bold text-5xl lg:text-[10rem]">
-						BEYOND THE GRID
-					</p>
+				<div ref={marqueeRef} className="flex items-center gap-4 w-fit">
+					{Array.from({ length: 4 }).map((_, index) => (
+						<div key={index} className="marquee-item flex items-center gap-4">
+							<p className="whitespace-nowrap font-unbounded font-bold text-5xl lg:text-[10rem]">
+								BEYOND THE GRID
+							</p>
 
-					<div className="w-16 h-2 bg-zinc-100" />
+							<div className="w-16 h-2 bg-zinc-100" />
 
-					<p className="whitespace-nowrap font-unbounded font-bold text-5xl lg:text-[10rem]">
-						BREAKING THE RULES
-					</p>
+							<p className="whitespace-nowrap font-unbounded font-bold text-5xl lg:text-[10rem]">
+								BREAKING THE RULES
+							</p>
 
-					<div className="w-16 h-2 bg-zinc-100" />
+							<div className="w-16 h-2 bg-zinc-100" />
+						</div>
+					))}
 				</div>
 			</div>
 

@@ -7,7 +7,7 @@ import { Flip } from 'gsap/Flip';
 import { Menu, X } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import { useMobile } from '@/hooks/use-mobile';
 
@@ -16,8 +16,17 @@ gsap.registerPlugin(useGSAP, Flip);
 export function Navbar() {
 	const isMobile = useMobile();
 	const containerRef = useRef<HTMLElement>(null);
+	const [now, setNow] = useState<Date | null>(null);
 
-	const now = new Date();
+	useEffect(() => {
+		setNow(new Date());
+		
+		const interval = setInterval(() => {
+			setNow(new Date());
+		}, 1000);
+
+		return () => clearInterval(interval);
+	}, []);
 
 	const { contextSafe } = useGSAP(
 		() => {
@@ -79,14 +88,15 @@ export function Navbar() {
 				<div className="flex flex-1 py-1 px-4 xl:px-6 items-center">
 					<Image src="/logo/light.svg" width={48} height={48} alt="" />
 
-					<time
-						dateTime={now.toISOString()}
-						className="flex flex-col items-end ml-auto text-xs gap-1"
-						suppressHydrationWarning
-					>
-						<span>{format(now, 'dd MMMM y')}</span>
-						<span>{format(now, 'hh:mm a')}</span>
-					</time>
+					{now && (
+						<time
+							dateTime={now.toISOString()}
+							className="flex flex-col items-end ml-auto text-xs gap-1"
+						>
+							<span>{format(now, 'dd MMMM y')}</span>
+							<span>{format(now, 'hh:mm:ss a')}</span>
+						</time>
+					)}
 				</div>
 
 				<button
