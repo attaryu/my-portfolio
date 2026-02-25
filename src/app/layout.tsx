@@ -51,11 +51,7 @@ export default function RootLayout({
 				className={`${unbounded.variable} ${neueMontreal.variable} antialiased bg-zinc-100 2xl:max-w-384 2xl:border-x 2xl:border-zinc-950 mx-auto relative`}
 			>
 				<Navbar />
-
-				<div className="mt-14">
-					<LenisProvider>{children}</LenisProvider>
-				</div>
-
+				<LenisProvider>{children}</LenisProvider>
 				<Footer />
 			</body>
 		</html>

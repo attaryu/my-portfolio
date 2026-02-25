@@ -58,7 +58,23 @@ export function Navbar() {
 	});
 
 	return (
-		<header className="fixed top-0 z-50 inset-x-0">
+		<header className="sticky top-0 z-50 inset-x-0">
+			<div className="border-b bg-zinc-950 py-4">
+				<p className="text-center text-sm text-zinc-400">
+					I haven't finished the site, but I have finished the fight with this
+					layout. Check out{' '}
+					<a
+						href="https://www.figma.com/design/ZqSe8pRXQFkFRcAUxqzxOJ/My-Own-Portofolio?node-id=0-1&t=6fAFpu0VqI9KwXfz-1"
+						className="underline underline-offset-4 text-zinc-200"
+						target="_blank"
+						rel="noopener"
+					>
+						the slicing
+					</a>
+					—it's complicated, non-standard, and live.
+				</p>
+			</div>
+
 			<div className="flex bg-zinc-100 border-b border-b-zinc-900 2xl:max-w-384 2xl:border-x 2xl:border-zinc-950 mx-auto">
 				<div className="flex flex-1 py-1 px-4 xl:px-6 items-center">
 					<Image src="/logo/light.svg" width={48} height={48} alt="" />
