@@ -77,7 +77,7 @@ export default function MyWorksPage() {
 				MY WORKS
 			</h1>
 
-			<section className="mb-16">
+			<section>
 				<div className="grid grid-cols-[3fr_1fr] lg:grid-cols-[1fr_1.5fr_0.5fr] font-unbounded font-bold bg-zinc-300 border-y border-zinc-950 p-4 text-sm">
 					<p>Title</p>
 					<p className="hidden lg:block">At glance</p>

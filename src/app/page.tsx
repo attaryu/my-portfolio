@@ -1,6 +1,7 @@
 import { differenceInYears } from 'date-fns';
 import { ArrowUpRight, Share2 } from 'lucide-react';
 import Image from 'next/image';
+import Link from 'next/link';
 
 import { ProjectCard } from '@/components/project-card';
 
@@ -54,7 +55,7 @@ export default function Home() {
 					MY RECENT WORKS
 				</h2>
 
-				<ul className="grid xl:grid-cols-[1fr_auto_auto] xl:h-[80vh]  max-h-155  auto-rows-auto grid-cols-1 gap-px bg-zinc-900 border-b border-b-zinc-900 xl:row-start-2 xl:col-span-2">
+				<ul className="grid xl:grid-cols-[1fr_auto_auto] xl:h-[80vh] xl:max-h-155 auto-rows-auto grid-cols-1 gap-px bg-zinc-900 border-b border-b-zinc-900 xl:row-start-2 xl:col-span-2">
 					{/* project card */}
 					<li className=" flex flex-col gap-px bg-zinc-900">
 						{/* project header */}
@@ -123,12 +124,14 @@ export default function Home() {
 					<ProjectCard title="Lorem, ipsum dolor." projectNumber="PROJECT X" />
 				</ul>
 
-				<button
-					type="button"
-					className="px-6 py-4 text-zinc-900 font-unbounded font-bold text-sm w-full text-center"
-				>
-					SEE MORE
-				</button>
+				<Link href="/my-works">
+					<button
+						type="button"
+						className="px-6 py-4 bg-zinc-900 text-white font-unbounded font-bold text-sm w-full text-center"
+					>
+						SEE MORE
+					</button>
+				</Link>
 			</section>
 		</main>
 	);

@@ -5,7 +5,7 @@ export function Footer() {
 	const now = new Date();
 
 	return (
-		<footer className="bg-zinc-950 text-zinc-100">
+		<footer className="bg-zinc-950 text-zinc-100 mt-16">
 			<div className="grid auto-rows-auto lg:place-items-center p-4 lg:grid-cols-4 lg:px-6 lg:py-0">
 				<Image
 					src="/logo/dark.svg"
