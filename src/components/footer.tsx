@@ -87,24 +87,30 @@ export function Footer() {
 					<ul className="border-l border-l-zinc-100 pl-3 ml-3 lg:pl-6 lg:ml-6 lg:space-y-1">
 						<li>
 							<a
-								href="/"
+								href="https://www.linkedin.com/in/mattarannaufal/"
 								className="font-unbounded text-sm lg:text-base font-medium"
+								target="_blank"
+								rel="noopener"
 							>
 								LinkedIn
 							</a>
 						</li>
 						<li>
 							<a
-								href="/"
+								href="https://github.com/attaryu"
 								className="font-unbounded text-sm lg:text-base font-medium"
+								target="_blank"
+								rel="noopener"
 							>
 								Github
 							</a>
 						</li>
 						<li>
 							<a
-								href="/"
+								href="https://www.instagram.com/am_iattar"
 								className="font-unbounded text-sm lg:text-base font-medium"
+								target="_blank"
+								rel="noopener"
 							>
 								Instagram
 							</a>
@@ -115,8 +121,11 @@ export function Footer() {
 
 			<div className="w-full overflow-hidden border-y border-y-zinc-100 mt-12 lg:mt-16 p-4 lg:py-8">
 				<div ref={marqueeRef} className="flex items-center gap-4 w-fit">
-					{Array.from({ length: 4 }).map((_, index) => (
-						<div key={index} className="marquee-item flex items-center gap-4">
+					{[1, 2, 3, 4].map((index) => (
+						<div
+							key={`marquee-item-${index}`}
+							className="marquee-item flex items-center gap-4"
+						>
 							<p className="whitespace-nowrap font-unbounded font-bold text-5xl lg:text-[10rem]">
 								BEYOND THE GRID
 							</p>
